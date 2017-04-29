@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 2000);
+        }, 2000);  //时间控制
     }
 
 
