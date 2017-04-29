@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +41,16 @@ public class MainActivity extends AppCompatActivity {
 
                 //改变Tab 状态
                 for(int i=0;i< mTabLayout.getTabCount();i++){
+                    View view = mTabLayout.getTabAt(i).getCustomView();
+                    ImageView icon = (ImageView) view.findViewById(R.id.tab_content_image);
+                    TextView text = (TextView) view.findViewById(R.id.tab_content_text);
                     if(i == tab.getPosition()){
-                        mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabResPressed[i]));
+                        //mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabResPressed[i]));
+                        icon.setImageResource(DataGenerator.mTabResPressed[i]);
+
                     }else{
-                        mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabRes[i]));
+                        //mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabRes[i]));
+                        icon.setImageResource(DataGenerator.mTabRes[i]);
                     }
                 }
 
@@ -63,10 +71,14 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_friend_pressed)).setText(DataGenerator.mTabTitle[1]));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_pose_pressed)).setText(DataGenerator.mTabTitle[2]));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_search_pressed)).setText(DataGenerator.mTabTitle[3]));*/
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_home_pressed)));
+        /*mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_home_pressed)));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_friend_pressed)));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_pose_pressed)));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_search_pressed)));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_search_pressed)));*/
+        // 提供自定义的布局添加Tab
+        for(int i=0;i<4;i++){
+            mTabLayout.addTab(mTabLayout.newTab().setCustomView(DataGenerator.getTabView(this,i)));
+        }
 
 
     }
@@ -94,19 +106,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        /**
-         * 获取Tab 显示的内容
-         * @param context
-         * @param position
-         * @return
 
-        public static View getTabView(Context context, int position){
-            View view = LayoutInflater.from(context).inflate(R.layout.home_tab_content,null);
-            ImageView tabIcon = (ImageView) view.findViewById(R.id.tab_content_image);
-            tabIcon.setImageResource(DataGenerator.mTabRes[position]);
-            TextView tabText = (TextView) view.findViewById(R.id.tab_content_text);
-            tabText.setText(mTabTitle[position]);
-            return view;
-        }*/
 
 }

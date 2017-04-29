@@ -1,6 +1,10 @@
 package com.example.admnistrator.bookcrossingapp;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by yvemuki on 2017/4/29.
@@ -18,5 +22,20 @@ public class DataGenerator {
         fragments[2] = HomeFragment.newInstance(from);
         fragments[3] = FriendFragment.newInstance(from);
         return fragments;
+    }
+
+    /**
+     * 获取Tab 显示的内容
+     * @param context
+     * @param position
+     * @return
+     */
+    public static View getTabView(Context context, int position){
+        View view = LayoutInflater.from(context).inflate(R.layout.bottom_tab_icon,null);
+        ImageView tabIcon = (ImageView) view.findViewById(R.id.tab_content_image);
+        tabIcon.setImageResource(DataGenerator.mTabRes[position]);
+            /*TextView tabText = (TextView) view.findViewById(R.id.tab_content_text);
+            tabText.setText(mTabTitle[position]);*/
+        return view;
     }
 }
