@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title);
         setContentView(R.layout.bottom_tab_layout);
-        mFragmensts = DataGenerator.getFragments("TabLayout Tab");
+        mFragmensts = DataGenerator.getFragments("TabLayout Tab");   //初始化调用DataGenerator相关函数进行初始化
 
         initView();
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        //这里是一开始定义非自定义布局的相关代码
         /*mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_home_pressed)).setText(DataGenerator.mTabTitle[0]));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_friend_pressed)).setText(DataGenerator.mTabTitle[1]));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_pose_pressed)).setText(DataGenerator.mTabTitle[2]));
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_pose_pressed)));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_search_pressed)));*/
         // 提供自定义的布局添加Tab
-        for(int i=0;i<4;i++){
+        for(int i=0;i<5;i++){
             mTabLayout.addTab(mTabLayout.newTab().setCustomView(DataGenerator.getTabView(this,i)));
         }
 
@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 fragment = mFragmensts[3];
                 break;
+            case 4:
+                fragment = mFragmensts[4];
         }
         if(fragment!=null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.home_container,fragment).commit();
