@@ -19,7 +19,7 @@ public class DataGenerator {
         Fragment fragments[] = new Fragment[5];
         fragments[0] = HomeFragment.newInstance(from);
         fragments[1] = FriendFragment.newInstance(from);
-        fragments[2] = HomeFragment.newInstance(from);
+        fragments[2] = PoseFragment.newInstance(from);
         fragments[3] = FriendFragment.newInstance(from);
         fragments[4] = FriendFragment.newInstance(from);
         return fragments;
