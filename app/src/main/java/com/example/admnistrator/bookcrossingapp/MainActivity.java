@@ -2,11 +2,13 @@ package com.example.admnistrator.bookcrossingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +16,28 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout mTabLayout;
     private Fragment[]mFragmensts;
+    private DrawerLayout mDrawerLayout;
+    private Button bar_menu;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.title);
-        setContentView(R.layout.bottom_tab_layout);
+        setContentView(R.layout.activity_main);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        bar_menu = (Button) findViewById(R.id.tools_bar_menu);
+        bar_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
         mFragmensts = DataGenerator.getFragments("TabLayout Tab");   //初始化调用DataGenerator相关函数进行初始化
 
         initView();
-
     }
+
+
 
     private void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.bottom_tab_layout);
