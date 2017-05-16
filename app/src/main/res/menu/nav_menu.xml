@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/Literature_Art"
+            android:actionLayout="@drawable/barre_mark"
+            android:icon="@drawable/barre_mark"
+            android:title="Literature &amp; Art" />
+        <item
+            android:id="@+id/Humanities_SocialSciences"
+            android:icon="@drawable/barre_mark"
+            android:title="Humanities &amp; Social Sciences" />
+
+        <item
+            android:id="@+id/Economic_Management"
+            android:icon="@drawable/barre_mark"
+            android:title="Economic &amp; Management" />
+
+        <item
+            android:id="@+id/Enducation_Life"
+            android:icon="@drawable/barre_mark"
+            android:title="Enducation &amp; Life" />
+
+        <item
+            android:id="@+id/ComputerScience_Technology"
+            android:icon="@drawable/barre_mark"
+            android:title="Computer Science &amp; Technology" />
+
+
+    </group>
+</menu>
