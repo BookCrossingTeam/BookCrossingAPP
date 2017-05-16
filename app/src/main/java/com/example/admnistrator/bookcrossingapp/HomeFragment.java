@@ -1,31 +1,129 @@
 package com.example.admnistrator.bookcrossingapp;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 
 /**
  * Created by yvemuki on 2017/4/29.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
     private String mArgument;
+
+    private ViewPager viewPager;
+    private ArrayList<View> pageview;
+    private View view;
+
+    private ImageView[] tips;//提示性点点数组
+    private int currentPage = 0;//当前展示的页码
+
     public static final String ARGUMENT = "argument";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_splash, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        initViewPager();
+        return view;
     }
 
-    public static HomeFragment newInstance(String from)
-    {
+    public static HomeFragment newInstance(String from) {
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT, from);
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setArguments(bundle);
         return homeFragment;
+    }
+
+    public void initViewPager() {
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        final int[] images = new int[]{R.drawable.banner, R.drawable.banner, R.drawable.banner, R.drawable.banner};//图片ID数组
+
+
+        //存放点点的容器
+        LinearLayout tipsBox = (LinearLayout) view.findViewById(R.id.tipsBox);
+        //初始化 提示点点
+        tips = new ImageView[4];
+        for (int i = 0; i < tips.length; i++) {
+            ImageView img = new ImageView(getContext()); //实例化一个点点
+            img.setLayoutParams(new LinearLayout.LayoutParams(10, 10));
+            tips[i] = img;
+            if (i == 0) {
+                img.setBackgroundResource(R.drawable.banner_page_now);//蓝色背景
+            } else {
+                img.setBackgroundResource(R.drawable.banner_page);//黑色背景
+            }
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(150,25));
+            params.leftMargin = 5;
+            params.rightMargin = 5;
+            tipsBox.addView(img, params); //把点点添加到容器中
+        }
+
+        //-----初始化PagerAdapter------
+        PagerAdapter adapter = new PagerAdapter() {
+            @Override
+            public int getCount() {
+                // TODO Auto-generated method stub
+                return images.length;
+            }
+
+            @Override
+            public boolean isViewFromObject(View arg0, Object arg1) {
+                // TODO Auto-generated method stub
+                return arg0 == arg1;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object o) {
+                //container.removeViewAt(position);
+            }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                ImageView im = new ImageView(getContext());
+
+                im.setImageResource(images[position]);
+                container.addView(im);
+                return im;
+            }
+
+        };
+
+        viewPager.setAdapter(adapter);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // TODO Auto-generated method stub
+                tips[currentPage].setBackgroundResource(R.drawable.banner_page);
+                currentPage = position;
+                tips[position].setBackgroundResource(R.drawable.banner_page_now);
+            }
+        });
+
     }
 }
