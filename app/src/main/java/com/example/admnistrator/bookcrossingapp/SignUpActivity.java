@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                 passwordValue = passowrd.getText().toString();
                 telephoneValue = telephone.getText().toString();
                 identicodeValue = identicode.getText().toString();
-                if(userNameValue.equals("") || userNameValue.equals("") || telephoneValue.equals("") || identicodeValue.equals(""))
+                if(userNameValue.equals("") || passwordValue.equals("") || telephoneValue.equals("") || identicodeValue.equals(""))
                 {
                     Toast.makeText(SignUpActivity.this,"请填写完整",Toast.LENGTH_SHORT).show();
                     return ;
@@ -106,14 +106,14 @@ public class SignUpActivity extends AppCompatActivity {
                 try{
                     OkHttpClient client = new OkHttpClient();
                     code = getcode();
-                    //RequestBody requestBody = new FormBody.Builder().add("number",telephoneValue).add("code",code).build();
-                    //Request request = new Request.Builder().url("http://120.24.217.191/sentmagess.php").post(requestBody).build();
-                    //Response response = client.newCall(request).execute();
-                    //String responseData = response.body().string();
-                    //if(SentOk(responseData))
+                    RequestBody requestBody = new FormBody.Builder().add("number",telephoneValue).add("code",code).build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/sentmagess.php").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    if(SentOk(responseData))
                         dis_sentmagess_btn();
-                    //else
-                    //    showResponse(responseData);
+                    else
+                        showResponse(responseData);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -161,7 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Toast.makeText(SignUpActivity.this,"短信发送成功",Toast.LENGTH_SHORT).show();
-                identicode.setText(code);
+                //identicode.setText(code);
                 confirm.setVisibility(View.GONE);
             }
         });
