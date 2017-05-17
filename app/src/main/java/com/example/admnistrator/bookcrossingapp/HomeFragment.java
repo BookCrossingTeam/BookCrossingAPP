@@ -13,8 +13,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by yvemuki on 2017/4/29.
@@ -34,6 +44,8 @@ public class HomeFragment extends Fragment {
     private BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
 
+    private long lastTime;
+
     public static final String ARGUMENT = "argument";
 
     @Override
@@ -41,6 +53,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        lastTime = 0L;
         initViewPager();
         initRecyclerView();
         initSwipe_refresh();
@@ -168,11 +181,46 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 ;// do somethings
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime+"").build();
+                    lastTime = new Date().getTime()/1000L;
+                    Request request = new Request.Builder().url("http://120.24.217.191/queryPose.php").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    handleResponseData(responseData);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                initBookDetailData();
-                adapter.notifyDataSetChanged();
-                swipeRefresh.setRefreshing(false);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //initBookDetailData();
+                        adapter.notifyDataSetChanged();
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
             }
         }).start();
+    }
+
+    public void handleResponseData(final String responseData)
+    {
+        try {
+            JSONArray jsonArray = new JSONArray(responseData);
+            for(int i=0;i<jsonArray.length();i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String username = jsonObject.getString("username");
+                String bookName = jsonObject.getString("bookName");
+                String author = jsonObject.getString("author");
+                BookDetail a = new BookDetail(username, "《"+bookName+"》", author, "", "");
+                BookDetailList.add(0,a);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
