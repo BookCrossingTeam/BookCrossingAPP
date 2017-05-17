@@ -2,24 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="134dp">
+    android:layout_height="134dp"
+    xmlns:Android="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="134dp"
+        android:layout_height="136dp"
         android:background="@drawable/white_box">
+        <RelativeLayout
+            android:layout_width="268dp"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="11dp"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/user_image" />
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="11dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/user_image" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView9"
+                android:layout_marginTop="17dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/imageView9"
+                android:layout_toRightOf="@+id/imageView9"
+                android:textSize="14sp"
+                android:text="Yvettemuki" />
+
+            <TextView
+                android:layout_width="26dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/textView9"
+                android:background="@drawable/main_content_level_back"
+                android:layout_alignBottom="@+id/textView9"
+                android:layout_alignTop="@+id/textView9"
+                android:text="21"
+                android:textSize="12sp"
+                android:paddingLeft="6dp"
+
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_toEndOf="@+id/imageView9"
+                android:layout_toRightOf="@+id/imageView9"
+                android:textSize="18sp"
+                android:text="The Great Gatsby" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView10"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:layout_centerHorizontal="true"
+                android:text="Francis Scott Key Fitzgerald" />
+
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/imageView10"
@@ -31,36 +87,7 @@
             android:layout_alignParentTop="true"
             app:srcCompat="@drawable/book_image" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView9"
-            android:layout_marginTop="7dp"
-            android:layout_toEndOf="@+id/imageView9"
-            android:layout_toRightOf="@+id/imageView9"
-            android:text="Yvettemuki" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="26dp"
-            android:layout_marginStart="26dp"
-            android:layout_toEndOf="@+id/imageView9"
-            android:layout_toRightOf="@+id/imageView9"
-            android:text="The Great Gatsby" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView10"
-            android:layout_marginTop="18dp"
-            android:layout_toEndOf="@+id/imageView9"
-            android:layout_toRightOf="@+id/imageView9"
-            android:text="Francis Scott Key Fitzgerald" />
     </RelativeLayout>
 
 </LinearLayout>
