@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yvemuki on 2017/4/29.
  */
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     private String mArgument;
 
     private ViewPager viewPager;
@@ -26,6 +30,10 @@ public class HomeFragment extends Fragment{
     private ImageView[] tips;//提示性点点数组
     private int currentPage = 0;//当前展示的页码
 
+    private List<BookDetail> BookDetailList = new ArrayList<>();
+    private BookDetailAdapter adapter;
+    private SwipeRefreshLayout swipeRefresh;
+
     public static final String ARGUMENT = "argument";
 
     @Override
@@ -34,6 +42,8 @@ public class HomeFragment extends Fragment{
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         initViewPager();
+        initRecyclerView();
+        initSwipe_refresh();
         return view;
     }
 
@@ -64,7 +74,7 @@ public class HomeFragment extends Fragment{
                 img.setBackgroundResource(R.drawable.banner_page);//黑色背景
             }
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(150,25));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(150, 25));
             params.leftMargin = 5;
             params.rightMargin = 5;
             tipsBox.addView(img, params); //把点点添加到容器中
@@ -124,6 +134,45 @@ public class HomeFragment extends Fragment{
                 tips[position].setBackgroundResource(R.drawable.banner_page_now);
             }
         });
+    }
 
+    public void initRecyclerView() {
+        initBookDetailData();
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(LayoutManager);
+        adapter = new BookDetailAdapter(BookDetailList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void initBookDetailData() {
+        for (int i = 0; i < 1; i++) {
+            BookDetail a = new BookDetail("Yvettemuki", "<The Great Gatsby>", "Francis Scott Key Fitzgerald", "", "");
+            BookDetailList.add(a);
+        }
+    }
+
+    public void initSwipe_refresh() {
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshBook();
+            }
+        });
+    }
+
+    public void refreshBook() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ;// do somethings
+
+                initBookDetailData();
+                adapter.notifyDataSetChanged();
+                swipeRefresh.setRefreshing(false);
+            }
+        }).start();
     }
 }
