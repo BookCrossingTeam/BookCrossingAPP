@@ -16,13 +16,12 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
 
     private List<BookDetail> mBookDetailList;
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView username;
         TextView bookName;
         TextView author;
 
-        public ViewHolder(View view)
-        {
+        public ViewHolder(View view) {
             super(view);
             username = (TextView) view.findViewById(R.id.textView9);
             bookName = (TextView) view.findViewById(R.id.textView10);
@@ -35,16 +34,14 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent,int viewType)
-    {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item,parent,false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder,int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         BookDetail bookdetail = mBookDetailList.get(position);
         holder.username.setText(bookdetail.getUsername());
         holder.bookName.setText(bookdetail.getBookName());
@@ -52,8 +49,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mBookDetailList.size();
     }
 }

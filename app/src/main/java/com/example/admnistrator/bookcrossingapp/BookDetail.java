@@ -13,9 +13,8 @@ public class BookDetail {
     private String recommendedReason;
     private int bookImage;
 
-    public BookDetail(String username,String bookName,String author,String press,
-                      String recommendedReason)
-    {
+    public BookDetail(String username, String bookName, String author, String press,
+                      String recommendedReason) {
         this.username = username;
         this.bookName = bookName;
         this.author = author;

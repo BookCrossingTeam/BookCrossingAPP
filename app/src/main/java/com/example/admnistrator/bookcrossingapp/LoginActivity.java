@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void passTrue() {
         new Thread(new Runnable() {
-           @Override
+            @Override
             public void run() {
                 try {
                     OkHttpClient client = new OkHttpClient();
@@ -67,35 +67,32 @@ public class LoginActivity extends AppCompatActivity {
                     Request request = new Request.Builder().url("http://120.24.217.191/sign_in.php").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
-                    if(responseData.equals("true"))
-                    {
+                    if (responseData.equals("true")) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                                SharedPreferences.Editor editor = getSharedPreferences("my_user_info",MODE_PRIVATE).edit();
-                                editor.putString("username",userNameValue);
-                                editor.putString("pass",passwordValue);
+                                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                SharedPreferences.Editor editor = getSharedPreferences("my_user_info", MODE_PRIVATE).edit();
+                                editor.putString("username", userNameValue);
+                                editor.putString("pass", passwordValue);
                                 editor.apply();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         });
-                    }
-                    else
-                    {
+                    } else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-           }
+            }
         }).start();
     }
 }

@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout mTabLayout;
-    private Fragment[]mFragmensts;
+    private Fragment[] mFragmensts;
     private DrawerLayout mDrawerLayout;
     private Button bar_menu;
 
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.bottom_tab_layout);
 
@@ -48,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
                 onTabItemSelected(tab.getPosition());
 
                 //改变Tab 状态
-                for(int i=0;i< mTabLayout.getTabCount();i++){
+                for (int i = 0; i < mTabLayout.getTabCount(); i++) {
                     View view = mTabLayout.getTabAt(i).getCustomView();
                     ImageView icon = (ImageView) view.findViewById(R.id.tab_content_image);
                     TextView text = (TextView) view.findViewById(R.id.tab_content_text);
-                    if(i == tab.getPosition()){
+                    if (i == tab.getPosition()) {
                         //mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabResPressed[i]));
                         icon.setImageResource(DataGenerator.mTabResPressed[i]);
 
-                    }else{
+                    } else {
                         //mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabRes[i]));
                         icon.setImageResource(DataGenerator.mTabRes[i]);
                     }
@@ -84,16 +83,16 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_pose_pressed)));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(getResources().getDrawable(R.drawable.tab_search_pressed)));*/
         // 提供自定义的布局添加Tab
-        for(int i=0;i<5;i++){
-            mTabLayout.addTab(mTabLayout.newTab().setCustomView(DataGenerator.getTabView(this,i)));
+        for (int i = 0; i < 5; i++) {
+            mTabLayout.addTab(mTabLayout.newTab().setCustomView(DataGenerator.getTabView(this, i)));
         }
 
 
     }
 
-    private void onTabItemSelected(int position){
+    private void onTabItemSelected(int position) {
         Fragment fragment = null;
-        switch (position){
+        switch (position) {
             case 0:
                 fragment = mFragmensts[0];
                 break;
@@ -110,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 fragment = mFragmensts[4];
         }
-        if(fragment!=null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.home_container,fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.home_container, fragment).commit();
         }
     }
 

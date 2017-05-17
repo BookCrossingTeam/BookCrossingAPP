@@ -31,6 +31,7 @@ import okhttp3.Response;
  */
 
 public class HomeFragment extends Fragment {
+    private static final String TAG = "HomeFragment";
     private String mArgument;
 
     private ViewPager viewPager;
@@ -44,16 +45,20 @@ public class HomeFragment extends Fragment {
     private BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
 
-    private long lastTime;
+    private long lastTime = 0L;
 
     public static final String ARGUMENT = "argument";
+
+    public HomeFragment() {
+        super();
+        initBookDetailData();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        lastTime = 0L;
         initViewPager();
         initRecyclerView();
         initSwipe_refresh();
@@ -81,13 +86,13 @@ public class HomeFragment extends Fragment {
             ImageView img = new ImageView(getContext()); //实例化一个点点
             img.setLayoutParams(new LinearLayout.LayoutParams(10, 10));
             tips[i] = img;
-            if (i == 0) {
+            if (i == currentPage) {
                 img.setBackgroundResource(R.drawable.banner_page_now);//蓝色背景
             } else {
                 img.setBackgroundResource(R.drawable.banner_page);//黑色背景
             }
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(150, 25));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(100, 15));
             params.leftMargin = 5;
             params.rightMargin = 5;
             tipsBox.addView(img, params); //把点点添加到容器中
@@ -150,7 +155,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void initRecyclerView() {
-        initBookDetailData();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(LayoutManager);
@@ -160,14 +164,14 @@ public class HomeFragment extends Fragment {
 
     public void initBookDetailData() {
         for (int i = 0; i < 1; i++) {
-            BookDetail a = new BookDetail("Yvettemuki", "<The Great Gatsby>", "Francis Scott Key Fitzgerald", "", "");
+            BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "");
             BookDetailList.add(a);
         }
     }
 
     public void initSwipe_refresh() {
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimaryDark);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -183,8 +187,8 @@ public class HomeFragment extends Fragment {
                 ;// do somethings
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime+"").build();
-                    lastTime = new Date().getTime()/1000L;
+                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime + "").build();
+                    lastTime = new Date().getTime() / 1000L;
                     Request request = new Request.Builder().url("http://120.24.217.191/queryPose.php").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
@@ -205,21 +209,18 @@ public class HomeFragment extends Fragment {
         }).start();
     }
 
-    public void handleResponseData(final String responseData)
-    {
+    public void handleResponseData(final String responseData) {
         try {
             JSONArray jsonArray = new JSONArray(responseData);
-            for(int i=0;i<jsonArray.length();i++)
-            {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String username = jsonObject.getString("username");
                 String bookName = jsonObject.getString("bookName");
                 String author = jsonObject.getString("author");
-                BookDetail a = new BookDetail(username, "《"+bookName+"》", author, "", "");
-                BookDetailList.add(0,a);
+                BookDetail a = new BookDetail(username, "《" + bookName + "》", author, "", "");
+                BookDetailList.add(0, a);
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -16,16 +16,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-
 public class SignUpActivity extends AppCompatActivity {
-    private static final String TAG="SignUpActivity";
+    private static final String TAG = "SignUpActivity";
     private EditText userName;
     private EditText passowrd;
     private EditText telephone;
     private EditText identicode;
     private ImageView btn_signup;
     private ImageView confirm;
-    private String userNameValue, passwordValue,telephoneValue,identicodeValue,code;
+    private String userNameValue, passwordValue, telephoneValue, identicodeValue, code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 telephoneValue = telephone.getText().toString();
-                if(telephoneValue.equals(""))
-                {
-                    Toast.makeText(SignUpActivity.this,"请填写手机号",Toast.LENGTH_SHORT).show();
-                    return ;
+                if (telephoneValue.equals("")) {
+                    Toast.makeText(SignUpActivity.this, "请填写手机号", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 sentmagess();
             }
@@ -59,108 +57,97 @@ public class SignUpActivity extends AppCompatActivity {
                 passwordValue = passowrd.getText().toString();
                 telephoneValue = telephone.getText().toString();
                 identicodeValue = identicode.getText().toString();
-                if(userNameValue.equals("") || passwordValue.equals("") || telephoneValue.equals("") || identicodeValue.equals(""))
-                {
-                    Toast.makeText(SignUpActivity.this,"请填写完整",Toast.LENGTH_SHORT).show();
-                    return ;
+                if (userNameValue.equals("") || passwordValue.equals("") || telephoneValue.equals("") || identicodeValue.equals("")) {
+                    Toast.makeText(SignUpActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                if(identicodeValue.equals(code))
-                {
+                if (identicodeValue.equals(code)) {
                     sent_info();
-                    Toast.makeText(SignUpActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else
-                {
-                    Toast.makeText(SignUpActivity.this,"验证码不正确",Toast.LENGTH_SHORT).show();
-                    return ;
+                } else {
+                    Toast.makeText(SignUpActivity.this, "验证码不正确", Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
         });
     }
 
-    public void sent_info()
-    {
+    public void sent_info() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("telephone",telephoneValue).add("userName",userNameValue).add("password",passwordValue).build();
+                    RequestBody requestBody = new FormBody.Builder().add("telephone", telephoneValue).add("userName", userNameValue).add("password", passwordValue).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/sign_up.php").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
     }
 
-    public void sentmagess()
-    {
+    public void sentmagess() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     OkHttpClient client = new OkHttpClient();
                     code = getcode();
-                    RequestBody requestBody = new FormBody.Builder().add("number",telephoneValue).add("code",code).build();
+                    RequestBody requestBody = new FormBody.Builder().add("number", telephoneValue).add("code", code).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/sentmagess.php").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
-                    if(SentOk(responseData))
+                    if (SentOk(responseData))
                         dis_sentmagess_btn();
                     else
                         showResponse(responseData);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
     }
 
-    public boolean SentOk(String jsonData)
-    {
-        try{
+    public boolean SentOk(String jsonData) {
+        try {
             JSONObject jsonObject = new JSONObject(jsonData);
             boolean success = jsonObject.getBoolean("success");
-            if(success)
+            if (success)
                 return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public String getcode()
-    {
+    public String getcode() {
         String num = "";
-        for(int i=0;i<6;i++)
-        {
-            int n = (int)(Math.random() *10);
+        for (int i = 0; i < 6; i++) {
+            int n = (int) (Math.random() * 10);
             num = num + n;
         }
         return num;
     }
 
-    public void showResponse(final String responseData)
-    {
+    public void showResponse(final String responseData) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(SignUpActivity.this,responseData,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, responseData, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void dis_sentmagess_btn()
-    {
+    public void dis_sentmagess_btn() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(SignUpActivity.this,"短信发送成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "短信发送成功", Toast.LENGTH_SHORT).show();
                 //identicode.setText(code);
                 confirm.setVisibility(View.GONE);
             }
