@@ -217,7 +217,9 @@ public class HomeFragment extends Fragment {
                 String username = jsonObject.getString("username");
                 String bookName = jsonObject.getString("bookName");
                 String author = jsonObject.getString("author");
-                BookDetail a = new BookDetail(username, "《" + bookName + "》", author, "", "");
+                String press = jsonObject.getString("press");
+                String recommendedReason = jsonObject.getString("recommendedReason");
+                BookDetail a = new BookDetail(username, "《" + bookName + "》", author, press, recommendedReason);
                 BookDetailList.add(0, a);
             }
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.example.admnistrator.bookcrossingapp;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,17 @@ import java.util.List;
 public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.ViewHolder> {
 
     private List<BookDetail> mBookDetailList;
+    private static final String TAG = "BookDetailAdapter";
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView username;
         TextView bookName;
         TextView author;
+        View bookView;
 
         public ViewHolder(View view) {
             super(view);
+            bookView = view;
             username = (TextView) view.findViewById(R.id.textView9);
             bookName = (TextView) view.findViewById(R.id.textView10);
             author = (TextView) view.findViewById(R.id.textView11);
@@ -35,8 +39,23 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
+        //ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.bookView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                BookDetail bookDetail = mBookDetailList.get(position);
+                Intent intent = new Intent(v.getContext(),ExchangeBookBetailsActivity.class);
+                intent.putExtra("Username",bookDetail.getUsername());
+                intent.putExtra("BookName",bookDetail.getBookName());
+                intent.putExtra("Author",bookDetail.getAuthor());
+                intent.putExtra("Press",bookDetail.getPress());
+                intent.putExtra("RecommendedReason",bookDetail.getRecommendedReason());
+                view.getContext().startActivity(intent);
+            }
+        });
         return holder;
     }
 
