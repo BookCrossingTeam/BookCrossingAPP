@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class FriendFragment extends Fragment {
-    public static final String ARGUMENT = "argument";
+    public static final String ARGUMENT = "FriendFragment";
     private String mArgument;
     private View view;
     private FriendAdapter adapter;

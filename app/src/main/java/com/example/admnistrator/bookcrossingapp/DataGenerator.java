@@ -20,8 +20,8 @@ public class DataGenerator {
         fragments[0] = HomeFragment.newInstance(from);
         fragments[1] = FriendFragment.newInstance(from);
         fragments[2] = PoseFragment.newInstance(from);
-        fragments[3] = FriendFragment.newInstance(from);
-        fragments[4] = FriendFragment.newInstance(from);
+        fragments[3] = MeFragment.newInstance(from);  //目前先将还没实现的页面都置为MeFragment
+        fragments[4] = MeFragment.newInstance(from);
         return fragments;
     }
 
