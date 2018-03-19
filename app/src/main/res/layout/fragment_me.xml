@@ -47,5 +47,122 @@
             android:textSize="16sp"
             android:text="21 books"/>
     </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="50dp">
+                <Button
+                    android:id="@+id/me_button_posing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:layout_marginBottom="30dp"
+                    android:text="     posing"
+                    android:drawableLeft="@drawable/me_icon_posing"
+                    android:textSize="16dp"
+                    android:textAllCaps="false"
+                    style="?android:attr/borderlessButtonStyle"
+                    />
+                <Button
+                    android:id="@+id/me_button_friends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:layout_marginBottom="30dp"
+                    android:text="     friends"
+                    android:drawableLeft="@drawable/me_icon_friends"
+                    android:textSize="16dp"
+                    android:textAllCaps="false"
+                    style="?android:attr/borderlessButtonStyle"
+                    />
+                <Button
+                    android:id="@+id/me_button_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:text="    settings"
+                    android:drawableLeft="@drawable/me_icon_settings"
+                    android:textSize="16dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="5dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1.5dp"
+            android:layout_height="200dp"
+            android:background="#b4e24f"/>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+                <Button
+                    android:id="@+id/me_button_swaping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:layout_marginBottom="30dp"
+                    android:text="swaping    "
+                    android:drawableRight="@drawable/me_icon_swaping"
+                    android:textSize="16dp"
+                    android:textAllCaps="false"
+                    style="?android:attr/borderlessButtonStyle" />
+                <Button
+                    android:id="@+id/me_button_records"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:layout_marginBottom="30dp"
+                    android:text="records     "
+                    android:drawableRight="@drawable/me_icon_records"
+                    android:textSize="16dp"
+                    android:textAllCaps="false"
+                    style="?android:attr/borderlessButtonStyle" />
+
+                <Button
+                    android:id="@+id/me_button_circles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:text="records     "
+                    android:drawableRight="@drawable/me_icon_circles"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAllCaps="false"
+                    style="?android:attr/borderlessButtonStyle" />
+
+
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
