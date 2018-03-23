@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder().add("userName", userNameValue).add("password", passwordValue).build();
-                    Request request = new Request.Builder().url("http://120.24.217.191/sign_in.php").post(requestBody).build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sign_in").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     if (responseData.equals("true")) {

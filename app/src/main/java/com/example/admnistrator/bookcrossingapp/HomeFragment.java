@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime + "").build();
                     lastTime = new Date().getTime() / 1000L;
-                    Request request = new Request.Builder().url("http://120.24.217.191/queryPose.php").post(requestBody).build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     handleResponseData(responseData);

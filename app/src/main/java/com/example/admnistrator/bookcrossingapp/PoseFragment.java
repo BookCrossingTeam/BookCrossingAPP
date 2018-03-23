@@ -86,7 +86,7 @@ public class PoseFragment extends Fragment {
                 try {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder().add("username", username).add("bookName", bookNameValue).add("author", authorValue).add("press", pressValue).add("recommendedReason", recommendedReasonValue).build();
-                    Request request = new Request.Builder().url("http://120.24.217.191/sendPose.php").post(requestBody).build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     if (responseData.equals("true")) {
