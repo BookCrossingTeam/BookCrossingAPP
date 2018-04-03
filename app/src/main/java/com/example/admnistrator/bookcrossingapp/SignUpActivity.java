@@ -1,10 +1,14 @@
 package com.example.admnistrator.bookcrossingapp;
 
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -25,11 +29,14 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageView btn_signup;
     private ImageView confirm;
     private String userNameValue, passwordValue, telephoneValue, identicodeValue, code;
+    private TextView tv_agreement;
+    private CheckBox checkbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
 
         userName = (EditText) findViewById(R.id.editText);
         passowrd = (EditText) findViewById(R.id.editText2);
@@ -37,6 +44,9 @@ public class SignUpActivity extends AppCompatActivity {
         identicode = (EditText) findViewById(R.id.editText4);
         btn_signup = (ImageView) findViewById(R.id.imageView6);
         confirm = (ImageView) findViewById(R.id.imageView7);
+        tv_agreement = ((TextView) findViewById(R.id.TextView_agreement));
+        tv_agreement.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        checkbox = (CheckBox) findViewById(R.id.checkBox);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +71,10 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                if (checkbox.isChecked()==false) {
+                    Toast.makeText(SignUpActivity.this, "请阅读协议", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (identicodeValue.equals(code)) {
                     sent_info();
                     Toast.makeText(SignUpActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
@@ -70,6 +83,14 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "验证码不正确", Toast.LENGTH_SHORT).show();
                     return;
                 }
+            }
+        });
+
+        tv_agreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this,AgreementActivity.class);
+                startActivity(intent);
             }
         });
     }
