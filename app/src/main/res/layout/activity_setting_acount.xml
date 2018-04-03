@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        tools:layout_editor_absoluteX="180dp"
+        android:gravity="center_horizontal"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageView
+            android:id="@+id/me_icon_personIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/me_icon_person" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/line4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#333333"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        />
+
+    <Button
+        android:id="@+id/btn_update_icon"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/white_box"
+        android:text="编辑头像"
+        android:textColor="@color/contents_text"
+        android:textSize="24sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_update_password"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/white_box"
+        android:text="修改密码"
+        android:textColor="@color/contents_text"
+        android:textSize="24sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+</LinearLayout>

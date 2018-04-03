@@ -39,8 +39,11 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ExchangeBookBetailsActivity" />
         <activity android:name=".FriendChatActivity" />
-        <activity android:name=".ForgetActivity" />
-        <activity android:name=".AgreementActivity"></activity>
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".AgreementActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".SettingAcountActivity" />
+        <activity android:name=".UpdatePasswordActivity"></activity>
     </application>
 
 </manifest>

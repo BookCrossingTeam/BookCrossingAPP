@@ -15,8 +15,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ForgetActivity extends AppCompatActivity {
-    private static final String TAG = "ForgetActivity";
+public class ForgetPasswordActivity extends AppCompatActivity {
+    private static final String TAG = "ForgetPasswordActivity";
 
     private EditText passowrd1;
     private EditText passowrd2;
@@ -29,7 +29,7 @@ public class ForgetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget);
+        setContentView(R.layout.activity_forget_password);
         passowrd1 = (EditText) findViewById(R.id.editText14);
         passowrd2 = (EditText) findViewById(R.id.editText13);
         telephone = (EditText) findViewById(R.id.editText11);
@@ -41,7 +41,7 @@ public class ForgetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 telephoneValue = telephone.getText().toString();
                 if (telephoneValue.equals("")) {
-                    Toast.makeText(ForgetActivity.this, "请填写手机号", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "请填写手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 sentmagess();
@@ -55,15 +55,15 @@ public class ForgetActivity extends AppCompatActivity {
                 telephoneValue = telephone.getText().toString();
                 identicodeValue = identicode.getText().toString();
                 if (passwordValue1.equals(passwordValue2) == false) {
-                    Toast.makeText(ForgetActivity.this, "请两次密码输入一致", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "请两次密码输入一致", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (identicodeValue.equals(code)) {
                     sent_info();
-                    Toast.makeText(ForgetActivity.this, "密码重置成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "密码重置成功", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(ForgetActivity.this, "验证码不正确", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "验证码不正确", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -131,7 +131,7 @@ public class ForgetActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ForgetActivity.this, responseData, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgetPasswordActivity.this, responseData, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -140,7 +140,7 @@ public class ForgetActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ForgetActivity.this, "短信发送成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgetPasswordActivity.this, "短信发送成功", Toast.LENGTH_SHORT).show();
                 //identicode.setText(code);
                 confirm.setVisibility(View.GONE);
             }

@@ -72,6 +72,13 @@ public class MeFragment extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
             }
         });
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static MeFragment newInstance(String from) {
