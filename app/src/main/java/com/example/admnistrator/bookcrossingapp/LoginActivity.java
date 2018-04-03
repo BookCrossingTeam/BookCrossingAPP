@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView btn_login;
     private String userNameValue, passwordValue;
     private TextView btn_signup;
+    private TextView btn_forget;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,9 @@ public class LoginActivity extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.editText);
         passowrd = (EditText) findViewById(R.id.editText2);
         btn_login = (ImageView) findViewById(R.id.imageButton);
+
         btn_signup = (TextView) findViewById(R.id.textVIew3);
+        btn_forget = (TextView) findViewById(R.id.textView23);
 
 
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +55,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgetActivity.class);
                 startActivity(intent);
             }
         });
