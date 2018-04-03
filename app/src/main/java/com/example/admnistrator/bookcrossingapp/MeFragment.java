@@ -86,7 +86,7 @@ public class MeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 扫描二维码/条码回传
-        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == -1) {
             if (data != null) {
                 String content = data.getStringExtra(Constant.CODED_CONTENT);
                 Toast.makeText(getActivity(), "扫描结果为：" + content, Toast.LENGTH_SHORT).show();
