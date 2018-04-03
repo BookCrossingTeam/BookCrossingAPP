@@ -75,18 +75,18 @@
                     android:textAllCaps="false"
                     style="?android:attr/borderlessButtonStyle"
                     />
+
                 <Button
-                    android:id="@+id/me_button_friends"
+                    android:id="@+id/me_button_reviews"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
                     android:layout_marginBottom="30dp"
-                    android:text="     reviews"
+                    android:background="#fff"
                     android:drawableLeft="@drawable/me_icon_friends"
-                    android:textSize="16dp"
+                    android:text="     reviews"
                     android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle"
-                    />
+                    android:textSize="16dp" />
                 <Button
                     android:id="@+id/me_button_settings"
                     android:layout_width="wrap_content"
@@ -143,16 +143,16 @@
                     style="?android:attr/borderlessButtonStyle" />
 
                 <Button
-                    android:id="@+id/me_button_circles"
+                    android:id="@+id/me_button_wanting"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:text="wanting     "
-                    android:drawableRight="@drawable/me_icon_circles"
-                    android:textSize="16dp"
                     android:layout_marginBottom="5dp"
+                    android:background="#fff"
+                    android:drawableRight="@drawable/me_icon_circles"
+                    android:text="wanting     "
                     android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle" />
+                    android:textSize="16dp" />
 
 
 
