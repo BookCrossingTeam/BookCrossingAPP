@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admnistrator.bookcrossingapp.SettingActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,11 +14,10 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#333333"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            />
+            android:background="#333333" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,17 +37,15 @@
             android:id="@+id/line4"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#333333"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            />
+            android:background="#333333" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            >
+            android:orientation="vertical">
 
         </LinearLayout>
 
@@ -55,66 +53,61 @@
             android:id="@+id/btn_setting_account"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/white_box"
             android:text="账号设置"
             android:textColor="@color/contents_text"
-            android:textSize="24sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/btn_setting_feedback"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/white_box"
             android:text="反馈建议"
             android:textColor="@color/contents_text"
-            android:textSize="24sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/btn_setting_software"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/white_box"
             android:text="软件设置"
             android:textColor="@color/contents_text"
-            android:textSize="24sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/btn_setting_help"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/white_box"
             android:text="帮助"
             android:textColor="@color/contents_text"
-            android:textSize="24sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/btn_log_off"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/white_box"
             android:text="退出登录"
             android:textColor="@color/contents_text"
-            android:textSize="24sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
+            android:textSize="24sp" />
 
 
     </LinearLayout>

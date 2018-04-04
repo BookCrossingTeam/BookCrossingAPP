@@ -1,80 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/me_icon_personIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="30dp"
             android:layout_gravity="center"
-            android:src="@drawable/me_icon_person"/>
+            android:layout_marginTop="30dp"
+            android:src="@drawable/me_icon_person" />
+
         <TextView
             android:id="@+id/me_text_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             android:text="until"
-            android:textSize="12dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="12dp" />
+
         <TextView
             android:id="@+id/me_info_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="2018.3.19"
             android:textColor="#000"
-            android:textSize="16sp"
-            android:text="2018.3.19"/>
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/me_text_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="you have exchanged"
             android:textColor="#000"
-            android:textSize="12sp"
-            android:text="you have exchanged"/>
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/me_info_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="21 books"
             android:textColor="#000"
-            android:textSize="16sp"
-            android:text="21 books"/>
+            android:textSize="16sp" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="50dp">
+                android:layout_marginLeft="50dp"
+                android:orientation="vertical">
+
                 <Button
                     android:id="@+id/me_button_posing"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
                     android:layout_marginBottom="30dp"
-                    android:text="     posing"
+                    android:background="#fff"
                     android:drawableLeft="@drawable/me_icon_posing"
-                    android:textSize="16dp"
+                    android:text="     posing"
                     android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle"
-                    />
+                    android:textSize="16dp" />
 
                 <Button
                     android:id="@+id/me_button_reviews"
@@ -87,18 +96,18 @@
                     android:text="     reviews"
                     android:textAllCaps="false"
                     android:textSize="16dp" />
+
                 <Button
                     android:id="@+id/me_button_settings"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:text="    settings"
-                    android:drawableLeft="@drawable/me_icon_settings"
-                    android:textSize="16dp"
-                    android:textAllCaps="false"
                     android:layout_marginBottom="5dp"
-                    style="?android:attr/borderlessButtonStyle"
-                    />
+                    android:background="#fff"
+                    android:drawableLeft="@drawable/me_icon_settings"
+                    android:text="    settings"
+                    android:textAllCaps="false"
+                    android:textSize="16dp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -106,41 +115,44 @@
         <View
             android:layout_width="1.5dp"
             android:layout_height="200dp"
-            android:background="#b4e24f"/>
+            android:background="#b4e24f" />
 
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
+
                 <Button
                     android:id="@+id/me_button_swaping"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
                     android:layout_marginBottom="30dp"
-                    android:text="swaping    "
+                    android:background="#fff"
                     android:drawableRight="@drawable/me_icon_swaping"
-                    android:textSize="16dp"
+                    android:text="swaping    "
                     android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle" />
+                    android:textSize="16dp" />
+
                 <Button
                     android:id="@+id/me_button_records"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
                     android:layout_marginBottom="30dp"
-                    android:text="records     "
+                    android:background="#fff"
                     android:drawableRight="@drawable/me_icon_records"
-                    android:textSize="16dp"
+                    android:text="records     "
                     android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle" />
+                    android:textSize="16dp" />
 
                 <Button
                     android:id="@+id/me_button_wanting"
@@ -153,10 +165,6 @@
                     android:text="wanting     "
                     android:textAllCaps="false"
                     android:textSize="16dp" />
-
-
-
-
 
 
             </LinearLayout>

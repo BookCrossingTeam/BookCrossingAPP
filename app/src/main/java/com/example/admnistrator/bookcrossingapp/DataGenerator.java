@@ -13,14 +13,13 @@ import android.widget.ImageView;
 public class DataGenerator {
     public static final int[] mTabRes = new int[]{R.drawable.tab_home_pressed, R.drawable.tab_friend_pressed, R.drawable.tab_pose_pressed, R.drawable.tab_search_pressed, R.drawable.tab_me_pressed};
     public static final int[] mTabResPressed = new int[]{R.drawable.tab_home_hover, R.drawable.tab_friend_hover, R.drawable.tab_pose_hover, R.drawable.tab_search_hover, R.drawable.tab_me_hover};
-    //public static final String []mTabTitle = new String[]{"首页","发现","关注","我的"};
 
     public static Fragment[] getFragments(String from) {
         Fragment fragments[] = new Fragment[5];
         fragments[0] = HomeFragment.newInstance(from);
         fragments[1] = FriendFragment.newInstance(from);
         fragments[2] = PoseFragment.newInstance(from);
-        fragments[3] = MeFragment.newInstance(from);  //目前先将还没实现的页面都置为MeFragment
+        fragments[3] = SearchFragment.newInstance(from);
         fragments[4] = MeFragment.newInstance(from);
         return fragments;
     }

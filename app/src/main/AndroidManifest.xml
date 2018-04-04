@@ -43,7 +43,9 @@
         <activity android:name=".AgreementActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".SettingAcountActivity" />
-        <activity android:name=".UpdatePasswordActivity"></activity>
+        <activity android:name=".UpdatePasswordActivity" />
+        <activity android:name=".SearchFragment" />
+        <activity android:name=".SearchDetailActivity" />
     </application>
 
 </manifest>

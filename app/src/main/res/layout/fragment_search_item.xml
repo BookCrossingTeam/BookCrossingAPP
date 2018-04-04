@@ -2,20 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/friend_item_layout"
     android:layout_width="wrap_content"
-    android:layout_height="72dp"
+    android:layout_height="50dp"
     android:background="@drawable/friend_list_item_bg"
     android:orientation="horizontal">
 
+
     <ImageView
-        android:id="@+id/friend_item_pic"
+        android:id="@+id/search_item_pic"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="20sp" />
+        android:layout_marginRight="20sp"
+        android:src="@android:drawable/ic_menu_search" />
 
     <TextView
-        android:id="@+id/friend_item_name"
+        android:id="@+id/search_item_contnet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

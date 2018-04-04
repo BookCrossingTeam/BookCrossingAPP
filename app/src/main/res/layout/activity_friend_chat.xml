@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="#fff">
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/title_friend">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="CHAT"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="#000"/>
+            android:text="CHAT"
+            android:textColor="#000"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -25,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -33,21 +36,22 @@
         <EditText
             android:id="@+id/input_text"
             android:layout_width="320dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
-            android:layout_height="36dp"
             android:background="@drawable/friend_chat_input"
-            android:padding="8dp"
             android:hint="Type something here"
-            android:maxLines="2"/>
+            android:maxLines="2"
+            android:padding="8dp" />
+
         <Button
             android:id="@+id/send"
-            android:layout_marginTop="6dp"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginRight="10dp"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="6dp"
             android:background="@drawable/friend_chat_send" />
 
     </LinearLayout>
