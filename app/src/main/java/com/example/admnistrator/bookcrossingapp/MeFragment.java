@@ -1,18 +1,20 @@
 package com.example.admnistrator.bookcrossingapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yzq.zxinglibrary.android.CaptureActivity;
 import com.yzq.zxinglibrary.bean.ZxingConfig;
 import com.yzq.zxinglibrary.common.Constant;
-
+import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by yvemuki on 2018/3/13.
  */
@@ -27,10 +29,12 @@ public class MeFragment extends Fragment {
     private Button btnRecords;
     private Button btnSetting;
     private Button btnWanting;
+    private TextView tvUsername;
+    private String username;
+
     //private FriendAdapter adapter;
     //private List<Friend> friendList = new ArrayList<>();
     private int REQUEST_CODE_SCAN = 111; //扫码
-    private int RESULT_OK = 1;//扫码
 
     public MeFragment(){
         super();
@@ -43,9 +47,20 @@ public class MeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_me, container, false);
         //initMeRecyclerView();
         initButton();
+        initData();
         return view;
     }
 
+    //初始化用户名
+    private void initData() {
+        //显示用户名
+        SharedPreferences pref = getActivity().getSharedPreferences("my_user_info", MODE_PRIVATE);
+        username = pref.getString("username", "");
+        tvUsername.setText(username);
+        /////时间、头像、书籍待完善
+    }
+
+    //初始化控件
     private void initButton() {
         btnPosing = view.findViewById(R.id.me_button_posing);
         btnSwaping = view.findViewById(R.id.me_button_swaping);
@@ -53,6 +68,8 @@ public class MeFragment extends Fragment {
         btnRecords = view.findViewById(R.id.me_button_records);
         btnSetting = view.findViewById(R.id.me_button_settings);
         btnWanting = view.findViewById(R.id.me_button_wanting);
+        tvUsername = view.findViewById(R.id.me_text_1);
+
         btnPosing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

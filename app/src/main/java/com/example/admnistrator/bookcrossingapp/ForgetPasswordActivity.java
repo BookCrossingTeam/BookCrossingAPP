@@ -18,28 +18,31 @@ import okhttp3.Response;
 public class ForgetPasswordActivity extends AppCompatActivity {
     private static final String TAG = "ForgetPasswordActivity";
 
-    private EditText passowrd1;
-    private EditText passowrd2;
-    private EditText telephone;
-    private EditText identicode;
-    private ImageView btn_resetpass;
-    private ImageView confirm;
-    private String passwordValue1, passwordValue2, telephoneValue, identicodeValue, code;
+    private EditText editNewpassowrd;
+    private EditText editConfirmpassowrd;
+    private EditText editTelephone;
+    private EditText editIdenticode;
+    private ImageView imageSummit;
+    private ImageView imageConfirm;
+    private String newPasswordValue, confirmPasswordValue, telephoneValue, identicodeValue, code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
-        passowrd1 = (EditText) findViewById(R.id.editText14);
-        passowrd2 = (EditText) findViewById(R.id.editText13);
-        telephone = (EditText) findViewById(R.id.editText11);
-        identicode = (EditText) findViewById(R.id.editText12);
-        btn_resetpass = (ImageView) findViewById(R.id.imageView15);
-        confirm = (ImageView) findViewById(R.id.imageView16);
-        confirm.setOnClickListener(new View.OnClickListener() {
+        //初始化控件
+        editNewpassowrd = (EditText) findViewById(R.id.edit_newPassword_forget);
+        editConfirmpassowrd = (EditText) findViewById(R.id.edit_confirmPassord_forget);
+        editTelephone = (EditText) findViewById(R.id.edit_telephone_forget);
+        editIdenticode = (EditText) findViewById(R.id.edit_code_forget);
+        imageSummit = (ImageView) findViewById(R.id.image_forgetPassword_summit);
+        imageConfirm = (ImageView) findViewById(R.id.image_getCode);
+
+        //提交修改
+        imageConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                telephoneValue = telephone.getText().toString();
+                telephoneValue = editTelephone.getText().toString();
                 if (telephoneValue.equals("")) {
                     Toast.makeText(ForgetPasswordActivity.this, "请填写手机号", Toast.LENGTH_SHORT).show();
                     return;
@@ -47,14 +50,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 sentmagess();
             }
         });
-        btn_resetpass.setOnClickListener(new View.OnClickListener() {
+        imageSummit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                passwordValue1 = passowrd1.getText().toString();
-                passwordValue2 = passowrd2.getText().toString();
-                telephoneValue = telephone.getText().toString();
-                identicodeValue = identicode.getText().toString();
-                if (passwordValue1.equals(passwordValue2) == false) {
+                newPasswordValue = editNewpassowrd.getText().toString();
+                confirmPasswordValue = editConfirmpassowrd.getText().toString();
+                telephoneValue = editTelephone.getText().toString();
+                identicodeValue = editIdenticode.getText().toString();
+                if (newPasswordValue.equals(confirmPasswordValue) == false) {
                     Toast.makeText(ForgetPasswordActivity.this, "请两次密码输入一致", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -70,23 +73,30 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         });
     }
 
-    public void sent_info() { /**不知道怎么更新
-     new Thread(new Runnable() {
-    @Override
-    public void run() {
-    try {
-    OkHttpClient client = new OkHttpClient();
+    ////////待实现
+    //后台更新密码，同修改密码界面
+    //向服务器发送请求修改密码
+    public void sent_info() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    /*
+                    待实现，将添加改成更新
+                    RequestBody requestBody = new FormBody.Builder().add("telephone", telephoneValue).add("password", passwordValue1).build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/sign_up.php").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    */
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
-    RequestBody requestBody = new FormBody.Builder().add("telephone", telephoneValue) .add("password", passwordValue1).build();
-    Request request = new Request.Builder().url("http://120.24.217.191/sign_up.php").post(requestBody).build();
-    Response response = client.newCall(request).execute();
-    String responseData = response.body().string();
-    } catch (Exception e) {
-    e.printStackTrace();
-    }
-    }
-    }).start();*/
-    }
+    //发送手机验证码
     public void sentmagess() {
         new Thread(new Runnable() {
             @Override
@@ -108,6 +118,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     public String getcode() {
         String num = "";
         for (int i = 0; i < 6; i++) {
@@ -116,6 +127,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         }
         return num;
     }
+
     public boolean SentOk(String jsonData) {
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
@@ -127,6 +139,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         }
         return false;
     }
+
     public void showResponse(final String responseData) {
         runOnUiThread(new Runnable() {
             @Override
@@ -142,7 +155,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void run() {
                 Toast.makeText(ForgetPasswordActivity.this, "短信发送成功", Toast.LENGTH_SHORT).show();
                 //identicode.setText(code);
-                confirm.setVisibility(View.GONE);
+                imageConfirm.setVisibility(View.GONE);
             }
         });
     }
