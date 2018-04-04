@@ -69,12 +69,18 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
                 break;
-            case R.id.btn_choose:
-                //手动上传按钮
+            case R.id.btn_share_book:
+                //手动上传已有按钮
                 //Toast.makeText(this, "手动上传", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(SettingActivity.this, MainActivity.class);
                 intent2.putExtra("fragmentid",3);
                 startActivity(intent2);
+                break;
+            case R.id.btn_want_book:
+                //手动上传想要按钮
+                //Toast.makeText(this, "手动上传", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(SettingActivity.this, PosingWantingActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.btn_cancel:
                 //取消按钮
@@ -90,7 +96,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 R.layout.bottom_dialog, null);
         //初始化视图
         root.findViewById(R.id.btn_scanning).setOnClickListener(this);
-        root.findViewById(R.id.btn_choose).setOnClickListener(this);
+        root.findViewById(R.id.btn_share_book).setOnClickListener(this);
+        root.findViewById(R.id.btn_want_book).setOnClickListener(this);
         root.findViewById(R.id.btn_cancel).setOnClickListener(this);
         mCameraDialog.setContentView(root);
         Window dialogWindow = mCameraDialog.getWindow();

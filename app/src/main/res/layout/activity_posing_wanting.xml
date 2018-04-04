@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    tools:context="com.example.admnistrator.bookcrossingapp.PosingWantingActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.014" />
 
     <EditText
-        android:id="@+id/edit_posing_shared_name"
+        android:id="@+id/edit_posing_wanting_name"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.172" />
 
     <EditText
-        android:id="@+id/edit_posing_shared_author"
+        android:id="@+id/edit_posing_wanting_author"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -99,7 +99,7 @@
         app:layout_constraintVertical_bias="0.337" />
 
     <EditText
-        android:id="@+id/edit_posing_shared_press"
+        android:id="@+id/edit_posing_wanting_press"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -117,45 +117,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.417" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:paddingBottom="16dp"
-        android:text="recommended reason"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.566" />
-
-    <EditText
-        android:id="@+id/edit_posing_shared_recommend"
-        android:layout_width="273dp"
-        android:layout_height="163dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/pose_input"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.821"
-        tools:layout_editor_absoluteY="328dp" />
 
     <ImageView
-        android:id="@+id/btn_posing_shared"
+        android:id="@+id/btn_posing_wanting"
         android:layout_width="175dp"
         android:layout_height="46dp"
         android:layout_marginBottom="8dp"
@@ -172,7 +136,7 @@
         app:srcCompat="@drawable/pose_button_pose" />
 
     <ImageView
-        android:id="@+id/img_posing_shared_pic"
+        android:id="@+id/img_posing_wanting_pic"
         android:layout_width="142dp"
         android:layout_height="210dp"
         android:layout_marginBottom="1dp"
@@ -187,6 +151,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.024"
         app:srcCompat="@drawable/pose_pic" />
-
-
 </android.support.constraint.ConstraintLayout>

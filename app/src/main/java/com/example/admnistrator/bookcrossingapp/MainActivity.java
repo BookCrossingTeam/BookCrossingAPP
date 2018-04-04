@@ -38,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //从help跳转回来，后期改成在tab中点击，现在只实现跳转到主页
     private void initPose() {
         int id = getIntent().getIntExtra("fragmentid", 0);
         if (id == 3) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.home_container,new PoseFragment())
+                    .replace(R.id.home_container, new PoseFragment())
                     .addToBackStack(null)
                     .commit();
         }

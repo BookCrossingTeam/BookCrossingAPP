@@ -56,11 +56,11 @@ public class PoseFragment extends Fragment {
     }
 
     public void initViewPager() {
-        bookName = (EditText) view.findViewById(R.id.editText5);
-        author = (EditText) view.findViewById(R.id.editText6);
-        press = (EditText) view.findViewById(R.id.editText7);
-        recommendedReason = (EditText) view.findViewById(R.id.editText8);
-        pose_btn = (ImageView) view.findViewById(R.id.imageView3);
+        bookName = (EditText) view.findViewById(R.id.edit_posing_shared_name);
+        author = (EditText) view.findViewById(R.id.edit_posing_shared_author);
+        press = (EditText) view.findViewById(R.id.edit_posing_shared_press);
+        recommendedReason = (EditText) view.findViewById(R.id.edit_posing_shared_recommend);
+        pose_btn = (ImageView) view.findViewById(R.id.btn_posing_shared);
 
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
