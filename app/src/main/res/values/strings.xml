@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Bcrossing</string>
     <string name="action_settings">Settings</string>
+
+
+    <string-array name="classify_spinner">
+        <item>请选择分类</item>
+        <item>Literature &amp; Art</item>
+        <item>Humanities &amp; Social Sciences</item>
+        <item>Economic &amp; Management</item>
+        <item>Enducation &amp; Life</item>
+        <item>Science &amp; Technology</item>
+        <item>Others</item>
+
+    </string-array>
 </resources>

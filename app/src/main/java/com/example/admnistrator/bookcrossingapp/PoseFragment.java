@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import okhttp3.FormBody;
@@ -30,8 +31,9 @@ public class PoseFragment extends Fragment {
     private EditText author;
     private EditText press;
     private EditText recommendedReason;
+    private Spinner classify;
     private ImageView pose_btn;
-    private String bookNameValue, authorValue, pressValue, recommendedReasonValue;
+    private String bookNameValue, authorValue, pressValue, recommendedReasonValue, classifyValue;
     private String username;
 
     public static final String ARGUMENT = "argument";
@@ -61,6 +63,7 @@ public class PoseFragment extends Fragment {
         press = (EditText) view.findViewById(R.id.edit_posing_shared_press);
         recommendedReason = (EditText) view.findViewById(R.id.edit_posing_shared_recommend);
         pose_btn = (ImageView) view.findViewById(R.id.btn_posing_shared);
+        classify = view.findViewById(R.id.spinner_posing_shared);
 
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +72,20 @@ public class PoseFragment extends Fragment {
                 authorValue = author.getText().toString();
                 pressValue = press.getText().toString();
                 recommendedReasonValue = recommendedReason.getText().toString();
-
+                classifyValue = classify.getSelectedItem().toString();
                 if (bookNameValue.equals("") || authorValue.equals("") || pressValue.equals("") || recommendedReasonValue.equals("")) {
                     Toast.makeText(getActivity(), "请填写完整", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (classifyValue.equals("请选择分类")) {
+                    Toast.makeText(getActivity(), "请选择分类", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 sendPose();
             }
         });
+
+
     }
 
     public void sendPose() {

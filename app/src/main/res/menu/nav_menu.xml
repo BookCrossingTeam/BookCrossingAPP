@@ -27,7 +27,12 @@
         <item
             android:id="@+id/ComputerScience_Technology"
             android:icon="@drawable/barre_mark"
-            android:title="Computer Science &amp; Technology" />
+            android:title="Science &amp; Technology" />
+
+        <item
+            android:id="@+id/others"
+            android:icon="@drawable/barre_mark"
+            android:title="Others" />
 
 
     </group>
