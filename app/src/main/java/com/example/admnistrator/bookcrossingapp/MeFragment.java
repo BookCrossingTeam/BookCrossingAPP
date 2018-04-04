@@ -9,11 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.yzq.zxinglibrary.android.CaptureActivity;
-import com.yzq.zxinglibrary.bean.ZxingConfig;
-import com.yzq.zxinglibrary.common.Constant;
 import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by yvemuki on 2018/3/13.
@@ -34,7 +30,7 @@ public class MeFragment extends Fragment {
 
     //private FriendAdapter adapter;
     //private List<Friend> friendList = new ArrayList<>();
-    private int REQUEST_CODE_SCAN = 111; //扫码
+    //private int REQUEST_CODE_SCAN = 111; //扫码
 
     public MeFragment(){
         super();
@@ -70,13 +66,12 @@ public class MeFragment extends Fragment {
         btnWanting = view.findViewById(R.id.me_button_wanting);
         tvUsername = view.findViewById(R.id.me_text_1);
 
-        btnPosing.setOnClickListener(new View.OnClickListener() {
+        /*btnPosing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*ZxingConfig是配置类  可以设置是否显示底部布局，闪光灯，相册，是否播放提示音  震动等动能
-                * 也可以不传这个参数
-                * 不传的话  默认都为默认不震动  其他都为true
-                * */
+                //ZxingConfig是配置类  可以设置是否显示底部布局，闪光灯，相册，是否播放提示音  震动等动能
+                //也可以不传这个参数
+                //不传的话  默认都为默认不震动  其他都为true
                 ZxingConfig config = new ZxingConfig();
                 config.setShowbottomLayout(true);//底部布局（包括闪光灯和相册）
                 config.setPlayBeep(true);//是否播放提示音
@@ -88,7 +83,7 @@ public class MeFragment extends Fragment {
                 intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
             }
-        });
+        });*/
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +101,7 @@ public class MeFragment extends Fragment {
         return meFragment;
     }
 
+    /*扫码
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -116,7 +112,9 @@ public class MeFragment extends Fragment {
                 Toast.makeText(getActivity(), "扫描结果为：" + content, Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
+
+
 
 //    private void initMe(){
 //        for (int i = 0; i < 3; i++){

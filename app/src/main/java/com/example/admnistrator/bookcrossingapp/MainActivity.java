@@ -33,8 +33,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mFragmensts = DataGenerator.getFragments("TabLayout Tab");   //初始化调用DataGenerator相关函数进行初始化
-
+        initPose();
         initView();
+
+    }
+
+    private void initPose() {
+        int id = getIntent().getIntExtra("fragmentid", 0);
+        if (id == 3) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_container,new PoseFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
 
