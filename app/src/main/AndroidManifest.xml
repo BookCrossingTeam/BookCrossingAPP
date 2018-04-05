@@ -44,9 +44,10 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".SettingAcountActivity" />
         <activity android:name=".UpdatePasswordActivity" />
-        <activity android:name=".SearchFragment" />
         <activity android:name=".SearchDetailActivity" />
-        <activity android:name=".PosingWantingActivity"></activity>
+        <activity android:name=".PosingWantingActivity" />
+        <activity android:name=".WantListActivity" />
+        <activity android:name=".ShareListActivity"></activity>
     </application>
 
 </manifest>

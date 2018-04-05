@@ -23,6 +23,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnFeedback;
     private Button btnSoftware;
     private Button btnHelp;
+    private Dialog dialog;//下弹窗
     private int REQUEST_CODE_SCAN = 111; //扫码
 
 
@@ -84,14 +85,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_cancel:
                 //取消按钮
-                Toast.makeText(this, "取消", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "取消", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
                 break;
 
         }
     }
 
     private void setDialog() {
-        Dialog mCameraDialog = new Dialog(this, R.style.BottomDialog);
+        dialog = new Dialog(this, R.style.BottomDialog);
         LinearLayout root = (LinearLayout) LayoutInflater.from(this).inflate(
                 R.layout.bottom_dialog, null);
         //初始化视图
@@ -99,8 +101,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         root.findViewById(R.id.btn_share_book).setOnClickListener(this);
         root.findViewById(R.id.btn_want_book).setOnClickListener(this);
         root.findViewById(R.id.btn_cancel).setOnClickListener(this);
-        mCameraDialog.setContentView(root);
-        Window dialogWindow = mCameraDialog.getWindow();
+        dialog.setContentView(root);
+        Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
 //        dialogWindow.setWindowAnimations(R.style.dialogstyle); // 添加动画
         WindowManager.LayoutParams lp = dialogWindow.getAttributes(); // 获取对话框当前的参数值
@@ -112,7 +114,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         lp.alpha = 9f; // 透明度
         dialogWindow.setAttributes(lp);
-        mCameraDialog.show();
+        dialog.show();
 
     }
 
