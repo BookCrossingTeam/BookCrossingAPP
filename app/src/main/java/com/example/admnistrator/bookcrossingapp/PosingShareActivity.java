@@ -2,10 +2,8 @@ package com.example.admnistrator.bookcrossingapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -17,15 +15,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
-/**
- * Created by 57010 on 2017/5/2.
- */
-
-public class PoseFragment extends Fragment {
-    private String mArgument;
-    private View view;
+public class PosingShareActivity extends AppCompatActivity {
 
     private EditText bookName;
     private EditText author;
@@ -39,31 +29,21 @@ public class PoseFragment extends Fragment {
     public static final String ARGUMENT = "argument";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.pose_layout, container, false);
-        SharedPreferences pref = getActivity().getSharedPreferences("my_user_info", MODE_PRIVATE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_posing_share);
+        SharedPreferences pref = this.getSharedPreferences("my_user_info", MODE_PRIVATE);
         username = pref.getString("username", "");
-        initViewPager();
-        return view;
+        init();//初始化组件
     }
 
-    public static PoseFragment newInstance(String from) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ARGUMENT, from);
-        PoseFragment poseFragment = new PoseFragment();
-        poseFragment.setArguments(bundle);
-        return poseFragment;
-    }
-
-    public void initViewPager() {
-        bookName = (EditText) view.findViewById(R.id.edit_posing_shared_name);
-        author = (EditText) view.findViewById(R.id.edit_posing_shared_author);
-        press = (EditText) view.findViewById(R.id.edit_posing_shared_press);
-        recommendedReason = (EditText) view.findViewById(R.id.edit_posing_shared_recommend);
-        pose_btn = (ImageView) view.findViewById(R.id.btn_posing_shared);
-        classify = view.findViewById(R.id.spinner_posing_shared);
+    private void init() {
+        bookName = (EditText) findViewById(R.id.edit_posing_shared_name);
+        author = (EditText) findViewById(R.id.edit_posing_shared_author);
+        press = (EditText) findViewById(R.id.edit_posing_shared_press);
+        recommendedReason = (EditText) findViewById(R.id.edit_posing_shared_recommend);
+        pose_btn = (ImageView) findViewById(R.id.btn_posing_shared);
+        classify = findViewById(R.id.spinner_posing_shared);
 
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,18 +54,16 @@ public class PoseFragment extends Fragment {
                 recommendedReasonValue = recommendedReason.getText().toString();
                 classifyValue = classify.getSelectedItem().toString();
                 if (bookNameValue.equals("") || authorValue.equals("") || pressValue.equals("") || recommendedReasonValue.equals("")) {
-                    Toast.makeText(getActivity(), "请填写完整", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PosingShareActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (classifyValue.equals("请选择分类")) {
-                    Toast.makeText(getActivity(), "请选择分类", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PosingShareActivity.this, "请选择分类", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 sendPose();
             }
         });
-
-
     }
 
     public void sendPose() {
@@ -99,10 +77,10 @@ public class PoseFragment extends Fragment {
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     if (responseData.equals("true")) {
-                        getActivity().runOnUiThread(new Runnable() {
+                        PosingShareActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getActivity(), "发表成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PosingShareActivity.this, "发表成功", Toast.LENGTH_SHORT).show();
                                 bookName.setText("");
                                 author.setText("");
                                 press.setText("");
@@ -116,4 +94,5 @@ public class PoseFragment extends Fragment {
             }
         }).start();
     }
+
 }

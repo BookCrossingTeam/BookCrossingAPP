@@ -47,7 +47,8 @@
         <activity android:name=".SearchDetailActivity" />
         <activity android:name=".PosingWantingActivity" />
         <activity android:name=".WantListActivity" />
-        <activity android:name=".ShareListActivity"></activity>
+        <activity android:name=".ShareListActivity" />
+        <activity android:name=".PosingShareActivity"></activity>
     </application>
 
 </manifest>
