@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
                 intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
+
                 dialog.dismiss();
             }
         });
@@ -232,6 +233,10 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 String content = data.getStringExtra(Constant.CODED_CONTENT);
                 Toast.makeText(this, "扫描结果为：" + content, Toast.LENGTH_SHORT).show();
+                //传值跳转
+                Intent intent = new Intent(MainActivity.this, PosingConfirmActivity.class);
+                intent.putExtra("code_content", content);
+                startActivity(intent);
             }
         }
     }

@@ -48,7 +48,8 @@
         <activity android:name=".PosingWantingActivity" />
         <activity android:name=".WantListActivity" />
         <activity android:name=".ShareListActivity" />
-        <activity android:name=".PosingShareActivity"></activity>
+        <activity android:name=".PosingShareActivity" />
+        <activity android:name=".PosingConfirmActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.admnistrator.bookcrossingapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class PosingShareActivity extends AppCompatActivity {
+public class PosingConfirmActivity extends AppCompatActivity {
 
     private EditText bookName;
     private EditText author;
@@ -33,6 +34,7 @@ public class PosingShareActivity extends AppCompatActivity {
         SharedPreferences pref = this.getSharedPreferences("my_user_info", MODE_PRIVATE);
         username = pref.getString("username", "");
         init();//初始化组件
+
     }
 
     private void init() {
@@ -42,6 +44,17 @@ public class PosingShareActivity extends AppCompatActivity {
         recommendedReason = (EditText) findViewById(R.id.edit_posing_shared_recommend);
         pose_btn = (ImageView) findViewById(R.id.btn_posing_shared);
         classify = findViewById(R.id.spinner_posing_shared);
+        //不可编辑，通过扫码传值进来
+        bookName.setFocusable(false);
+        bookName.setFocusableInTouchMode(false);
+        author.setFocusable(false);
+        author.setFocusableInTouchMode(false);
+        press.setFocusable(false);
+        press.setFocusableInTouchMode(false);
+        //传值
+        Intent intent = getIntent();
+        String content = intent.getStringExtra("code_content");
+        recommendedReason.setText(content);
 
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,12 +64,12 @@ public class PosingShareActivity extends AppCompatActivity {
                 pressValue = press.getText().toString();
                 recommendedReasonValue = recommendedReason.getText().toString();
                 classifyValue = classify.getSelectedItem().toString();
-                if (bookNameValue.equals("") || authorValue.equals("") || pressValue.equals("") || recommendedReasonValue.equals("")) {
-                    Toast.makeText(PosingShareActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
+                if (recommendedReasonValue.equals("")) {
+                    Toast.makeText(PosingConfirmActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (classifyValue.equals("请选择分类")) {
-                    Toast.makeText(PosingShareActivity.this, "请选择分类", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PosingConfirmActivity.this, "请选择分类", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 sendPose();
@@ -75,10 +88,10 @@ public class PosingShareActivity extends AppCompatActivity {
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     if (responseData.equals("true")) {
-                        PosingShareActivity.this.runOnUiThread(new Runnable() {
+                        PosingConfirmActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(PosingShareActivity.this, "发表成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PosingConfirmActivity.this, "发表成功", Toast.LENGTH_SHORT).show();
                                 bookName.setText("");
                                 author.setText("");
                                 press.setText("");
@@ -92,5 +105,4 @@ public class PosingShareActivity extends AppCompatActivity {
             }
         }).start();
     }
-
 }
