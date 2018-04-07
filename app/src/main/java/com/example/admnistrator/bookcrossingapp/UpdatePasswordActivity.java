@@ -84,4 +84,10 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Created by Administrator on 2018/4/7.
+     */
+
+    public static class Records {
+    }
 }

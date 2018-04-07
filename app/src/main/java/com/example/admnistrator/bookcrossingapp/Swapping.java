@@ -6,8 +6,7 @@ package com.example.admnistrator.bookcrossingapp;
 
 
 /* 关于状态
-now_state 和 btn_state
-    0 线上未确认状态
+    0 线上未确认状态 //不存在
     1 线上确认状态
     2 线下确认状态
     3 归还状态
