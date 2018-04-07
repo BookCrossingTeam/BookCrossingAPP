@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class ExchangeBookBetailsActivity extends AppCompatActivity {
+public class ExchangeBookDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "ExchangeBookBetailsActi";
 
@@ -61,7 +61,7 @@ public class ExchangeBookBetailsActivity extends AppCompatActivity {
         tv_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ExchangeBookBetailsActivity.this, FriendChatActivity.class);
+                Intent intent = new Intent(ExchangeBookDetailsActivity.this, FriendChatActivity.class);
                 startActivity(intent);
             }
         });
@@ -69,7 +69,7 @@ public class ExchangeBookBetailsActivity extends AppCompatActivity {
         tv_sharelist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ExchangeBookBetailsActivity.this, ShareListActivity.class);
+                Intent intent = new Intent(ExchangeBookDetailsActivity.this, ShareListActivity.class);
                 intent.putExtra("username",usernameValue);
                 startActivity(intent);
             }
@@ -79,7 +79,7 @@ public class ExchangeBookBetailsActivity extends AppCompatActivity {
         tv_wantlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ExchangeBookBetailsActivity.this, WantListActivity.class);
+                Intent intent = new Intent(ExchangeBookDetailsActivity.this, WantListActivity.class);
                 intent.putExtra("username",usernameValue);
                 startActivity(intent);
             }

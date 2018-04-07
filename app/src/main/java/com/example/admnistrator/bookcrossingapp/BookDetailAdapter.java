@@ -27,9 +27,9 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         public ViewHolder(View view) {
             super(view);
             bookView = view;
-            username = (TextView) view.findViewById(R.id.textView9);
-            bookName = (TextView) view.findViewById(R.id.textView10);
-            author = (TextView) view.findViewById(R.id.textView11);
+            username = (TextView) view.findViewById(R.id.book_detail_username);
+            bookName = (TextView) view.findViewById(R.id.book_detail_bookname);
+            author = (TextView) view.findViewById(R.id.book_detail_author);
         }
     }
 
@@ -47,7 +47,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 BookDetail bookDetail = mBookDetailList.get(position);
-                Intent intent = new Intent(v.getContext(),ExchangeBookBetailsActivity.class);
+                Intent intent = new Intent(v.getContext(),ExchangeBookDetailsActivity.class);
                 intent.putExtra("Username",bookDetail.getUsername());
                 intent.putExtra("BookName",bookDetail.getBookName());
                 intent.putExtra("Author",bookDetail.getAuthor());

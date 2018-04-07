@@ -39,7 +39,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //可以理解为虽然在构造函数时候已经获取了view中的组件元素，但还要重新构造一次，利用msg_item
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_chat_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_friend_chat_item, parent, false);
         return new ViewHolder(view);
     }
 

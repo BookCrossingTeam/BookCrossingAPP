@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/white_box">
+
+        <ImageView
+            android:id="@+id/records_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            app:srcCompat="@drawable/book_image" />
+
+
+        <RelativeLayout
+            android:layout_width="268dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/records_pic">
+
+
+            <TextView
+                android:id="@+id/records_bookname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:gravity="center_horizontal"
+                android:text="The Great Gatsby"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/records_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/records_bookname"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="state:已归还"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/records_exchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/records_state"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="exchange user:"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/records_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/records_exchange"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="from 2017.3.2 to 2017.6.1"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

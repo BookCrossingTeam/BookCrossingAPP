@@ -17,7 +17,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MeFragment extends Fragment {
     public static final String ARGUMENT = "MeFragment";
-    private String mArgument;
     private View view;
     private Button btnPosing;
     private Button btnSwaping;
@@ -27,10 +26,6 @@ public class MeFragment extends Fragment {
     private Button btnWanting;
     private TextView tvUsername;
     private String username;
-
-    //private FriendAdapter adapter;
-    //private List<Friend> friendList = new ArrayList<>();
-    //private int REQUEST_CODE_SCAN = 111; //扫码
 
     public MeFragment(){
         super();
@@ -84,6 +79,27 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), WantListActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSwaping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SwappingActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ReviewsActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnRecords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RecordsActivity.class);
                 startActivity(intent);
             }
         });

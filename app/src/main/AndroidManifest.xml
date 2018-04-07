@@ -37,7 +37,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".ExchangeBookBetailsActivity" />
+        <activity android:name=".ExchangeBookDetailsActivity" />
         <activity android:name=".FriendChatActivity" />
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".AgreementActivity" />
@@ -49,7 +49,11 @@
         <activity android:name=".WantListActivity" />
         <activity android:name=".ShareListActivity" />
         <activity android:name=".PosingShareActivity" />
-        <activity android:name=".PosingConfirmActivity"></activity>
+        <activity android:name=".PosingConfirmActivity" />
+        <activity android:name=".ReviewsActivity" />
+        <activity android:name=".RecordsActivity" />
+        <activity android:name=".SwappingActivity" />
+        <activity android:name=".UserDetailActivity"></activity>
     </application>
 
 </manifest>
