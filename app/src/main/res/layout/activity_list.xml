@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/list_title_layout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical">
@@ -35,7 +36,6 @@
         android:id="@+id/booklist_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
 
     </android.support.v7.widget.RecyclerView>
