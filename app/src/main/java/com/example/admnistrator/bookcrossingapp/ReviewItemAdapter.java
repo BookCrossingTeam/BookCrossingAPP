@@ -46,12 +46,10 @@ public class ReviewItemAdapter  extends RecyclerView.Adapter<ReviewItemAdapter.V
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 ReviewItem reviewItem = mReviewList.get(position);
-                Intent intent = new Intent(v.getContext(),AgreementActivity.class);
-                /*intent.putExtra("Username",bookDetail.getUsername());
-                intent.putExtra("BookName",bookDetail.getBookName());
-                intent.putExtra("Author",bookDetail.getAuthor());
-                intent.putExtra("Press",bookDetail.getPress());
-                intent.putExtra("RecommendedReason",bookDetail.getRecommendedReason());*/
+                Intent intent = new Intent(v.getContext(),ReviewsDetailActivity.class);
+                intent.putExtra("cover",reviewItem.getCover());
+                intent.putExtra("title",reviewItem.getTitle());
+                intent.putExtra("author",reviewItem.getAuthor());
                 view.getContext().startActivity(intent);
             }
         });

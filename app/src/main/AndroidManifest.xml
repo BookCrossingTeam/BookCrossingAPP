@@ -54,7 +54,8 @@
         <activity android:name=".RecordsActivity" />
         <activity android:name=".SwappingActivity" />
         <activity android:name=".UserDetailActivity" />
-        <activity android:name=".ReviewsEditActivity"></activity>
+        <activity android:name=".ReviewsEditActivity" />
+        <activity android:name=".ReviewsDetailActivity"></activity>
     </application>
 
 </manifest>

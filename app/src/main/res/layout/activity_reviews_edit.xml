@@ -4,32 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.admnistrator.bookcrossingapp.ReviewsEditActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.admnistrator.bookcrossingapp.ReviewsEditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/reviews_edit_frame"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/reviews_edit_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="3"
+
+                android:hint="标题" />
+
+            <Button
+                android:id="@+id/reviews_edit_write"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="发表" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/reviews_edit_cover"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_below="@+id/reviews_edit_content"
+            android:src="@drawable/plus_sign" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#333333" />
 
         <EditText
+            android:id="@+id/reviews_edit_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:hint="标题" />
+            android:layout_below="@+id/reviews_edit_frame"
+            android:layout_marginLeft="10dp"
+            android:gravity="top"
+            android:hint="内容"
+            android:inputType="textMultiLine" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:text="上传" />
+
     </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top"
-        android:hint="内容"
-        android:inputType="textMultiLine" />
 
 </LinearLayout>
