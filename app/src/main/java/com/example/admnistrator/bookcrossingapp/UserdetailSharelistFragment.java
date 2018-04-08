@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class UserdetailSharelistFragment extends Fragment {
 
-    public static final String ARGUMENT = "UserdetailSharelistFragment";
     private View view;
     private BookDetailAdapter adapter;
     private List<BookDetail> sharelist = new ArrayList<>();
@@ -53,14 +52,6 @@ public class UserdetailSharelistFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new BookDetailAdapter(sharelist);
         recyclerView.setAdapter(adapter);
-    }
-
-    public static UserdetailSharelistFragment newInstance(String from) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ARGUMENT, from);
-        UserdetailSharelistFragment userdetailSharelistFragment = new UserdetailSharelistFragment();
-        userdetailSharelistFragment.setArguments(bundle);
-        return userdetailSharelistFragment;
     }
 
 }
