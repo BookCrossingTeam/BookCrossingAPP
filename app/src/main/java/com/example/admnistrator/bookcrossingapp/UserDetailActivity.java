@@ -1,10 +1,13 @@
 package com.example.admnistrator.bookcrossingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -15,12 +18,17 @@ public class UserDetailActivity extends AppCompatActivity {
     private ViewPager userdetail_pager;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private ArrayList<String> list = new ArrayList<>();
+    private TextView tv_username;
+    private ImageView img_icon;
+    private String usernameValue;
+    private int imgIconPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         initView();
+        initData();
         UserdetailSharelistFragment fragment1 = new UserdetailSharelistFragment();
         UserdetailWantlistFragment fragment2 = new UserdetailWantlistFragment();
         UserdetailReviewsFragment fragment3 = new UserdetailReviewsFragment();
@@ -34,9 +42,19 @@ public class UserDetailActivity extends AppCompatActivity {
         userdetail_pager.setAdapter(new TabSimpleAdapter(getSupportFragmentManager(), mFragments, list));
     }
 
+    private void initData() {
+        //从上一个页面传过来的值
+        Intent intent = getIntent();
+        usernameValue = intent.getStringExtra("username");
+        tv_username.setText(usernameValue);
+    }
+
     private void initView() {
         userdetail_tab_layout = (TabLayout) findViewById(R.id.userdetail_tab_layout);
         userdetail_pager = (ViewPager) findViewById(R.id.userdetail_pager);
+        tv_username = findViewById(R.id.user_detail_username);
+        img_icon = findViewById(R.id.img_icon);
+
         userdetail_tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
