@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context="com.example.admnistrator.bookcrossingapp.ExchangeBookDetailsActivity">
+    tools:context="com.example.administrator.bookcrossingapp.activity.ExchangeBookDetailsActivity">
 
 
     <ImageView

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.admnistrator.bookcrossingapp">
+    package="com.example.administrator.bookcrossingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -22,12 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.administrator.bookcrossingapp.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.example.administrator.bookcrossingapp.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,27 +35,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".ExchangeBookDetailsActivity" />
-        <activity android:name=".FriendChatActivity" />
-        <activity android:name=".ForgetPasswordActivity" />
-        <activity android:name=".AgreementActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".SettingAcountActivity" />
-        <activity android:name=".UpdatePasswordActivity" />
-        <activity android:name=".SearchDetailActivity" />
-        <activity android:name=".PosingWantingActivity" />
-        <activity android:name=".WantListActivity" />
-        <activity android:name=".ShareListActivity" />
-        <activity android:name=".PosingShareActivity" />
-        <activity android:name=".PosingConfirmActivity" />
-        <activity android:name=".ReviewsActivity" />
-        <activity android:name=".RecordsActivity" />
-        <activity android:name=".SwappingActivity" />
-        <activity android:name=".UserDetailActivity" />
-        <activity android:name=".ReviewsEditActivity" />
-        <activity android:name=".ReviewsDetailActivity"></activity>
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.LoginActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.SignUpActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ExchangeBookDetailsActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.FriendChatActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ForgetPasswordActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.AgreementActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.SettingActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.SettingAcountActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.UpdatePasswordActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.SearchDetailActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingWantingActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.WantListActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ShareListActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingShareActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingConfirmActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.RecordsActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.SwappingActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.UserDetailActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsEditActivity" />
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsDetailActivity"></activity>
     </application>
 
 </manifest>
