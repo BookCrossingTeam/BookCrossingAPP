@@ -14,19 +14,16 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        toNextPage();
-    }
 
-    public void toNextPage() {
+        //延迟跳转
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                SharedPreferences pref = getSharedPreferences("my_user_info", MODE_PRIVATE);
-                String username = pref.getString("username", "");
-                String pass = pref.getString("pass", "");
-                if (username.equals("") && pass.equals("")) {
+                SharedPreferences pref = getSharedPreferences("user_info", MODE_PRIVATE);
+                String userid = pref.getString("userid", "");
+                String token = pref.getString("token", "");
+                if (userid.equals("") || userid.equals("")) {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -38,6 +35,5 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 1500);  //时间控制
     }
-
 
 }

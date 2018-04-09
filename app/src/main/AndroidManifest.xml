@@ -19,22 +19,18 @@
         android:icon="@mipmap/logo_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity
-            android:name="com.example.administrator.bookcrossingapp.activity.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+
         <activity
             android:name="com.example.administrator.bookcrossingapp.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.MainActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.LoginActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.SignUpActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.ExchangeBookDetailsActivity" />
@@ -55,7 +51,7 @@
         <activity android:name="com.example.administrator.bookcrossingapp.activity.SwappingActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.UserDetailActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsEditActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsDetailActivity"></activity>
+        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsDetailActivity"/>
     </application>
 
 </manifest>
