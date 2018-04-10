@@ -27,12 +27,12 @@ public class WantListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         tv_title = findViewById(R.id.list_title);
-        tv_username = findViewById(R.id.list_username);
-        tv_title.setText("Want List");
+        //tv_username = findViewById(R.id.list_username);
+        tv_title.setText("WantList");
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        tv_username.setText(username);
+//        Intent intent = getIntent();
+//        username = intent.getStringExtra("username");
+//        tv_username.setText(username);
 
         initData();
         RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);

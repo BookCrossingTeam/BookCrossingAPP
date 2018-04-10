@@ -11,35 +11,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:background="#333333" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="55dp"
+            android:background="@drawable/title_friend">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="设置"
-                android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="40sp" />
-        </LinearLayout>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="SETTINGS"
+                android:textColor="#000"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/line4"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="#333333" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,11 +42,11 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:background="@drawable/friend_list_item_bg"
                 android:text="账号设置"
                 android:textColor="@color/contents_text"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_setting_feedback"
@@ -65,11 +54,11 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:background="@drawable/friend_list_item_bg"
                 android:text="反馈建议"
                 android:textColor="@color/contents_text"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_setting_software"
@@ -77,11 +66,11 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:background="@drawable/friend_list_item_bg"
                 android:text="软件设置"
                 android:textColor="@color/contents_text"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_setting_help"
@@ -89,11 +78,11 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:background="@drawable/friend_list_item_bg"
                 android:text="帮助"
                 android:textColor="@color/contents_text"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_log_off"
@@ -101,11 +90,11 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/white_box"
+                android:gravity="center"
+                android:background="@drawable/friend_list_item_bg"
                 android:text="退出登录"
                 android:textColor="@color/contents_text"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
 
         </LinearLayout>

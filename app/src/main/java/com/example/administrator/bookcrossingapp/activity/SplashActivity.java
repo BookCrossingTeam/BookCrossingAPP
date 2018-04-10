@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //用来存储用户基本信息
                 SharedPreferences pref = getSharedPreferences("user_info", MODE_PRIVATE);
                 String userid = pref.getString("userid", "");
                 String token = pref.getString("token", "");

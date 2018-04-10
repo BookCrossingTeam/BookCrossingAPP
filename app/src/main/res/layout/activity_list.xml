@@ -7,28 +7,27 @@
     <LinearLayout
         android:id="@+id/list_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
+        android:layout_height="55dp"
+        android:orientation="vertical"
+        android:background="@drawable/title_friend">
 
         <TextView
             android:id="@+id/list_title"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            android:text="shareList"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/list_username"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginRight="50dp"
-            android:gravity="right|center_vertical"
-            android:text="author"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="18sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/list_username"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="14sp"-->
+            <!--android:textColor="#000"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"/>-->
 
     </LinearLayout>
 

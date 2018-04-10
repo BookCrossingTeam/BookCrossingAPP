@@ -1,6 +1,7 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,7 @@ public class ShareListActivity extends AppCompatActivity {
 
     private TextView tv_title;
     private TextView tv_username;
-    private String username;
+    //private String username;
 
     private List<BookDetail> sharelist = new ArrayList<>();
 
@@ -27,12 +28,15 @@ public class ShareListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         tv_title = findViewById(R.id.list_title);
-        tv_username = findViewById(R.id.list_username);
-        tv_title.setText("Share List");
+        //tv_username = findViewById(R.id.list_username);
+        SharedPreferences userInfo = getSharedPreferences("user_info", MODE_PRIVATE);
+        String userId = userInfo.getString("userid","");
+        tv_title.setText("ShareList");
+//        tv_username.setText("of XXXX");
 
-        Intent  intent = getIntent();
-        username = intent.getStringExtra("username");
-        tv_username.setText(username);
+//        Intent  intent = getIntent();
+//        username = intent.getStringExtra("username");
+//        tv_username.setText(username);
 
         initData();
         RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
