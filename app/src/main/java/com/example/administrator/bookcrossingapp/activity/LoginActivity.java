@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.bookcrossingapp.CalcMD5;
 import com.example.administrator.bookcrossingapp.R;
 
 import org.json.JSONObject;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            //userNameValue = CalcMD5.getMD5(userNameValue);
+                            passwordValue = CalcMD5.getMD5(passwordValue);
 
                             OkHttpClient client = new OkHttpClient();
                             RequestBody requestBody = new FormBody.Builder().add("userName", userNameValue).add("password", passwordValue).build();
@@ -76,10 +77,11 @@ public class LoginActivity extends AppCompatActivity {
                                 return;
                             }
                             String responseData = response.body().string();
-                            final JSONObject datajson = new JSONObject(responseData);
+                             JSONObject datajson = new JSONObject(responseData);
                             if (datajson.getInt("statecode") == 200) {
                                 SharedPreferences.Editor editor = getSharedPreferences("user_info", MODE_PRIVATE).edit();
                                 editor.putString("userid", datajson.getString("userid"));
+                                editor.putString("username", datajson.getString("username"));
                                 editor.putString("token", datajson.getString("token"));
                                 editor.apply();
                                 runOnUiThread(new Runnable() {
