@@ -7,6 +7,15 @@ public class DoubanIsbn {
     private String title;
     private String publisher;
     private List<String> author;
+    private String subtitle;
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 
     public String getImage() {
         return image;

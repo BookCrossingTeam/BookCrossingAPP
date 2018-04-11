@@ -55,12 +55,12 @@ public class PosingConfirmActivity extends AppCompatActivity {
         bookImg = (ImageView) findViewById(R.id.img_posing_shared_pic);
         classify = findViewById(R.id.spinner_posing_shared);
         //不可编辑，通过扫码传值进来
-        bookName.setFocusable(false);
-        bookName.setFocusableInTouchMode(false);
-        author.setFocusable(false);
-        author.setFocusableInTouchMode(false);
-        press.setFocusable(false);
-        press.setFocusableInTouchMode(false);
+        //bookName.setFocusable(false);
+        //bookName.setFocusableInTouchMode(false);
+        //author.setFocusable(false);
+        //author.setFocusableInTouchMode(false);
+        //press.setFocusable(false);
+        //press.setFocusableInTouchMode(false);
         //传值
         Intent intent = getIntent();
         final String content = intent.getStringExtra("code_content");
@@ -72,16 +72,31 @@ public class PosingConfirmActivity extends AppCompatActivity {
                 ;// do somethings
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder().url("https://api.douban.com/v2/book/isbn/"+content).build();
+                    Request request = new Request.Builder().url("https://api.douban.com/v2/book/isbn/" + content).build();
                     Response response = client.newCall(request).execute();
+                    if(!response.isSuccessful())
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(PosingConfirmActivity.this, "该书本未收录", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                        return;
+                    }
                     String responseData = response.body().string();
-                    Log.d(TAG, "run: "+responseData);
+                    Log.d(TAG, "run: " + responseData);
                     final DoubanIsbn resultJson = new Gson().fromJson(responseData, DoubanIsbn.class);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            bookName.setText(resultJson.getTitle());
-                            author.setText(resultJson.getAuthor().get(0));
+                            if (resultJson.getSubtitle().equals(""))
+                                bookName.setText(resultJson.getTitle());
+                            else
+                                bookName.setText(resultJson.getSubtitle());
+                            if (!resultJson.getAuthor().isEmpty())
+                                author.setText(resultJson.getAuthor().get(0));
                             press.setText(resultJson.getPublisher());
                             Glide.with(PosingConfirmActivity.this).load(resultJson.getImage()).into(bookImg);
                         }
