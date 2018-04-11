@@ -1,10 +1,14 @@
 package com.example.administrator.bookcrossingapp.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +28,8 @@ import com.example.administrator.bookcrossingapp.R;
 import com.yzq.zxinglibrary.android.CaptureActivity;
 import com.yzq.zxinglibrary.bean.ZxingConfig;
 import com.yzq.zxinglibrary.common.Constant;
+
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -164,6 +170,12 @@ public class MainActivity extends AppCompatActivity {
         root.findViewById(R.id.btn_scanning).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //运行时相机权限
+                if (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
+                    return;
+                }
+
                 //选择扫码按钮
                 //Toast.makeText(this, "扫码", Toast.LENGTH_SHORT).show();
                 //ZxingConfig是配置类  可以设置是否显示底部布局，闪光灯，相册，是否播放提示音  震动等动能
@@ -173,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 config.setShowbottomLayout(true);//底部布局（包括闪光灯和相册）
                 config.setPlayBeep(true);//是否播放提示音
                 config.setShake(true);//是否震动
-                config.setShowAlbum(true);//是否显示相册
+                config.setShowAlbum(false);//是否显示相册
                 config.setShowFlashLight(true);//是否显示闪光灯
                 //如果不传 ZxingConfig的话，两行代码就能搞定了
                 Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
@@ -234,7 +246,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_SCAN && resultCode == -1) {
             if (data != null) {
                 String content = data.getStringExtra(Constant.CODED_CONTENT);
-                Toast.makeText(this, "扫描结果为：" + content, Toast.LENGTH_SHORT).show();
+                if (!Pattern.matches("[0-9]*", content)) {
+                    Toast.makeText(this, "请扫书本条形码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //传值跳转
                 Intent intent = new Intent(MainActivity.this, PosingConfirmActivity.class);
                 intent.putExtra("code_content", content);

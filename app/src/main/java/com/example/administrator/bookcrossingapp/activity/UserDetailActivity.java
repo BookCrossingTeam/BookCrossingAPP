@@ -58,7 +58,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private void initView() {
         userdetail_tab_layout = (TabLayout) findViewById(R.id.userdetail_tab_layout);
         userdetail_pager = (ViewPager) findViewById(R.id.userdetail_pager);
-        tv_username = findViewById(R.id.user_detail_username);
+        //tv_username = findViewById(R.id.user_detail_username);
         img_icon = findViewById(R.id.img_icon);
 
         userdetail_tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.datamodel.DoubanIsbn;
+import com.google.gson.Gson;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -20,12 +24,15 @@ import okhttp3.Response;
 
 public class PosingConfirmActivity extends AppCompatActivity {
 
+    private static final String TAG = "PosingConfirmActivity";
+
     private EditText bookName;
     private EditText author;
     private EditText press;
     private EditText recommendedReason;
     private Spinner classify;
     private ImageView pose_btn;
+    private ImageView bookImg;
     private String bookNameValue, authorValue, pressValue, recommendedReasonValue, classifyValue;
     private String username;
 
@@ -45,6 +52,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
         press = (EditText) findViewById(R.id.edit_posing_shared_press);
         recommendedReason = (EditText) findViewById(R.id.edit_posing_shared_recommend);
         pose_btn = (ImageView) findViewById(R.id.btn_posing_shared);
+        bookImg = (ImageView) findViewById(R.id.img_posing_shared_pic);
         classify = findViewById(R.id.spinner_posing_shared);
         //不可编辑，通过扫码传值进来
         bookName.setFocusable(false);
@@ -55,8 +63,34 @@ public class PosingConfirmActivity extends AppCompatActivity {
         press.setFocusableInTouchMode(false);
         //传值
         Intent intent = getIntent();
-        String content = intent.getStringExtra("code_content");
+        final String content = intent.getStringExtra("code_content");
         recommendedReason.setText(content);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ;// do somethings
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url("https://api.douban.com/v2/book/isbn/"+content).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "run: "+responseData);
+                    final DoubanIsbn resultJson = new Gson().fromJson(responseData, DoubanIsbn.class);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            bookName.setText(resultJson.getTitle());
+                            author.setText(resultJson.getAuthor().get(0));
+                            press.setText(resultJson.getPublisher());
+                            Glide.with(PosingConfirmActivity.this).load(resultJson.getImage()).into(bookImg);
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
