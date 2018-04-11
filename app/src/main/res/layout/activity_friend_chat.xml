@@ -6,19 +6,51 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layout_chat_exchange"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:orientation="vertical"
         android:background="@drawable/title_friend">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="CHAT"
             android:textColor="#000"
             android:textSize="18sp" />
+        <LinearLayout
+            android:id="@+id/layout_chat_exchange_change"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:paddingBottom="40dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+            <Button
+                android:id="@+id/exchange_book_left"
+                android:layout_width="80dp"
+                android:layout_height="110dp"
+                android:background="@drawable/friend_chat_exchange_book"
+                />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:src="@drawable/friend_chat_exchange_jiantou"/>
+            <Button
+                android:id="@+id/exchange_book_right"
+                android:layout_width="80dp"
+                android:layout_height="110dp"
+                android:background="@drawable/friend_chat_exchange_add"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -35,7 +67,8 @@
 
         <EditText
             android:id="@+id/input_text"
-            android:layout_width="320dp"
+            android:layout_width="0dp"
+            android:layout_weight="5"
             android:layout_height="36dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -46,13 +79,22 @@
             android:padding="8dp" />
 
         <Button
-            android:id="@+id/send"
+        android:id="@+id/send"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/friend_chat_send" />
+
+        <Button
+            android:id="@+id/button_exchange"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_marginTop="6dp"
-            android:background="@drawable/friend_chat_send" />
+            android:background="@drawable/button_exchange" />
 
     </LinearLayout>
 
