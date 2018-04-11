@@ -12,11 +12,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.datamodel.DoubanIsbn;
 import com.google.gson.Gson;
 
-import okhttp3.FormBody;
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -34,14 +38,15 @@ public class PosingConfirmActivity extends AppCompatActivity {
     private ImageView pose_btn;
     private ImageView bookImg;
     private String bookNameValue, authorValue, pressValue, recommendedReasonValue, classifyValue;
-    private String username;
+    private String userid;
+    private String bookImgAbsolutePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posing_share);
-        SharedPreferences pref = this.getSharedPreferences("my_user_info", MODE_PRIVATE);
-        username = pref.getString("username", "");
+        SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
+        userid = pref.getString("userid", "");
         init();//初始化组件
 
     }
@@ -74,8 +79,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder().url("https://api.douban.com/v2/book/isbn/" + content).build();
                     Response response = client.newCall(request).execute();
-                    if(!response.isSuccessful())
-                    {
+                    if (!response.isSuccessful()) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -101,6 +105,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
                             Glide.with(PosingConfirmActivity.this).load(resultJson.getImage()).into(bookImg);
                         }
                     });
+                    bookImgAbsolutePath = Glide.with(PosingConfirmActivity.this).load(resultJson.getImage()).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get().getAbsolutePath();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -133,8 +138,12 @@ public class PosingConfirmActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    File file = new File(bookImgAbsolutePath);
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("username", username).add("bookName", bookNameValue).add("author", authorValue).add("press", pressValue).add("recommendedReason", recommendedReasonValue).build();
+                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
+                    RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("file", "book_image.jpg", fileBody)
+                            .addFormDataPart("userid", userid).addFormDataPart("bookName", bookNameValue)
+                            .addFormDataPart("author", authorValue).addFormDataPart("press", pressValue).addFormDataPart("recommendedReason", recommendedReasonValue).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
@@ -143,17 +152,21 @@ public class PosingConfirmActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(PosingConfirmActivity.this, "发表成功", Toast.LENGTH_SHORT).show();
-                                bookName.setText("");
-                                author.setText("");
-                                press.setText("");
-                                recommendedReason.setText("");
+                                finish();
                             }
                         });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(PosingConfirmActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         }).start();
     }
+
 }

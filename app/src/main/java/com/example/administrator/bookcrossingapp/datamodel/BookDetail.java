@@ -14,6 +14,28 @@ public class BookDetail {
     private String press;
     private String recommendedReason;
     private int bookImage;
+    private String bookImageUrl;
+
+    public String getBookImageUrl() {
+        return bookImageUrl;
+    }
+
+    public void setBookImageUrl(String bookImageUrl) {
+        this.bookImageUrl = bookImageUrl;
+    }
+
+    public BookDetail(String username, String bookName, String author, String press,
+                      String recommendedReason, String bookImageUrl) {
+        this.username = username;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.recommendedReason = recommendedReason;
+        this.usernameImage = R.drawable.user_image;
+        this.bookImage = R.drawable.book_image;
+        this.bookImageUrl = bookImageUrl;
+
+    }
 
     public BookDetail(String username, String bookName, String author, String press,
                       String recommendedReason) {
@@ -24,6 +46,8 @@ public class BookDetail {
         this.recommendedReason = recommendedReason;
         this.usernameImage = R.drawable.user_image;
         this.bookImage = R.drawable.book_image;
+        //this.bookImageUrl = bookImageUrl;
+
     }
 
     public String getUsername() {
@@ -76,6 +100,7 @@ public class BookDetail {
 
     public int getBookImage() {
         return bookImage;
+
     }
 
     public void setBookImage(int bookImage) {

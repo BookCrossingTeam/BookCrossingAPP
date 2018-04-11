@@ -176,6 +176,7 @@ public class HomeFragment extends Fragment {
     public void initSwipe_refresh() {
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimaryDark);
+
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -221,9 +222,10 @@ public class HomeFragment extends Fragment {
                 String username = jsonObject.getString("username");
                 String bookName = jsonObject.getString("bookName");
                 String author = jsonObject.getString("author");
-                String press = jsonObject.getString("press");
-                String recommendedReason = jsonObject.getString("recommendedReason");
-                BookDetail a = new BookDetail(username, "《" + bookName + "》", author, press, recommendedReason);
+                String press = jsonObject.getString("publish");
+                String recommendedReason = jsonObject.getString("reason");
+                String imgUrl = jsonObject.getString("imgUrl");
+                BookDetail a = new BookDetail(username, "《" + bookName + "》", author, press, recommendedReason,imgUrl);
                 BookDetailList.add(0, a);
             }
         } catch (Exception e) {

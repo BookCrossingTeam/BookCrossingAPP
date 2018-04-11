@@ -1,6 +1,5 @@
 package com.example.administrator.bookcrossingapp.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.adapter.BookDetailAdapter;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class ShareListActivity extends AppCompatActivity {
 
     private void initData() {
         for (int i = 0; i < 3; i++) {
-            BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "");
+            BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "","");
             sharelist.add(a);
         }
     }
