@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
+                if (tab.getPosition() == 2) {
+                    setDialog();//点击事件
+                    return;
+                }
                 onTabItemSelected(tab.getPosition());
 
                 //改变Tab 状态
@@ -75,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     if (i == tab.getPosition()) {
                         //mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabResPressed[i]));
                         icon.setImageResource(DataGenerator.mTabResPressed[i]);
-                        if (i == 2) {
-                            setDialog();//点击事件
-                        }
                     } else {
                         //mTabLayout.getTabAt(i).setIcon(getResources().getDrawable(DataGenerator.mTabRes[i]));
                         icon.setImageResource(DataGenerator.mTabRes[i]);
@@ -93,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 2) {
+                    setDialog();//点击事件
+                    return;
+                }
                 onTabItemSelected(tab.getPosition());
                 //改变Tab 状态
                 for (int i = 0; i < mTabLayout.getTabCount(); i++) {
@@ -101,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
                     TextView text = (TextView) view.findViewById(R.id.tab_content_text);
                     if (i == tab.getPosition()) {
                         icon.setImageResource(DataGenerator.mTabResPressed[i]);
-                        if (i == 2) {
-                            setDialog();//点击事件
-                        }
                     } else {
                         icon.setImageResource(DataGenerator.mTabRes[i]);
                     }
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //运行时相机权限
-                if (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
                     return;
                 }
@@ -246,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_SCAN && resultCode == -1) {
             if (data != null) {
                 String content = data.getStringExtra(Constant.CODED_CONTENT);
-                if (!Pattern.matches("[0-9]*", content)) {
+                if (!Pattern.matches("^(\\d[- ]*){9,12}[\\dxX]$", content)) {
                     Toast.makeText(this, "请扫书本条形码", Toast.LENGTH_SHORT).show();
                     return;
                 }

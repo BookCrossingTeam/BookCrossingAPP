@@ -14,6 +14,8 @@ import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.activity.ExchangeBookDetailsActivity;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +32,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         TextView username;
         TextView bookName;
         TextView author;
+        TextView posetime;
         ImageView bookimg;
         View bookView;
 
@@ -41,6 +44,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
             bookName = (TextView) view.findViewById(R.id.book_detail_bookname);
             author = (TextView) view.findViewById(R.id.book_detail_author);
             bookimg = (ImageView)view.findViewById(R.id.book_detail_pic);
+            posetime = (TextView)view.findViewById(R.id.book_detail_posetime);
         }
     }
 
@@ -77,6 +81,8 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         holder.username.setText(bookdetail.getUsername());
         holder.bookName.setText(bookdetail.getBookName());
         holder.author.setText(bookdetail.getAuthor());
+        Long timestamp = Long.parseLong(bookdetail.getPosetime());
+        holder.posetime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(timestamp)));
         Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/"+bookdetail.getBookImageUrl()).into(holder.bookimg);
     }
 

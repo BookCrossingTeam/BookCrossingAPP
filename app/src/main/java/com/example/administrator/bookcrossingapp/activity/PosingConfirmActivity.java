@@ -148,14 +148,20 @@ public class PosingConfirmActivity extends AppCompatActivity {
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     if (responseData.equals("true")) {
-                        PosingConfirmActivity.this.runOnUiThread(new Runnable() {
+                        runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(PosingConfirmActivity.this, "发表成功", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         });
-                    }
+                    } else
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(PosingConfirmActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 } catch (Exception e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {

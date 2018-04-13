@@ -15,6 +15,7 @@ public class BookDetail {
     private String recommendedReason;
     private int bookImage;
     private String bookImageUrl;
+    private String posetime;
 
     public String getBookImageUrl() {
         return bookImageUrl;
@@ -105,5 +106,13 @@ public class BookDetail {
 
     public void setBookImage(int bookImage) {
         this.bookImage = bookImage;
+    }
+
+    public String getPosetime() {
+        return posetime;
+    }
+
+    public void setPosetime(String posetime) {
+        this.posetime = posetime;
     }
 }

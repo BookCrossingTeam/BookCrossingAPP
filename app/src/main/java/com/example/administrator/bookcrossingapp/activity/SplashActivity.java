@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         //延迟跳转
-        Handler handler = new Handler();
+        final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -29,6 +29,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
+                    handler.removeCallbacks(this);
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

@@ -16,7 +16,7 @@ import com.example.administrator.bookcrossingapp.fragment.SearchFragment;
  */
 
 public class DataGenerator {
-    public static final int[] mTabRes = new int[]{R.drawable.tab_home_pressed, R.drawable.tab_friend_pressed, R.drawable.tab_pose_pressed, R.drawable.tab_search_pressed, R.drawable.tab_me_pressed};
+    public static final int[] mTabRes = new int[]{R.drawable.tab_home_pressed, R.drawable.tab_friend_pressed, R.drawable.tab_pose_hover, R.drawable.tab_search_pressed, R.drawable.tab_me_pressed};
     public static final int[] mTabResPressed = new int[]{R.drawable.tab_home_hover, R.drawable.tab_friend_hover, R.drawable.tab_pose_hover, R.drawable.tab_search_hover, R.drawable.tab_me_hover};
 
     public static Fragment[] getFragments(String from) {

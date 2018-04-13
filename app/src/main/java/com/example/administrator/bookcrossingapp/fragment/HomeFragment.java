@@ -12,17 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.activity.PosingConfirmActivity;
 import com.example.administrator.bookcrossingapp.adapter.BookDetailAdapter;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetailDB;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -49,12 +53,17 @@ public class HomeFragment extends Fragment {
     private BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
 
-    private long lastTime = 0L;
+    private String lastTime = null;
 
     public static final String ARGUMENT = "argument";
 
+    private int offset;
+    private int offsetStep;
+
     public HomeFragment() {
         super();
+        offset = 0;
+        offsetStep = 10;
         initBookDetailData();
     }
 
@@ -164,12 +173,32 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(LayoutManager);
         adapter = new BookDetailAdapter(BookDetailList);
         recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // 在newState为滑到底部时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    updateList();
+                }
+            }
+
+        });
     }
 
     public void initBookDetailData() {
-        for (int i = 0; i < 1; i++) {
-            BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "");
-            BookDetailList.add(a);
+        ;
+        List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
+        offset = offset + offsetStep;
+        //username, bookName, author, press, recommendedReason,imgUrl
+        lastTime = "0";
+        if (!dbList.isEmpty())
+            lastTime = dbList.get(0).getPosetime();
+        for (BookDetailDB db : dbList) {
+            BookDetail bookDetail = new BookDetail(db.getUsername(), db.getBookName(), db.getAuthor(), db.getPress(), db.getRecommendedReason(), db.getBookImageUrl());
+            bookDetail.setPosetime(db.getPosetime());
+            BookDetailList.add(bookDetail);
         }
     }
 
@@ -192,14 +221,27 @@ public class HomeFragment extends Fragment {
                 ;// do somethings
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime + "").build();
-                    lastTime = new Date().getTime() / 1000L;
+                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                     String responseData = response.body().string();
                     handleResponseData(responseData);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
                 getActivity().runOnUiThread(new Runnable() {
@@ -225,11 +267,37 @@ public class HomeFragment extends Fragment {
                 String press = jsonObject.getString("publish");
                 String recommendedReason = jsonObject.getString("reason");
                 String imgUrl = jsonObject.getString("imgUrl");
-                BookDetail a = new BookDetail(username, "《" + bookName + "》", author, press, recommendedReason,imgUrl);
-                BookDetailList.add(0, a);
+                String posetime = jsonObject.getString("poseTime");
+                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
+                a.setPosetime(posetime);
+                BookDetailDB db = new BookDetailDB();
+                db.setUsername(username);
+                db.setBookName(bookName);
+                db.setAuthor(author);
+                db.setPress(press);
+                db.setRecommendedReason(recommendedReason);
+                db.setBookImageUrl(imgUrl);
+                db.setPosetime(posetime);
+                db.saveThrows();
+                //BookDetailList.add(0, a);
             }
+            BookDetailList.clear();
+            offset = 0;
+            initBookDetailData();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateList() {
+        List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
+        offset = offset + offsetStep;
+        //username, bookName, author, press, recommendedReason,imgUrl
+        for (BookDetailDB db : dbList) {
+            BookDetail bookDetail = new BookDetail(db.getUsername(), db.getBookName(), db.getAuthor(), db.getPress(), db.getRecommendedReason(), db.getBookImageUrl());
+            bookDetail.setPosetime(db.getPosetime());
+            BookDetailList.add(bookDetail);
+        }
+        adapter.notifyDataSetChanged();
     }
 }
