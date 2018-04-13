@@ -120,7 +120,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
                 pressValue = press.getText().toString();
                 recommendedReasonValue = recommendedReason.getText().toString();
                 classifyValue = classify.getSelectedItem().toString();
-                if (recommendedReasonValue.equals("")) {
+                if (bookNameValue.equals("") || authorValue.equals("") || pressValue.equals("") || recommendedReasonValue.equals("")) {
                     Toast.makeText(PosingConfirmActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
                     return;
                 }
