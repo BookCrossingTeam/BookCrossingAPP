@@ -12,7 +12,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
-        android:background="@drawable/tools_bar_menu" />
+        android:background="@drawable/tools_bar_menu"
+        android:layout_marginLeft="8dp"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/tools_bar_more"
@@ -21,7 +23,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="0dp"
-        android:background="@drawable/tools_bar_more" />
+        android:background="@drawable/tools_bar_more"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp" />
 
 
 </RelativeLayout>

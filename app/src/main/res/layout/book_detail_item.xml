@@ -16,7 +16,9 @@
             android:layout_height="130dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="12dp" />
+            android:layout_marginEnd="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp" />
 
         <TextView
             android:id="@+id/book_detail_author"
@@ -26,7 +28,8 @@
             android:layout_marginBottom="28dp"
             android:layout_toEndOf="@+id/book_detail_icon"
             android:textSize="14sp"
-            Android:text="Francis Scott Key Fitzgerald" />
+            Android:text="Francis Scott Key Fitzgerald"
+            android:layout_toRightOf="@+id/book_detail_icon" />
 
         <TextView
             android:id="@+id/book_detail_bookname"
@@ -40,7 +43,9 @@
             android:maxLines="2"
             android:maxWidth="150dp"
             android:textSize="18sp"
-            Android:text="The Great Gatsby" />
+            Android:text="The Great Gatsby"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="73dp" />
 
         <TextView
             android:id="@+id/book_detail_username"
@@ -49,7 +54,8 @@
             android:layout_alignTop="@+id/book_detail_icon"
             android:layout_toEndOf="@+id/book_detail_icon"
             android:text="Yvettemuki"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_toRightOf="@+id/book_detail_icon" />
 
         <ImageView
             android:id="@+id/book_detail_icon"
@@ -71,7 +77,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:textSize="8sp"
-            Android:text="4-13 15:00:00" />
+            Android:text="4-13 15:00:00"
+            android:layout_alignRight="@+id/book_detail_author" />
 
 
     </RelativeLayout>

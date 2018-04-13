@@ -1,5 +1,6 @@
 package com.example.administrator.bookcrossingapp.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -15,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.R;
-import com.example.administrator.bookcrossingapp.activity.PosingConfirmActivity;
 import com.example.administrator.bookcrossingapp.adapter.BookDetailAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetailDB;
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
         super();
         offset = 0;
-        offsetStep = 10;
+        offsetStep = 5;
         initBookDetailData();
     }
 
@@ -225,23 +225,27 @@ public class HomeFragment extends Fragment {
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
-                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                     String responseData = response.body().string();
                     handleResponseData(responseData);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), "服务器开小差啦", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(), "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
 
                 getActivity().runOnUiThread(new Runnable() {
