@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
         super();
         offset = 0;
-        offsetStep = 5;
+        offsetStep = 8;
         initBookDetailData();
     }
 
@@ -294,6 +295,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateList() {
+        Log.i(TAG, "updateList: ");
         List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
         offset = offset + offsetStep;
         //username, bookName, author, press, recommendedReason,imgUrl

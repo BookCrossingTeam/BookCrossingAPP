@@ -85,6 +85,18 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/btn_setting_update"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/friend_list_item_bg"
+                android:gravity="center"
+                android:text="软件更新"
+                android:textColor="@color/contents_text"
+                android:textSize="18sp" />
+
+            <Button
                 android:id="@+id/btn_log_off"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

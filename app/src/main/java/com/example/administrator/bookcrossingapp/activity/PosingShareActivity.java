@@ -66,9 +66,9 @@ public class PosingShareActivity extends AppCompatActivity {
         imagePicker.setSelectLimit(1);    //选中数量限制
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
         imagePicker.setFocusWidth(720);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(1280);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(960);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
         imagePicker.setOutPutX(720);//保存文件的宽度。单位像素
-        imagePicker.setOutPutY(1280);//保存文件的高度。单位像素
+        imagePicker.setOutPutY(960);//保存文件的高度。单位像素
     }
 
     private void init() {
@@ -84,6 +84,7 @@ public class PosingShareActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PosingShareActivity.this, ImageGridActivity.class);
+                intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS,true); // 是否是直接打开相机
                 startActivityForResult(intent, IMAGE_PICKER);
             }
         });
@@ -164,7 +165,7 @@ public class PosingShareActivity extends AppCompatActivity {
                 File file = new File(getFilesDir(),"temp.jpg");//将要保存图片的路径
                 try {
                     BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                    bm.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                     bos.flush();
                     bos.close();
                 } catch (IOException e) {
@@ -189,7 +190,7 @@ public class PosingShareActivity extends AppCompatActivity {
         // 开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);// 此时返回bm为空
-        newOpts.inSampleSize = calculateInSampleSize(newOpts, 720, 1280);
+        newOpts.inSampleSize = calculateInSampleSize(newOpts, 720, 960);
         newOpts.inJustDecodeBounds = false;
         // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -209,6 +210,7 @@ public class PosingShareActivity extends AppCompatActivity {
         int options = 90;
 
         while (baos.toByteArray().length / 1024 > 50) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            Log.i(TAG, "compressImage: "+baos.toByteArray().length);
             baos.reset(); // 重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             options -= 10;// 每次都减少10
