@@ -37,7 +37,7 @@ public class ShareListActivity extends AppCompatActivity {
 //        username = intent.getStringExtra("username");
 //        tv_username.setText(username);
 
-        initData();
+        //initData();
         RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -48,8 +48,11 @@ public class ShareListActivity extends AppCompatActivity {
 
     private void initData() {
         for (int i = 0; i < 3; i++) {
-            BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "","");
-            sharelist.add(a);
+            //注意这里增加了时间，用set来更新
+            BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面",
+                    "", "","");
+            bookDetail.setPosetime("");
+            sharelist.add(bookDetail);
         }
     }
 }

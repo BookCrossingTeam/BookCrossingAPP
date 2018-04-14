@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 if (tab.getPosition() == 2) {
-                    setDialog();//点击事件
+                    setDialog();//点击事件是上传
                     return;
                 }
                 onTabItemSelected(tab.getPosition());
