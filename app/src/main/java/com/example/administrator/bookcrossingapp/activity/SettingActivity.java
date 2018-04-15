@@ -34,6 +34,7 @@ public class SettingActivity extends AppCompatActivity {
     private Button btnSoftware;
     private Button btnHelp;
     private Button btnupdate;
+    private Button btnLogoff;
     private ProgressDialog pBar;
 
 
@@ -46,6 +47,9 @@ public class SettingActivity extends AppCompatActivity {
         btnSoftware = (Button) findViewById(R.id.btn_setting_software);
         btnupdate = (Button) findViewById(R.id.btn_setting_update);
         btnHelp = (Button) findViewById(R.id.btn_setting_help);
+        btnLogoff = (Button)findViewById(R.id.btn_log_off);
+
+
 
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +93,57 @@ public class SettingActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+            }
+        });
+
+        btnLogoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setTitle("提示");
+                builder.setMessage("你确认注销账号吗？");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //确认退出登录
+                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class );
+                        startActivity(intent);
+
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //取消操作
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("提示");
+        builder.setMessage("你确认注销账号吗？");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //确认退出登录
+                Intent intent = new Intent(SettingActivity.this, LoginActivity.class );
+                startActivity(intent);
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //取消操作
             }
         });
     }
