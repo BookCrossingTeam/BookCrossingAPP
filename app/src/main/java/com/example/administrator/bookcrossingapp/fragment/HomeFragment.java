@@ -199,6 +199,7 @@ public class HomeFragment extends Fragment {
         for (BookDetailDB db : dbList) {
             BookDetail bookDetail = new BookDetail(db.getUsername(), db.getBookName(), db.getAuthor(), db.getPress(), db.getRecommendedReason(), db.getBookImageUrl());
             bookDetail.setPosetime(db.getPosetime());
+            bookDetail.setUserid(db.getUserid());
             BookDetailList.add(bookDetail);
         }
     }
@@ -273,8 +274,11 @@ public class HomeFragment extends Fragment {
                 String recommendedReason = jsonObject.getString("reason");
                 String imgUrl = jsonObject.getString("imgUrl");
                 String posetime = jsonObject.getString("poseTime");
+                int userId = Integer.parseInt(jsonObject.getString("userId"));
                 BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
                 a.setPosetime(posetime);
+                a.setUserid(userId);
+
                 BookDetailDB db = new BookDetailDB();
                 db.setUsername(username);
                 db.setBookName(bookName);
@@ -283,6 +287,7 @@ public class HomeFragment extends Fragment {
                 db.setRecommendedReason(recommendedReason);
                 db.setBookImageUrl(imgUrl);
                 db.setPosetime(posetime);
+                db.setUserid(userId);
                 db.saveThrows();
                 //BookDetailList.add(0, a);
             }
@@ -302,6 +307,7 @@ public class HomeFragment extends Fragment {
         for (BookDetailDB db : dbList) {
             BookDetail bookDetail = new BookDetail(db.getUsername(), db.getBookName(), db.getAuthor(), db.getPress(), db.getRecommendedReason(), db.getBookImageUrl());
             bookDetail.setPosetime(db.getPosetime());
+            bookDetail.setUserid(db.getUserid());
             BookDetailList.add(bookDetail);
         }
         adapter.notifyDataSetChanged();

@@ -45,7 +45,7 @@ public class PosingShareActivity extends AppCompatActivity {
     private Spinner classify;
     private ImageView pose_btn;
     private String bookNameValue, authorValue, pressValue, recommendedReasonValue, classifyValue;
-    private String userid;
+    private int userid;
     private ImageView bookImg;
     private String bookImgAbsolutePath = null;
 
@@ -56,7 +56,7 @@ public class PosingShareActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posing_share);
         SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
-        userid = pref.getString("userid", "");
+        userid = pref.getInt("userid", 0);
         init();//初始化组件
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -119,7 +119,7 @@ public class PosingShareActivity extends AppCompatActivity {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
                     RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("file", "book_image.jpg", fileBody)
-                            .addFormDataPart("userid", userid).addFormDataPart("bookName", bookNameValue)
+                            .addFormDataPart("userid", userid+"").addFormDataPart("bookName", bookNameValue)
                             .addFormDataPart("author", authorValue).addFormDataPart("press", pressValue).addFormDataPart("recommendedReason", recommendedReasonValue).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.administrator.bookcrossingapp.datamodel.Msg;
 import com.example.administrator.bookcrossingapp.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +27,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
         LinearLayout rightLayout;
         TextView leftMsg;
         TextView rightMsg;
+        TextView leftMsgTime;
+        TextView rightMsgTime;
 
         public ViewHolder(View view){
             super(view);
@@ -32,6 +36,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
             rightLayout = (LinearLayout) view.findViewById(R.id.right_layout);
             leftMsg = (TextView) view.findViewById(R.id.left_msg);
             rightMsg = (TextView) view.findViewById(R.id.right_msg);
+            leftMsgTime = (TextView) view.findViewById(R.id.left_msg_time);
+            rightMsgTime = (TextView) view.findViewById(R.id.right_msg_time);
         }
     }
 
@@ -54,11 +60,13 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
             holder.leftLayout.setVisibility(View.VISIBLE);
             holder.rightLayout.setVisibility(View.GONE);
             holder.leftMsg.setText(msg.getContent());
+            holder.leftMsgTime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(msg.getTime())));
         }else if(msg.getType() == Msg.TYPE_SENT){
             //如果是发送的情况
             holder.rightLayout.setVisibility(View.VISIBLE);
             holder.leftLayout.setVisibility(View.GONE);
             holder.rightMsg.setText(msg.getContent());
+            holder.rightMsgTime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(msg.getTime())));
         }
     }
 

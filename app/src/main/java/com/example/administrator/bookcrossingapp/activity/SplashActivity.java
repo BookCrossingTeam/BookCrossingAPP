@@ -22,9 +22,9 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 //用来存储用户基本信息
                 SharedPreferences pref = getSharedPreferences("user_info", MODE_PRIVATE);
-                String userid = pref.getString("userid", "");
+                int userid = pref.getInt("userid", 0);
                 String token = pref.getString("token", "");
-                if (userid.equals("") || userid.equals("")) {
+                if (userid==0) {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();

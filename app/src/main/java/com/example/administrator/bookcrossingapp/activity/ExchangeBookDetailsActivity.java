@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
 
 public class ExchangeBookDetailsActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private TextView tv_want;
     private ImageView img_icon;
     private TextView username, bookName, author, press, recommendedReason;
+    private ImageView bookImg;
 
     private String usernameValue;
     private String bookNameValue;
@@ -27,6 +29,8 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private String pressValue;
     private String classifyValue;
     private String recommendedReasonValue;
+    private String bookImgURL;
+    private int userid;
 
 
 
@@ -43,12 +47,15 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         authorValue = intent.getStringExtra("Author");
         pressValue = intent.getStringExtra("Press");
         recommendedReasonValue = intent.getStringExtra("RecommendedReason");
+        bookImgURL = intent.getStringExtra("BookImageUrl");
+        userid = intent.getIntExtra("userid",0);
 
         username = (TextView) findViewById(R.id.tv_username);
         bookName = (TextView) findViewById(R.id.tv_bookname);
         author = (TextView) findViewById(R.id.tv_author);
         press = (TextView) findViewById(R.id.tv_press);
         recommendedReason = (TextView) findViewById(R.id.tv_recommend);
+        bookImg = (ImageView) findViewById(R.id.img_pic);
         tv_sharelist = findViewById(R.id.tv_sharelist);
         tv_wantlist = findViewById(R.id.tv_wantlist);
         tv_chat = findViewById(R.id.tv_bookdetail_chat);
@@ -65,11 +72,13 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         author.setText(authorValue);
         press.setText(pressValue);
         recommendedReason.setText(recommendedReasonValue);
+        Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/bookImg/"+bookImgURL).into(bookImg);
 
         tv_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ExchangeBookDetailsActivity.this, FriendChatActivity.class);
+                intent.putExtra("userid",userid);
                 startActivity(intent);
             }
         });

@@ -1,20 +1,21 @@
 package com.example.administrator.bookcrossingapp.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.administrator.bookcrossingapp.datamodel.Msg;
-import com.example.administrator.bookcrossingapp.adapter.MsgAdapter;
+import com.example.administrator.bookcrossingapp.MessageManagement;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.adapter.MsgAdapter;
+import com.example.administrator.bookcrossingapp.datamodel.Msg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 
 public class FriendChatActivity extends AppCompatActivity {
+    private static final String TAG = "FriendChatActivity";
     private List<Msg> msgList = new ArrayList<>();
     private EditText inputText;
     private Button exchangeBtn;
@@ -35,6 +37,8 @@ public class FriendChatActivity extends AppCompatActivity {
     private LinearLayout layout_exchange;
     private LinearLayout layout_exchange_change;
 
+    private int userid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,48 +49,74 @@ public class FriendChatActivity extends AppCompatActivity {
         inputText = (EditText) findViewById(R.id.input_text);
         send = (Button) findViewById(R.id.send);
         msgRecyclerView = (RecyclerView) findViewById(R.id.msg_recycler_view);
-        exchangeBtn = (Button)findViewById(R.id.button_exchange);
-        addBtn = (Button)findViewById(R.id.exchange_book_right);
-        layout_exchange = (LinearLayout)findViewById(R.id.layout_chat_exchange);
-        layout_exchange_change = (LinearLayout)findViewById(R.id.layout_chat_exchange_change);
+        exchangeBtn = (Button) findViewById(R.id.button_exchange);
+        addBtn = (Button) findViewById(R.id.exchange_book_right);
+        layout_exchange = (LinearLayout) findViewById(R.id.layout_chat_exchange);
+        layout_exchange_change = (LinearLayout) findViewById(R.id.layout_chat_exchange_change);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         msgRecyclerView.setLayoutManager(layoutManager);
         adapter = new MsgAdapter(msgList);
         msgRecyclerView.setAdapter(adapter);
+
+        refreshMsg();
         //为send注册点击事件
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = inputText.getText().toString();
-                if (!"".equals(content)) {
-                    //如果输入框内容不为空
-                    Msg msg = new Msg(content, Msg.TYPE_SENT);
-                    msgList.add(msg); //相当于将新添加的内容加到数据list中
-                    //当有新的数据插入是时，会刷新RecyclerView显示
-                    adapter.notifyItemInserted(msgList.size() - 1); //重新获取最新数据list位置
-                    //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
-                    msgRecyclerView.scrollToPosition(msgList.size() - 1);
-                    inputText.setText(""); //清空输入框内容
-
-                }
+                final String content = inputText.getText().toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!"".equals(content)) {
+                            //如果输入框内容不为空
+                            if (MessageManagement.getInstance(FriendChatActivity.this).sendMsg(userid, content)) {
+                                Msg msg = new Msg(content, Msg.TYPE_SENT);
+                                msg.setTime(System.currentTimeMillis());
+                                msgList.add(msg); //相当于将新添加的内容加到数据list中
+                                //当有新的数据插入是时，会刷新RecyclerView显示
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        adapter.notifyItemInserted(msgList.size() - 1); //重新获取最新数据list位置
+                                        //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
+                                        msgRecyclerView.scrollToPosition(msgList.size() - 1);
+                                        inputText.setText(""); //清空输入框内容}
+                                    }
+                                });
+                            }
+                            else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "网络开小差啦", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }).start();
             }
         });
 
         //为点击exchange按钮设置点击事件
-        exchangeBtn.setOnClickListener(new View.OnClickListener() {
+        exchangeBtn.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) layout_exchange.getLayoutParams();
                 linearParams.height = 400;
                 layout_exchange_change.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), "exchange your book",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "exchange your book", Toast.LENGTH_SHORT).show();
 
             }
         });
 
         //为添加按钮添加点击事件
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FriendChatActivity.this, ShareListActivity.class);
@@ -95,12 +125,23 @@ public class FriendChatActivity extends AppCompatActivity {
         });
     }
 
-    private void initMsgs(){
-        Msg msg1 = new Msg("Hello guy.", Msg.TYPE_RECEIVED);
-        msgList.add(msg1);
-        Msg msg2 = new Msg("Hello. Who is That?", Msg.TYPE_SENT);
-        msgList.add(msg2);
-        Msg msg3 = new Msg("This is Tom. Nice to meet you. ", Msg.TYPE_RECEIVED);
-        msgList.add(msg3);
+    private void initMsgs() {
+        Intent intent = getIntent();
+        userid = intent.getIntExtra("userid", 0);
+        MessageManagement.getInstance(FriendChatActivity.this).initMsglist(userid, msgList);
+        Log.i(TAG, "initMsgs: " + msgList.size());
+    }
+
+    public void refreshMsg() {
+        List<Msg> tempList = MessageManagement.getInstance(FriendChatActivity.this).getFriendUnread(userid);
+        for (Msg msg : tempList) {
+            msg.setIsRead(1);
+            msg.saveThrows();
+            msgList.add(msg); //相当于将新添加的内容加到数据list中
+            //当有新的数据插入是时，会刷新RecyclerView显示
+            adapter.notifyItemInserted(msgList.size() - 1); //重新获取最新数据list位置
+            //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
+            msgRecyclerView.scrollToPosition(msgList.size() - 1);
+        }
     }
 }

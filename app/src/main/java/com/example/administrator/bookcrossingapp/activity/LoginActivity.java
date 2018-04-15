@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                              JSONObject datajson = new JSONObject(responseData);
                             if (datajson.getInt("statecode") == 200) {
                                 SharedPreferences.Editor editor = getSharedPreferences("user_info", MODE_PRIVATE).edit();
-                                editor.putString("userid", datajson.getString("userid"));
+                                editor.putInt("userid", datajson.getInt("userid"));
                                 editor.putString("username", datajson.getString("username"));
                                 editor.putString("token", datajson.getString("token"));
                                 editor.apply();

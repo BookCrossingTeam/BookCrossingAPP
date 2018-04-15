@@ -16,6 +16,15 @@ public class BookDetail {
     private int bookImage;
     private String bookImageUrl;
     private String posetime;
+    private int userid;
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
 
     public String getBookImageUrl() {
         return bookImageUrl;

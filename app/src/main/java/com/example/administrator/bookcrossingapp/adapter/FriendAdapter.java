@@ -12,6 +12,8 @@ import com.example.administrator.bookcrossingapp.datamodel.Friend;
 import com.example.administrator.bookcrossingapp.activity.FriendChatActivity;
 import com.example.administrator.bookcrossingapp.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +26,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView friendPic;
         TextView friendName;
+        TextView friendRead;
+        TextView friendTime;
         View friendView; //用来设置整个item的点击事件
 
         public ViewHolder(View v) {
@@ -31,6 +35,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             friendView = v;
             friendPic = (ImageView) v.findViewById(R.id.friend_item_pic);
             friendName = (TextView) v.findViewById(R.id.friend_item_name);
+            friendRead = (TextView) v.findViewById(R.id.friendRead);
+            friendTime = (TextView) v.findViewById(R.id.friendTime);
         }
     }
 
@@ -47,23 +53,27 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 //暂时先不传递消息
-//                int position = holder.getAdapterPosition();
-//                Friend friend = mFriendList.get(position);
+               int position = holder.getAdapterPosition();
+                Friend friend = mFriendList.get(position);
                 Intent intent = new Intent(v.getContext(), FriendChatActivity.class);
+                intent.putExtra("userid",friend.getUserid());
                 //这里会添加需要传递的消息
                 view.getContext().startActivity(intent);
             }
         });
-
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Friend friend = mFriendList.get(position);
-        holder.friendPic.setImageResource(friend.getFriendPic());
+        if(friend.getIsread()==1)
+            holder.friendRead.setVisibility(View.GONE);
+        else
+            holder.friendRead.setVisibility(View.VISIBLE);
+        holder.friendPic.setImageResource(R.drawable.friend_list_icon);
         holder.friendName.setText(friend.getFriendName());
-
+        holder.friendTime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(friend.getTime())));
     }
 
     @Override
