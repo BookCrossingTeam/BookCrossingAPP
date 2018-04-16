@@ -2,6 +2,7 @@ package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,9 @@ public class FriendChatActivity extends AppCompatActivity {
     private LinearLayout layout_exchange;
     private LinearLayout layout_exchange_change;
 
+    private Handler handler;
+    private Runnable runnable;
+
     private int userid;
 
     @Override
@@ -58,8 +62,8 @@ public class FriendChatActivity extends AppCompatActivity {
         msgRecyclerView.setLayoutManager(layoutManager);
         adapter = new MsgAdapter(msgList);
         msgRecyclerView.setAdapter(adapter);
+        msgRecyclerView.scrollToPosition(msgList.size() - 1);
 
-        refreshMsg();
         //为send注册点击事件
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +88,7 @@ public class FriendChatActivity extends AppCompatActivity {
                                         inputText.setText(""); //清空输入框内容}
                                     }
                                 });
-                            }
-                            else{
+                            } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -123,6 +126,27 @@ public class FriendChatActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                refreshMsg();
+                handler.postDelayed(runnable, 10000);
+            }
+        };
+        handler.postDelayed(runnable, 10000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 
     private void initMsgs() {
@@ -133,15 +157,24 @@ public class FriendChatActivity extends AppCompatActivity {
     }
 
     public void refreshMsg() {
-        List<Msg> tempList = MessageManagement.getInstance(FriendChatActivity.this).getFriendUnread(userid);
-        for (Msg msg : tempList) {
-            msg.setIsRead(1);
-            msg.saveThrows();
-            msgList.add(msg); //相当于将新添加的内容加到数据list中
-            //当有新的数据插入是时，会刷新RecyclerView显示
-            adapter.notifyItemInserted(msgList.size() - 1); //重新获取最新数据list位置
-            //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
-            msgRecyclerView.scrollToPosition(msgList.size() - 1);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i(TAG, "refreshMsg: ");
+                        MessageManagement.getInstance(FriendChatActivity.this).initMsglist(userid, msgList);
+
+                        //当有新的数据插入是时，会刷新RecyclerView显示
+                        adapter.notifyDataSetChanged(); //重新获取最新数据list位置
+                        //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
+                        msgRecyclerView.smoothScrollToPosition(msgList.size() - 1);
+                    }
+                });
+            }
+        }).start();
+
     }
 }

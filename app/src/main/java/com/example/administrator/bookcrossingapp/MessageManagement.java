@@ -2,6 +2,7 @@ package com.example.administrator.bookcrossingapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.util.Log;
 
 import com.example.administrator.bookcrossingapp.datamodel.Friend;
@@ -11,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.litepal.crud.DataSupport;
+import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -72,6 +74,7 @@ public class MessageManagement {
     }
 
     public void getMsgFromRemote() {
+        Log.i(TAG, "getMsgFromRemote: ");
         try {
             List<Msg> msgList = DataSupport.order("time desc").limit(1).find(Msg.class);
             if (!msgList.isEmpty())
@@ -85,6 +88,7 @@ public class MessageManagement {
             Type type = new TypeToken<ArrayList<MsgJson>>() {
             }.getType();
             List<MsgJson> msgJsonList = new Gson().fromJson(responseData, type);
+            boolean flag = false;
             for (MsgJson msgJson : msgJsonList) {
                 Msg msg = new Msg();
                 msg.setUserid(msgJson.getUserid());
@@ -93,13 +97,17 @@ public class MessageManagement {
                 msg.setContent(msgJson.getMessage());
                 msg.setTime(msgJson.getMsgTime());
                 msg.setIsRead(0);
-                if (msgJson.getFromUserId() == myuserid)
-                {
+                if (msgJson.getFromUserId() == myuserid) {
                     msg.setType(Msg.TYPE_SENT);
                     msg.setIsRead(1);
-                }
-                else
+                } else {
                     msg.setType(Msg.TYPE_RECEIVED);
+                    if (!flag) {
+                        Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(1000);
+                        flag = true;
+                    }
+                }
                 msg.saveThrows();
             }
         } catch (Exception e) {
@@ -116,7 +124,7 @@ public class MessageManagement {
             if (hs.contains(id))
                 continue;
             hs.add(id);
-            Log.i(TAG, "initFrinedList: "+msg.getUsername()+msg.getIsRead());
+            Log.i(TAG, "initFrinedList: " + msg.getUsername() + msg.getIsRead());
             Friend friend = new Friend();
             friend.setFriendName(msg.getUsername());
             friend.setUserid(msg.getUserid());
@@ -130,8 +138,16 @@ public class MessageManagement {
     public void initMsglist(int userid, List<Msg> _msgList) {
         Log.i(TAG, "initMsglist: " + userid);
         _msgList.clear();
-        List<Msg> msgList = DataSupport.where("userid = ? and isRead = ?", userid + "", "1").order("time asc").find(Msg.class);
+        List<Msg> msgList = DataSupport.where("userid = ? ", userid + "").order("time asc").find(Msg.class);
         _msgList.addAll(msgList);
+        Msg msg = new Msg();
+        msg.setIsRead(1);
+        msg.updateAllAsync("userid = ? ", userid + "").listen(new UpdateOrDeleteCallback() {
+            @Override
+            public void onFinish(int rowsAffected) {
+                Log.i(TAG, "initMsglist onFinish: " + rowsAffected);
+            }
+        });
         Log.i(TAG, "initMsglist: " + _msgList.size());
     }
 
@@ -143,7 +159,7 @@ public class MessageManagement {
     public boolean sendMsg(int touserid, String content) {
         try {
             OkHttpClient client = new OkHttpClient();
-            RequestBody requestBody = new FormBody.Builder().add("userid", myuserid + "").add("touserid",touserid+"").add("content", content).build();
+            RequestBody requestBody = new FormBody.Builder().add("userid", myuserid + "").add("touserid", touserid + "").add("content", content).build();
             Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendMsg").post(requestBody).build();
             Response response = client.newCall(request).execute();
             String responseData = response.body().string();

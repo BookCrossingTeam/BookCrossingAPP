@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.example.administrator.bookcrossingapp.GlideImageLoader;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.datamodel.DoubanIsbn;
 import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -58,10 +60,22 @@ public class PosingConfirmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posing_share);
+
         SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
         userid = pref.getInt("userid", 0);
-        init();//初始化组件
 
+        init();//初始化组件
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
+        imagePicker.setCrop(true);        //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        imagePicker.setSelectLimit(1);    //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(720);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(960);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(720);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(960);//保存文件的高度。单位像素
     }
 
     private void init() {
@@ -72,13 +86,6 @@ public class PosingConfirmActivity extends AppCompatActivity {
         pose_btn = (ImageView) findViewById(R.id.btn_posing_shared);
         bookImg = (ImageView) findViewById(R.id.img_posing_shared_pic);
         classify = findViewById(R.id.spinner_posing_shared);
-        //不可编辑，通过扫码传值进来
-        //bookName.setFocusable(false);
-        //bookName.setFocusableInTouchMode(false);
-        //author.setFocusable(false);
-        //author.setFocusableInTouchMode(false);
-        //press.setFocusable(false);
-        //press.setFocusableInTouchMode(false);
         //传值
         Intent intent = getIntent();
         final String content = intent.getStringExtra("code_content");
@@ -129,7 +136,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PosingConfirmActivity.this, ImageGridActivity.class);
-                intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS,true); // 是否是直接打开相机
+                intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
                 startActivityForResult(intent, IMAGE_PICKER);
             }
         });
@@ -164,7 +171,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
                     RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("file", "book_image.jpg", fileBody)
-                            .addFormDataPart("userid", userid+"").addFormDataPart("bookName", bookNameValue)
+                            .addFormDataPart("userid", userid + "").addFormDataPart("bookName", bookNameValue)
                             .addFormDataPart("author", authorValue).addFormDataPart("press", pressValue).addFormDataPart("recommendedReason", recommendedReasonValue).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
@@ -205,19 +212,26 @@ public class PosingConfirmActivity extends AppCompatActivity {
             if (data != null && requestCode == IMAGE_PICKER) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 Log.d(TAG, "onActivityResult: " + images.get(0).path + images.get(0).width);
-                Bitmap bm = getimage(images.get(0).path);
+                final String srcPath = images.get(0).path;
+                Bitmap bm = BitmapFactory.decodeFile(srcPath);
                 bookImg.setImageBitmap(bm);
                 //openFileInput("tmp.jpg");
-                File file = new File(getFilesDir(),"temp.jpg");//将要保存图片的路径
-                try {
-                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                    bos.flush();
-                    bos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                bookImgAbsolutePath = file.getAbsolutePath();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        File file = new File(getFilesDir(), "temp.jpg");//将要保存图片的路径
+                        try {
+                            Bitmap bm = getimage(srcPath);
+                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                            bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                            bos.flush();
+                            bos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        bookImgAbsolutePath = file.getAbsolutePath();
+                    }
+                }).start();
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }
@@ -236,7 +250,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
         // 开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);// 此时返回bm为空
-        newOpts.inSampleSize = calculateInSampleSize(newOpts, 720, 960);
+        newOpts.inSampleSize = calculateInSampleSize(newOpts, 540, 720);
         newOpts.inJustDecodeBounds = false;
         // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -256,7 +270,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
         int options = 90;
 
         while (baos.toByteArray().length / 1024 > 50) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
-            Log.i(TAG, "compressImage: "+baos.toByteArray().length);
+            Log.i(TAG, "compressImage: " + baos.toByteArray().length);
             baos.reset(); // 重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             options -= 10;// 每次都减少10

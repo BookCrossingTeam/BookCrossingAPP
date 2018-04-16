@@ -159,19 +159,26 @@ public class PosingShareActivity extends AppCompatActivity {
             if (data != null && requestCode == IMAGE_PICKER) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 Log.d(TAG, "onActivityResult: " + images.get(0).path + images.get(0).width);
-                Bitmap bm = getimage(images.get(0).path);
+                final String srcPath = images.get(0).path;
+                Bitmap bm = BitmapFactory.decodeFile(srcPath);
                 bookImg.setImageBitmap(bm);
                 //openFileInput("tmp.jpg");
-                File file = new File(getFilesDir(),"temp.jpg");//将要保存图片的路径
-                try {
-                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                    bos.flush();
-                    bos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                bookImgAbsolutePath = file.getAbsolutePath();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        File file = new File(getFilesDir(), "temp.jpg");//将要保存图片的路径
+                        try {
+                            Bitmap bm = getimage(srcPath);
+                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                            bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                            bos.flush();
+                            bos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        bookImgAbsolutePath = file.getAbsolutePath();
+                    }
+                }).start();
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }
@@ -190,7 +197,7 @@ public class PosingShareActivity extends AppCompatActivity {
         // 开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);// 此时返回bm为空
-        newOpts.inSampleSize = calculateInSampleSize(newOpts, 720, 960);
+        newOpts.inSampleSize = calculateInSampleSize(newOpts, 540, 720);
         newOpts.inJustDecodeBounds = false;
         // 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);

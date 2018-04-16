@@ -25,12 +25,12 @@ import java.util.List;
 public class FriendFragment extends Fragment {
     private static final String TAG = "FriendFragment";
     public static final String ARGUMENT = "FriendFragment";
-    private String mArgument;
     private View view;
     private FriendAdapter adapter;
     private List<Friend> friendList = new ArrayList<>();
 
     private SwipeRefreshLayout swipeRefresh;
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener;
 
     public FriendFragment() {
         super();
@@ -41,10 +41,16 @@ public class FriendFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
-        initFriends();
         initFriendsRecyclerView();
         initSwipe_refresh();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        swipeRefresh.setRefreshing(true);
+        onRefreshListener.onRefresh();
     }
 
     public static FriendFragment newInstance(String from) {
@@ -75,12 +81,13 @@ public class FriendFragment extends Fragment {
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.friend_list_swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimaryDark);
 
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i(TAG, "onRefresh run: ");
                         MessageManagement.getInstance(getActivity()).getMsgFromRemote();
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -95,14 +102,9 @@ public class FriendFragment extends Fragment {
                     }
                 }).start();
             }
-        });
+        };
+
+        swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initFriends();
-        adapter.notifyDataSetChanged();
-        swipeRefresh.setRefreshing(false);
-    }
 }

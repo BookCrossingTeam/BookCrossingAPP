@@ -180,10 +180,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                // 在newState为滑到底部时
+
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int lastItemPosition = LayoutManager.findLastVisibleItemPosition();
-                    if (lastItemPosition == BookDetailList.size() - 2)
+                    if (lastItemPosition >= BookDetailList.size() - 3)
                         updateList();
                 }
             }
@@ -192,7 +192,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void initBookDetailData() {
-        ;
         List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
         offset = offset + offsetStep;
         //username, bookName, author, press, recommendedReason,imgUrl
@@ -238,9 +237,10 @@ public class HomeFragment extends Fragment {
                                 }
                             });
                         }
+                        Log.i(TAG, "run: " + response.body());
+                        String responseData = response.body().string();
+                        handleResponseData(responseData);
                     }
-                    String responseData = response.body().string();
-                    handleResponseData(responseData);
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -292,7 +292,6 @@ public class HomeFragment extends Fragment {
                 db.setPosetime(posetime);
                 db.setUserid(userId);
                 db.saveThrows();
-                //BookDetailList.add(0, a);
             }
             BookDetailList.clear();
             offset = 0;
