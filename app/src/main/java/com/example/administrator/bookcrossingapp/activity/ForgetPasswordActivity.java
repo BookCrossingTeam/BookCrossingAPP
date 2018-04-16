@@ -32,7 +32,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private ImageView imageSummit;
 
     private ImageView imageConfirm;
-    private String newPasswordValue, confirmPasswordValue, telephoneValue, identicodeValue, code;
+    private String newPasswordValue, telephoneValue, identicodeValue;
 
     private static String sessionid;
 

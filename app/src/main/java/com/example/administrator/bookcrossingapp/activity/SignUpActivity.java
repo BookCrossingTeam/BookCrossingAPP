@@ -156,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
                 if (!checkbox.isChecked()) {
-                    Toast.makeText(SignUpActivity.this, "请阅读协议", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "请同意相关协议", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

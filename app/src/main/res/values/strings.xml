@@ -3,6 +3,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="todo">TODO</string>
+    <string name="agreement">注册即代表您已阅读并同意<u>相关条款</u></string>
 
     <string-array name="classify_spinner">
         <item>请选择分类</item>

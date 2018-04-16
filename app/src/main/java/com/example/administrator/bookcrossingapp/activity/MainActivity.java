@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.DataGenerator;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.fragment.HomeFragment;
 import com.yzq.zxinglibrary.android.CaptureActivity;
 import com.yzq.zxinglibrary.bean.ZxingConfig;
 import com.yzq.zxinglibrary.common.Constant;
@@ -99,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
                     setDialog();//点击事件
                     return;
                 }
+                if(tab.getPosition() == 0)
+                    ((HomeFragment)mFragmensts[0]).smoothScroll();
+
                 onTabItemSelected(tab.getPosition());
                 //改变Tab 状态
                 for (int i = 0; i < mTabLayout.getTabCount(); i++) {

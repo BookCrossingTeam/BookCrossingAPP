@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.administrator.bookcrossingapp.R;
 
 public class SplashActivity extends AppCompatActivity {
+    private static final String TAG = "SplashActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +22,16 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.i(TAG, "run: ");
                 //用来存储用户基本信息
                 SharedPreferences pref = getSharedPreferences("user_info", MODE_PRIVATE);
                 int userid = pref.getInt("userid", 0);
                 String token = pref.getString("token", "");
-                if (userid==0) {
+                if (userid == 0 || token.equals("")) {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    handler.removeCallbacks(this);
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

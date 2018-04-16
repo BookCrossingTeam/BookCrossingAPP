@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment {
     private List<BookDetail> BookDetailList = new ArrayList<>();
     private BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
+    private RecyclerView recyclerView;
 
     private String lastTime = null;
 
@@ -169,8 +170,8 @@ public class HomeFragment extends Fragment {
     }
 
     public void initRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        final LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(LayoutManager);
         adapter = new BookDetailAdapter(BookDetailList);
         recyclerView.setAdapter(adapter);
@@ -181,7 +182,9 @@ public class HomeFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 // 在newState为滑到底部时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    updateList();
+                    int lastItemPosition = LayoutManager.findLastVisibleItemPosition();
+                    if (lastItemPosition == BookDetailList.size() - 2)
+                        updateList();
                 }
             }
 
@@ -311,5 +314,10 @@ public class HomeFragment extends Fragment {
             BookDetailList.add(bookDetail);
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public void smoothScroll() {
+        Log.i(TAG, "smoothScroll: ");
+        recyclerView.smoothScrollToPosition(0);
     }
 }

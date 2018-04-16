@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putInt("userid", datajson.getInt("userid"));
                                 editor.putString("username", datajson.getString("username"));
                                 editor.putString("token", datajson.getString("token"));
+                                editor.putString("headImgPath",datajson.getString("headImgPath"));
                                 editor.apply();
                                 runOnUiThread(new Runnable() {
                                     @Override
