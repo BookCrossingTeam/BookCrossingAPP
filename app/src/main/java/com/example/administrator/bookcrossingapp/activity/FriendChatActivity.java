@@ -157,7 +157,7 @@ public class FriendChatActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote()>0)
+                if (MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote()>-1)
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

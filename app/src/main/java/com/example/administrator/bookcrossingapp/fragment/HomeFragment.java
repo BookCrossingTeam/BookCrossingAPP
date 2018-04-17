@@ -225,6 +225,7 @@ public class HomeFragment extends Fragment {
                 ;// do somethings
                 try {
                     OkHttpClient client = new OkHttpClient();
+                    client.retryOnConnectionFailure();
                     RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
@@ -237,7 +238,7 @@ public class HomeFragment extends Fragment {
                                 }
                             });
                         }
-                        Log.i(TAG, "run: " + response.body());
+                        //Log.i(TAG, "run: " + response.body());
                         String responseData = response.body().string();
                         handleResponseData(responseData);
                     }
