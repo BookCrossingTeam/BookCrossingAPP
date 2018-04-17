@@ -51,7 +51,7 @@ public class ShareListActivity extends AppCompatActivity {
             //注意这里增加了时间，用set来更新
             BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面",
                     "", "","");
-            bookDetail.setPosetime("");
+            bookDetail.setPosetime(0);
             sharelist.add(bookDetail);
         }
     }

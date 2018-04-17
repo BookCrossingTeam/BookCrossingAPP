@@ -15,8 +15,7 @@
         <ImageView
             android:id="@+id/friend_item_people1"
             android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/friend_chat_people1" />
+            android:layout_height="45dp" />
 
         <LinearLayout
 
@@ -79,8 +78,7 @@
         <ImageView
             android:id="@+id/friend_item_people2"
             android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/friend_chat_people2" />
+            android:layout_height="45dp" />
     </LinearLayout>
 
 </LinearLayout>

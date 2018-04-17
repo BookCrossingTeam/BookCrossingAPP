@@ -15,8 +15,17 @@ public class BookDetail {
     private String recommendedReason;
     private int bookImage;
     private String bookImageUrl;
-    private String posetime;
+    private long posetime;
     private int userid;
+    private String userheadpath;
+
+    public String getUserheadpath() {
+        return userheadpath;
+    }
+
+    public void setUserheadpath(String userheadpath) {
+        this.userheadpath = userheadpath;
+    }
 
     public int getUserid() {
         return userid;
@@ -117,11 +126,11 @@ public class BookDetail {
         this.bookImage = bookImage;
     }
 
-    public String getPosetime() {
+    public long getPosetime() {
         return posetime;
     }
 
-    public void setPosetime(String posetime) {
+    public void setPosetime(long posetime) {
         this.posetime = posetime;
     }
 }

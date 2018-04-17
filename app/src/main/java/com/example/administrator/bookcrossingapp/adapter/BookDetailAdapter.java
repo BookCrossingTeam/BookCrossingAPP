@@ -34,6 +34,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         TextView author;
         TextView posetime;
         ImageView bookimg;
+        ImageView nameheadImg;
         View bookView;
 
 
@@ -43,8 +44,9 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
             username = (TextView) view.findViewById(R.id.book_detail_username);
             bookName = (TextView) view.findViewById(R.id.book_detail_bookname);
             author = (TextView) view.findViewById(R.id.book_detail_author);
-            bookimg = (ImageView)view.findViewById(R.id.book_detail_pic);
-            posetime = (TextView)view.findViewById(R.id.book_detail_posetime);
+            bookimg = (ImageView) view.findViewById(R.id.book_detail_pic);
+            posetime = (TextView) view.findViewById(R.id.book_detail_posetime);
+            nameheadImg = (ImageView) view.findViewById(R.id.book_detail_icon);
         }
     }
 
@@ -63,14 +65,15 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 BookDetail bookDetail = mBookDetailList.get(position);
-                Intent intent = new Intent(v.getContext(),ExchangeBookDetailsActivity.class);
-                intent.putExtra("Username",bookDetail.getUsername());
-                intent.putExtra("BookName",bookDetail.getBookName());
-                intent.putExtra("Author",bookDetail.getAuthor());
-                intent.putExtra("Press",bookDetail.getPress());
-                intent.putExtra("RecommendedReason",bookDetail.getRecommendedReason());
-                intent.putExtra("BookImageUrl",bookDetail.getBookImageUrl());
-                intent.putExtra("userid",bookDetail.getUserid());
+                Intent intent = new Intent(v.getContext(), ExchangeBookDetailsActivity.class);
+                intent.putExtra("Username", bookDetail.getUsername());
+                intent.putExtra("BookName", bookDetail.getBookName());
+                intent.putExtra("Author", bookDetail.getAuthor());
+                intent.putExtra("Press", bookDetail.getPress());
+                intent.putExtra("RecommendedReason", bookDetail.getRecommendedReason());
+                intent.putExtra("BookImageUrl", bookDetail.getBookImageUrl());
+                intent.putExtra("userid", bookDetail.getUserid());
+                intent.putExtra("nameheadUrl",bookDetail.getUserheadpath());
                 view.getContext().startActivity(intent);
             }
         });
@@ -83,9 +86,9 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         holder.username.setText(bookdetail.getUsername());
         holder.bookName.setText(bookdetail.getBookName());
         holder.author.setText(bookdetail.getAuthor());
-        Long timestamp = Long.parseLong(bookdetail.getPosetime());
-        holder.posetime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(timestamp)));
-        Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/"+bookdetail.getBookImageUrl()).into(holder.bookimg);
+        holder.posetime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(bookdetail.getPosetime())));
+        Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/" + bookdetail.getBookImageUrl()).into(holder.bookimg);
+        Glide.with(context).load("http://120.24.217.191/Book/img/headImg/" + bookdetail.getUserheadpath()).error(R.drawable.icon).into(holder.nameheadImg);
     }
 
     @Override
