@@ -130,7 +130,7 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PollingService.setDelaytime(Integer.MAX_VALUE);
+        PollingService.setDelaytime(1000*30);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -145,7 +145,7 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PollingService.setDelaytime(10000);
+        PollingService.setDelaytime(1000*10);
         handler.removeCallbacks(runnable);
     }
 
