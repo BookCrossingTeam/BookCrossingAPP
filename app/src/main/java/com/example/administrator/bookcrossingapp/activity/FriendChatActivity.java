@@ -17,6 +17,7 @@ import com.example.administrator.bookcrossingapp.MessageManagement;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.adapter.MsgAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.Msg;
+import com.example.administrator.bookcrossingapp.service.PollingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +130,7 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        PollingService.setDelaytime(Integer.MAX_VALUE);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -143,6 +145,7 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        PollingService.setDelaytime(10000);
         handler.removeCallbacks(runnable);
     }
 
