@@ -33,6 +33,7 @@ public class FriendChatActivity extends AppCompatActivity {
     private Button send;
     private Button addBtn;
     private RecyclerView msgRecyclerView;
+    private LinearLayoutManager recyclerViewlayoutManager;
     private MsgAdapter adapter;
     //点击事件时候需要变化布局
     private LinearLayout layout_exchange;
@@ -58,8 +59,8 @@ public class FriendChatActivity extends AppCompatActivity {
         layout_exchange = (LinearLayout) findViewById(R.id.layout_chat_exchange);
         layout_exchange_change = (LinearLayout) findViewById(R.id.layout_chat_exchange_change);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        msgRecyclerView.setLayoutManager(layoutManager);
+        recyclerViewlayoutManager = new LinearLayoutManager(this);
+        msgRecyclerView.setLayoutManager(recyclerViewlayoutManager);
         adapter = new MsgAdapter(msgList);
         msgRecyclerView.setAdapter(adapter);
         msgRecyclerView.scrollToPosition(msgList.size() - 1);
@@ -75,14 +76,10 @@ public class FriendChatActivity extends AppCompatActivity {
                         if (!"".equals(content)) {
                             //如果输入框内容不为空
                             if (MessageManagement.getInstance(FriendChatActivity.this).sendMsg(userid, content)) {
-                                Msg msg = new Msg(content, Msg.TYPE_SENT);
-                                msg.setTime(System.currentTimeMillis());
-                                msgList.add(msg); //相当于将新添加的内容加到数据list中
-                                //当有新的数据插入是时，会刷新RecyclerView显示
+                                refreshMsg();
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        adapter.notifyItemInserted(msgList.size() - 1); //重新获取最新数据list位置
                                         //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
                                         msgRecyclerView.scrollToPosition(msgList.size() - 1);
                                         inputText.setText(""); //清空输入框内容}
@@ -160,19 +157,21 @@ public class FriendChatActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i(TAG, "refreshMsg: ");
-                        MessageManagement.getInstance(FriendChatActivity.this).initMsglist(userid, msgList);
+                if (MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote()>0)
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "refreshMsg: ");
+                            int oldlistsize = msgList.size();
+                            MessageManagement.getInstance(FriendChatActivity.this).initMsglist(userid, msgList);
 
-                        //当有新的数据插入是时，会刷新RecyclerView显示
-                        adapter.notifyDataSetChanged(); //重新获取最新数据list位置
-                        //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
-                        msgRecyclerView.smoothScrollToPosition(msgList.size() - 1);
-                    }
-                });
+                            //当有新的数据插入是时，会刷新RecyclerView显示
+                            adapter.notifyDataSetChanged(); //重新获取最新数据list位置
+                            if (recyclerViewlayoutManager.findLastVisibleItemPosition() == oldlistsize - 1)
+                                //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
+                                msgRecyclerView.smoothScrollToPosition(msgList.size() - 1);
+                        }
+                    });
             }
         }).start();
 

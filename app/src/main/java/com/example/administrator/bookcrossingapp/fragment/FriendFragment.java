@@ -1,6 +1,7 @@
 package com.example.administrator.bookcrossingapp.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.MessageManagement;
 import com.example.administrator.bookcrossingapp.R;
@@ -32,6 +34,9 @@ public class FriendFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener;
 
+    private Handler handler;
+    private Runnable runnable;
+
     public FriendFragment() {
         super();
     }
@@ -41,6 +46,7 @@ public class FriendFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
+        //initFriends();
         initFriendsRecyclerView();
         initSwipe_refresh();
         return view;
@@ -49,8 +55,22 @@ public class FriendFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        swipeRefresh.setRefreshing(true);
-        onRefreshListener.onRefresh();
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                initFriends();
+                adapter.notifyDataSetChanged();
+                handler.postDelayed(runnable, 10000);
+            }
+        };
+        handler.post(runnable);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 
     public static FriendFragment newInstance(String from) {
@@ -88,17 +108,28 @@ public class FriendFragment extends Fragment {
                     @Override
                     public void run() {
                         Log.i(TAG, "onRefresh run: ");
-                        MessageManagement.getInstance(getActivity()).getMsgFromRemote();
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //initBookDetailData();
-                                //adapter.notifyDataSetChanged();
-                                initFriends();
-                                adapter.notifyDataSetChanged();
-                                swipeRefresh.setRefreshing(false);
-                            }
-                        });
+                        if (MessageManagement.getInstance(getActivity()).getMsgFromRemote()>-1) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //initBookDetailData();
+                                    //adapter.notifyDataSetChanged();
+                                    initFriends();
+                                    adapter.notifyDataSetChanged();
+                                    swipeRefresh.setRefreshing(false);
+                                }
+                            });
+                        } else {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //initBookDetailData();
+                                    //adapter.notifyDataSetChanged();
+                                    Toast.makeText(getActivity(), "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                                    swipeRefresh.setRefreshing(false);
+                                }
+                            });
+                        }
                     }
                 }).start();
             }

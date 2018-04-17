@@ -73,8 +73,9 @@ public class MessageManagement {
         return myheadImgPath;
     }
 
-    public void getMsgFromRemote() {
+    public int getMsgFromRemote() {
         Log.i(TAG, "getMsgFromRemote: ");
+        int flag = 0;
         try {
             List<Msg> msgList = DataSupport.order("time desc").limit(1).find(Msg.class);
             if (!msgList.isEmpty())
@@ -88,7 +89,6 @@ public class MessageManagement {
             Type type = new TypeToken<ArrayList<MsgJson>>() {
             }.getType();
             List<MsgJson> msgJsonList = new Gson().fromJson(responseData, type);
-            boolean flag = false;
             for (MsgJson msgJson : msgJsonList) {
                 Msg msg = new Msg();
                 msg.setUserid(msgJson.getUserid());
@@ -102,20 +102,23 @@ public class MessageManagement {
                     msg.setIsRead(1);
                 } else {
                     msg.setType(Msg.TYPE_RECEIVED);
-                    if (!flag) {
+                    if (flag==0) {
                         Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
-                        vibrator.vibrate(1000);
-                        flag = true;
+                        vibrator.vibrate(500);
                     }
                 }
+                flag++;
                 msg.saveThrows();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
+        return flag;
     }
 
     public void initFrinedList(List<Friend> friendList) {
+        Log.i(TAG, "initFrinedList: ");
         friendList.clear();
         List<Msg> msgList = DataSupport.order("time desc").find(Msg.class);
         HashSet hs = new HashSet<>();
@@ -124,7 +127,6 @@ public class MessageManagement {
             if (hs.contains(id))
                 continue;
             hs.add(id);
-            Log.i(TAG, "initFrinedList: " + msg.getUsername() + msg.getIsRead());
             Friend friend = new Friend();
             friend.setFriendName(msg.getUsername());
             friend.setUserid(msg.getUserid());

@@ -55,6 +55,8 @@
         <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsEditActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsDetailActivity"/>
 
+        <service android:name="com.example.administrator.bookcrossingapp.service.PollingService" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.administrator.bookcrossingapp.fileprovider"

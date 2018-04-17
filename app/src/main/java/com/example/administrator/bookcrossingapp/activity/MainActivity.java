@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.administrator.bookcrossingapp.DataGenerator;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.fragment.HomeFragment;
+import com.example.administrator.bookcrossingapp.service.PollingService;
 import com.yzq.zxinglibrary.android.CaptureActivity;
 import com.yzq.zxinglibrary.bean.ZxingConfig;
 import com.yzq.zxinglibrary.common.Constant;
@@ -57,8 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
         mFragmensts = DataGenerator.getFragments("TabLayout Tab");   //初始化调用DataGenerator相关函数进行初始化
         initView();
+
+        Intent startIntent = new Intent(this, PollingService.class);
+        startService(startIntent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent stopIntent = new Intent(this, PollingService.class);
+        stopService(stopIntent);
+    }
 
     private void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.bottom_tab_layout);
