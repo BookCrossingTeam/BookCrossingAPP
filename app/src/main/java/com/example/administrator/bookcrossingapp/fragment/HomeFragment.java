@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerView;
 
-    private String lastTime = null;
+    private long lastTime;
 
     public static final String ARGUMENT = "argument";
 
@@ -195,7 +195,7 @@ public class HomeFragment extends Fragment {
         List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
         offset = offset + offsetStep;
         //username, bookName, author, press, recommendedReason,imgUrl
-        lastTime = "0";
+        lastTime = 0;
         if (!dbList.isEmpty())
             lastTime = dbList.get(0).getPosetime();
         for (BookDetailDB db : dbList) {
@@ -222,11 +222,11 @@ public class HomeFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ;// do somethings
+                // do somethings
                 try {
                     OkHttpClient client = new OkHttpClient();
                     client.retryOnConnectionFailure();
-                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime).build();
+                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime+"").build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
@@ -277,7 +277,7 @@ public class HomeFragment extends Fragment {
                 String press = jsonObject.getString("publish");
                 String recommendedReason = jsonObject.getString("reason");
                 String imgUrl = jsonObject.getString("imgUrl");
-                String posetime = jsonObject.getString("poseTime");
+                long posetime = Long.parseLong(jsonObject.getString("poseTime"));
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
                 BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
                 a.setPosetime(posetime);
