@@ -128,7 +128,7 @@ public class ShareListActivity extends AppCompatActivity {
                 String press = jsonObject.getString("publish");
                 String recommendedReason = jsonObject.getString("reason");
                 String imgUrl = jsonObject.getString("imgUrl");
-                String posetime = jsonObject.getString("poseTime");
+                long posetime = Long.parseLong(jsonObject.getString("poseTime"));
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
                 SharedPreferences sp = getSharedPreferences("user_info",MODE_PRIVATE);
                 String username = sp.getString("username","");
