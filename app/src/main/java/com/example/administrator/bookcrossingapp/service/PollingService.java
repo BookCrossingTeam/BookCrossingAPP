@@ -24,6 +24,7 @@ public class PollingService extends Service {
 
     private Handler handler;
     private Runnable runnable;
+    static private int  delaytime;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -33,6 +34,7 @@ public class PollingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        delaytime = 10000;
 
         sendNotification("正在运行中");
 
@@ -47,12 +49,12 @@ public class PollingService extends Service {
                     public void run() {
                         if (MessageManagement.getInstance(PollingService.this).getMsgFromRemote()>0)
                             sendNotification("有新消息");
-                        handler.postDelayed(runnable, 10000);
+                        handler.postDelayed(runnable, delaytime);
                     }
                 }).start();
             }
         };
-        handler.postDelayed(runnable, 2000);
+        handler.postDelayed(runnable, delaytime);
     }
 
     @Override
@@ -62,6 +64,11 @@ public class PollingService extends Service {
         handler.removeCallbacks(runnable);
         stopForeground(true);
         super.onDestroy();
+    }
+
+    static public void setDelaytime(int time)
+    {
+        delaytime = time;
     }
 
     public void sendNotification(String msg) {

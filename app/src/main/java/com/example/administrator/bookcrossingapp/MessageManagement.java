@@ -44,7 +44,7 @@ public class MessageManagement {
         SharedPreferences pref = context.getSharedPreferences("user_info", MODE_PRIVATE);
         myuserid = pref.getInt("userid", 0);
         myusername = pref.getString("username", "");
-
+        myheadImgPath = pref.getString("headImgPath","");
     }
 
 
@@ -132,6 +132,7 @@ public class MessageManagement {
             friend.setUserid(msg.getUserid());
             friend.setTime(msg.getTime());
             friend.setIsread(msg.getIsRead());
+            friend.setFriendheadImgURL(msg.getUserheadImgPath());
             friendList.add(friend);
         }
         hs = null;

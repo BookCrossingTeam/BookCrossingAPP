@@ -10,6 +10,7 @@ public class Friend {
     private int userid;
     private int isread;
     private long time;
+    private String friendheadImgURL;
 
     public Friend(int friendPic, String friendName) {
         this.friendPic = friendPic;
@@ -17,6 +18,14 @@ public class Friend {
     }
 
     public Friend() {
+    }
+
+    public String getFriendheadImgURL() {
+        return friendheadImgURL;
+    }
+
+    public void setFriendheadImgURL(String friendheadImgURL) {
+        this.friendheadImgURL = friendheadImgURL;
     }
 
     public int getIsread() {

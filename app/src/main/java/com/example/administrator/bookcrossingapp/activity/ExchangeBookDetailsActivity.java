@@ -22,6 +22,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private ImageView img_icon;
     private TextView username, bookName, author, press, recommendedReason;
     private ImageView bookImg;
+    private ImageView headImg;
 
     private String usernameValue;
     private String bookNameValue;
@@ -30,6 +31,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private String classifyValue;
     private String recommendedReasonValue;
     private String bookImgURL;
+    private String headImgURL;
     private int userid;
 
 
@@ -49,6 +51,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         recommendedReasonValue = intent.getStringExtra("RecommendedReason");
         bookImgURL = intent.getStringExtra("BookImageUrl");
         userid = intent.getIntExtra("userid",0);
+        headImgURL = intent.getStringExtra("nameheadUrl");
 
         username = (TextView) findViewById(R.id.tv_username);
         bookName = (TextView) findViewById(R.id.tv_bookname);
@@ -56,6 +59,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         press = (TextView) findViewById(R.id.tv_press);
         recommendedReason = (TextView) findViewById(R.id.tv_recommend);
         bookImg = (ImageView) findViewById(R.id.img_pic);
+        headImg = (ImageView) findViewById(R.id.img_icon);
         tv_sharelist = findViewById(R.id.tv_sharelist);
         tv_wantlist = findViewById(R.id.tv_wantlist);
         tv_chat = findViewById(R.id.tv_bookdetail_chat);
@@ -73,6 +77,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         press.setText(pressValue);
         recommendedReason.setText(recommendedReasonValue);
         Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/bookImg/"+bookImgURL).into(bookImg);
+        Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/headImg/" + headImgURL).error(R.drawable.icon).into(headImg);
 
         tv_chat.setOnClickListener(new View.OnClickListener() {
             @Override

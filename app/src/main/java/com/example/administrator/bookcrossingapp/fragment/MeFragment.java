@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.activity.RecordsActivity;
 import com.example.administrator.bookcrossingapp.activity.ReviewsActivity;
@@ -34,6 +36,8 @@ public class MeFragment extends Fragment {
     private Button btnWanting;
     private TextView tvUsername;
     private String username;
+    private ImageView headImg;
+    private String headImgUrl;
 
     public MeFragment(){
         super();
@@ -53,9 +57,11 @@ public class MeFragment extends Fragment {
     //初始化用户名
     private void initData() {
         //显示用户名
-        SharedPreferences pref = getActivity().getSharedPreferences("my_user_info", MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences("user_info", MODE_PRIVATE);
         username = pref.getString("username", "");
+        headImgUrl = pref.getString("headImgPath","");
         tvUsername.setText(username);
+        Glide.with(getActivity()).load("http://120.24.217.191/Book/img/headImg/"+headImgUrl).error(R.drawable.me_icon_person).into(headImg);
         /////时间、头像、书籍待完善
     }
 
@@ -67,6 +73,7 @@ public class MeFragment extends Fragment {
         btnRecords = view.findViewById(R.id.me_button_records);
         btnSetting = view.findViewById(R.id.me_button_settings);
         btnWanting = view.findViewById(R.id.me_button_wanting);
+        headImg = view.findViewById(R.id.me_icon_personIcon);
         tvUsername = view.findViewById(R.id.me_text_1);
 
         btnPosing.setOnClickListener(new View.OnClickListener() {

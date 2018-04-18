@@ -55,13 +55,15 @@ public class FriendFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //PollingService.setDelaytime(Integer.MAX_VALUE);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
+
                 initFriends();
                 adapter.notifyDataSetChanged();
-                handler.postDelayed(runnable, 10000);
+                handler.postDelayed(runnable, 5000);
             }
         };
         handler.post(runnable);
@@ -70,6 +72,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        //PollingService.setDelaytime(10000);
         handler.removeCallbacks(runnable);
     }
 
