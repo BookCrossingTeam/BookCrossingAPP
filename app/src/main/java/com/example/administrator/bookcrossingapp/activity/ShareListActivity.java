@@ -35,7 +35,6 @@ public class ShareListActivity extends AppCompatActivity {
     private static final String TAG = "ShareListActivity";
     //private String username;
 
-
     private List<BookDetail> sharelist = new ArrayList<>();
 
     @Override
@@ -44,14 +43,10 @@ public class ShareListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         tv_title = findViewById(R.id.list_title);
         //tv_username = findViewById(R.id.list_username);
-        SharedPreferences userInfo = getSharedPreferences("user_info", MODE_PRIVATE);
-        String userId = userInfo.getString("userid","");
+        SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
+        String userId = sp.getString("userid","");
         tv_title.setText("ShareList");
-//        tv_username.setText("of XXXX");
 
-//        Intent  intent = getIntent();
-//        username = intent.getStringExtra("username");
-//        tv_username.setText(username);
 
         //initData();
         initShareList();
@@ -61,14 +56,18 @@ public class ShareListActivity extends AppCompatActivity {
         BookDetailAdapter adapter = new BookDetailAdapter(sharelist);
         recyclerView.setAdapter(adapter);
 
+
     }
 
     private void initData() {
         for (int i = 0; i < 3; i++) {
             //注意这里增加了时间，用set来更新
-            BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面",
-                    "", "","");
-            bookDetail.setPosetime(0);
+//            BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面",
+//                    "", "","");
+//            bookDetail.setPosetime(0);
+                BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》",
+                        "下拉刷新页面", "", "");
+
             sharelist.add(bookDetail);
         }
     }
@@ -132,7 +131,8 @@ public class ShareListActivity extends AppCompatActivity {
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
                 SharedPreferences sp = getSharedPreferences("user_info",MODE_PRIVATE);
                 String username = sp.getString("username","");
-                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
+                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason);
+                //BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
                 a.setPosetime(posetime);
                 a.setUserid(userId);
                 sharelist.add(a);

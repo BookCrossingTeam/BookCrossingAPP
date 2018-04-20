@@ -118,9 +118,10 @@ public class SettingActivity extends AppCompatActivity {
                             sp.edit().clear().commit();
                             Toast.makeText(SettingActivity.this,"test", Toast.LENGTH_LONG).show();
                         }
-                        //
+                        //跳转到登录页面
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class );
-                        startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        //添加两个设置就搞定对返回的控制
+                        startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK));
                         SettingActivity.this.finish();
                     }
                 });
@@ -134,36 +135,9 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("提示");
-        builder.setMessage("你确认注销账号吗？");
-        builder.setCancelable(true);
-
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //确认退出登录
-                Intent intent = new Intent(SettingActivity.this, LoginActivity.class );
-                startActivity(intent);
-
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //取消操作
-            }
-        });
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        return false;
-    }
+
 
 
 

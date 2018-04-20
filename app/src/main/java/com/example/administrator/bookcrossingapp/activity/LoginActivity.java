@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -123,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,5 +142,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        //禁止返回功能
+//        if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 }
