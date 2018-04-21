@@ -18,6 +18,7 @@ import com.example.administrator.bookcrossingapp.datamodel.BookDetailDB;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,8 +44,7 @@ public class ShareListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         tv_title = findViewById(R.id.list_title);
         //tv_username = findViewById(R.id.list_username);
-        SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
-        String userId = sp.getString("userid","");
+
         tv_title.setText("ShareList");
 
 
@@ -75,15 +75,31 @@ public class ShareListActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+//                OkHttpClient client = new OkHttpClient();
+//                client.retryOnConnectionFailure();
+//                SharedPreferences sp =  getSharedPreferences("user_info",MODE_PRIVATE);
+//                int id = sp.getInt("userid", 0); //只有失败的时候才会赋值为0
+//                String userid = Integer.toString(id);
+//                RequestBody requestBody = new FormBody.Builder().add("userid", userid).build();
+//                Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryGet").post(requestBody).build();
+//                try {
+//                    Response response = client.newCall(request).execute();
+//                    if(response.isSuccessful()){
+//                        Toast.makeText(ShareListActivity.this, "success", Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (IOException e) {
+//                    Toast.makeText(ShareListActivity.this, "error", Toast.LENGTH_SHORT).show();
+//                    e.printStackTrace();
+//                }
                 // 获取数据
                 try {
                     OkHttpClient client = new OkHttpClient();
                     client.retryOnConnectionFailure();
                     SharedPreferences sp =  getSharedPreferences("user_info",MODE_PRIVATE);
-                    String userId = sp.getString("userid", "");
-                    Log.i(TAG, "userid is :"+userId);
-                    //int userId = Integer.parseInt(id);
-                    RequestBody requestBody = new FormBody.Builder().add("userId", userId).build();
+                    int id = sp.getInt("userid", 0);
+                    String userid = Integer.toString(id);
+                    Log.i(TAG, "userid is :"+userid);
+                    RequestBody requestBody = new FormBody.Builder().add("userid", userid).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryGet").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
