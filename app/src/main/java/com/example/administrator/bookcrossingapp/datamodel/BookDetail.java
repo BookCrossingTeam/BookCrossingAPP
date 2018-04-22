@@ -133,4 +133,9 @@ public class BookDetail {
     public void setPosetime(long posetime) {
         this.posetime = posetime;
     }
+
+    @Override
+    public String toString() {
+        return bookName;
+    }
 }

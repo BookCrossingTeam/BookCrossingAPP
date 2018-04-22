@@ -48,7 +48,7 @@ public class ShareListActivity extends AppCompatActivity {
         tv_title.setText("ShareList");
 
 
-        //initData();
+        initData();
         initShareList();
         RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -66,7 +66,7 @@ public class ShareListActivity extends AppCompatActivity {
 //                    "", "","");
 //            bookDetail.setPosetime(0);
                 BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》",
-                        "下拉刷新页面", "", "");
+                        "下拉刷新页面", "", "","");
 
             sharelist.add(bookDetail);
         }
@@ -75,22 +75,6 @@ public class ShareListActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                OkHttpClient client = new OkHttpClient();
-//                client.retryOnConnectionFailure();
-//                SharedPreferences sp =  getSharedPreferences("user_info",MODE_PRIVATE);
-//                int id = sp.getInt("userid", 0); //只有失败的时候才会赋值为0
-//                String userid = Integer.toString(id);
-//                RequestBody requestBody = new FormBody.Builder().add("userid", userid).build();
-//                Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryGet").post(requestBody).build();
-//                try {
-//                    Response response = client.newCall(request).execute();
-//                    if(response.isSuccessful()){
-//                        Toast.makeText(ShareListActivity.this, "success", Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (IOException e) {
-//                    Toast.makeText(ShareListActivity.this, "error", Toast.LENGTH_SHORT).show();
-//                    e.printStackTrace();
-//                }
                 // 获取数据
                 try {
                     OkHttpClient client = new OkHttpClient();
@@ -107,11 +91,12 @@ public class ShareListActivity extends AppCompatActivity {
                             Objects.requireNonNull(ShareListActivity.this).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(ShareListActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(ShareListActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                                    Log.i(TAG, "run: " + "test111111111111");
                                 }
                             });
                         }
-                        //Log.i(TAG, "run: " + response.body());
+
                         String responseData = response.body().string();
                         handleResponseData(responseData);
                     }
@@ -147,10 +132,18 @@ public class ShareListActivity extends AppCompatActivity {
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
                 SharedPreferences sp = getSharedPreferences("user_info",MODE_PRIVATE);
                 String username = sp.getString("username","");
-                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason);
-                //BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
+//                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason);
+                System.out.println("test2222222222222222");
+                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
                 a.setPosetime(posetime);
                 a.setUserid(userId);
+//                System.out.println(TAG+": "+username);
+//                System.out.println(TAG+": "+bookName);
+//                System.out.println(TAG+": "+author);
+//                System.out.println(TAG+": "+press);
+//                System.out.println(TAG+": "+recommendedReason);
+//                System.out.println(TAG+": "+imgUrl);
+                System.out.println(a.toString());
                 sharelist.add(a);
 
 //                BookDetailDB db = new BookDetailDB();
