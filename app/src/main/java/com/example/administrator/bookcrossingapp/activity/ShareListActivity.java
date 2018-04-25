@@ -3,6 +3,7 @@ package com.example.administrator.bookcrossingapp.activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,9 +34,9 @@ public class ShareListActivity extends AppCompatActivity {
 
     private TextView tv_title;
     private TextView tv_username;
+    private BookDetailAdapter adapter;
+    private SwipeRefreshLayout swipeRefresh;
     private static final String TAG = "ShareListActivity";
-    //private String username;
-
     private List<BookDetail> sharelist = new ArrayList<>();
 
     @Override
@@ -46,31 +47,13 @@ public class ShareListActivity extends AppCompatActivity {
         //tv_username = findViewById(R.id.list_username);
 
         tv_title.setText("ShareList");
-
-
-        initData();
         initShareList();
-        RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        BookDetailAdapter adapter = new BookDetailAdapter(sharelist);
-        recyclerView.setAdapter(adapter);
+
 
 
     }
 
-    private void initData() {
-        for (int i = 0; i < 3; i++) {
-            //注意这里增加了时间，用set来更新
-//            BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面",
-//                    "", "","");
-//            bookDetail.setPosetime(0);
-                BookDetail bookDetail = new BookDetail("Yvettemuki", "《The Great Gatsby》",
-                        "下拉刷新页面", "", "","");
 
-            sharelist.add(bookDetail);
-        }
-    }
     public void initShareList() {
         new Thread(new Runnable() {
             @Override
@@ -87,19 +70,25 @@ public class ShareListActivity extends AppCompatActivity {
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryGet").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            Objects.requireNonNull(ShareListActivity.this).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //Toast.makeText(ShareListActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
-                                    Log.i(TAG, "run: " + "test111111111111");
-                                }
-                            });
-                        }
 
                         String responseData = response.body().string();
                         handleResponseData(responseData);
+
+                        ShareListActivity.this.runOnUiThread((new Runnable() {
+                            @Override
+                            public void run() {
+                                //获取页面
+                                RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(ShareListActivity.this);
+                                recyclerView.setLayoutManager(layoutManager);
+                                adapter = new BookDetailAdapter(sharelist);
+                                recyclerView.setAdapter(adapter);
+//                                adapter.notifyDataSetChanged();
+//                                swipeRefresh.setRefreshing(false);
+                            }
+                        }));
                     }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -111,6 +100,7 @@ public class ShareListActivity extends AppCompatActivity {
                         });
                     }
                 }
+
 
 
             }
@@ -157,6 +147,7 @@ public class ShareListActivity extends AppCompatActivity {
 //                db.setUserid(userId);
 //                db.saveThrows();
             }
+
 //            BookDetailList.clear();
 //            offset = 0;
 //            initBookDetailData();

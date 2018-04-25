@@ -231,7 +231,6 @@ public class HomeFragment extends Fragment {
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
-                        Toast.makeText(getActivity(), "succes", Toast.LENGTH_SHORT).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                             Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                                 @Override
