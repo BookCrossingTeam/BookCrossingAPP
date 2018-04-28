@@ -46,18 +46,14 @@ public class WantListActivity extends AppCompatActivity {
         tv_title = findViewById(R.id.list_title);
         //tv_username = findViewById(R.id.list_username);
         tv_title.setText("WantList");
-
-//        Intent intent = getIntent();
-//        username = intent.getStringExtra("username");
-//        tv_username.setText(username);
-
-        //initData();
+        //获取书单信息
         initWantList();
-        RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new BookDetailAdapter(wantlist);
-        recyclerView.setAdapter(adapter);
+//        initData();
+//        RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(WantListActivity.this);
+//        recyclerView.setLayoutManager(layoutManager);
+//        adapter = new BookDetailAdapter(wantlist);
+//        recyclerView.setAdapter(adapter);
 
     }
 
@@ -65,6 +61,10 @@ public class WantListActivity extends AppCompatActivity {
     private void initData() {
         for (int i = 0; i < 3; i++) {
             BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "");
+            a.setPosetime(00000);
+            SharedPreferences sp =  getSharedPreferences("user_info",MODE_PRIVATE);
+            int userId = sp.getInt("userid",0);
+            a.setUserid(userId);
             wantlist.add(a);
         }
     }
@@ -80,13 +80,18 @@ public class WantListActivity extends AppCompatActivity {
                     SharedPreferences sp =  getSharedPreferences("user_info",MODE_PRIVATE);
                     int id = sp.getInt("userid", 0);
                     String userid = Integer.toString(id);
-                    Log.i(TAG, "userid is :"+userid);
                     RequestBody requestBody = new FormBody.Builder().add("userid", userid).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryWant").post(requestBody).build();
                     Response response = client.newCall(request).execute();
+                    Log.i(TAG, "response is :"+response.isSuccessful());
                     if (response.isSuccessful()) {
-
-
+                        WantListActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(WantListActivity.this,"刷新成功！！！！！", Toast.LENGTH_SHORT).show();
+                            }}
+                        );
+                        //获取response回来的数据
                         String responseData = response.body().string();
                         handleResponseData(responseData);
 
@@ -107,26 +112,14 @@ public class WantListActivity extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        Objects.requireNonNull(WantListActivity.this).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(WantListActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+                    WantListActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(WantListActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
-
-                WantListActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //initBookDetailData();
-                        adapter.notifyDataSetChanged();
-                        swipeRefresh.setRefreshing(false);
-                    }
-                });
-
-
             }
         }).start();
     }
@@ -139,7 +132,6 @@ public class WantListActivity extends AppCompatActivity {
                 String bookName = jsonObject.getString("bookName");
                 String author = jsonObject.getString("author");
                 String press = jsonObject.getString("publish");
-                //String recommendedReason = jsonObject.getString("reason");
                 String imgUrl = jsonObject.getString("imgUrl");
                 long posetime = Long.parseLong(jsonObject.getString("poseTime"));
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
@@ -151,7 +143,7 @@ public class WantListActivity extends AppCompatActivity {
                 a.setPosetime(posetime);
                 a.setUserid(userId);
 //                System.out.println(TAG+": "+username);
-//                System.out.println(TAG+": "+bookName);
+                System.out.println(TAG+": "+bookName);
 //                System.out.println(TAG+": "+author);
 //                System.out.println(TAG+": "+press);
 //                System.out.println(TAG+": "+recommendedReason);

@@ -45,8 +45,8 @@ public class ShareListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         tv_title = findViewById(R.id.list_title);
         //tv_username = findViewById(R.id.list_username);
-
         tv_title.setText("ShareList");
+        //获取书单信息
         initShareList();
 
 
