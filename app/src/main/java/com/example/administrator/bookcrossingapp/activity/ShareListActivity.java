@@ -44,14 +44,22 @@ public class ShareListActivity extends AppCompatActivity {
 
         tv_title = findViewById(R.id.list_title);
         tv_title.setText("ShareList");
+        int flag;
 
         Intent intent = getIntent();
         userid = intent.getIntExtra("userid", 0);
+        flag = intent.getIntExtra("flag", 0);
 
         RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(ShareListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BookDetailAdapter(sharelist);
+        if (flag == 0)
+            adapter = new BookDetailAdapter(sharelist);
+        if (flag == 1)
+        {
+            adapter = new BookDetailAdapter(sharelist, ShareListActivity.this);
+            adapter.setIntent(2);
+        }
         recyclerView.setAdapter(adapter);
 
 

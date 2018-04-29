@@ -32,23 +32,25 @@
             android:visibility="gone"
             >
 
-            <Button
+            <ImageView
                 android:id="@+id/exchange_book_left"
                 android:layout_width="80dp"
                 android:layout_height="110dp"
-                android:background="@drawable/friend_chat_exchange_book"
+                android:src="@drawable/friend_chat_exchange_add"
                 />
+
             <ImageView
+                android:id="@+id/exchange_pose"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:src="@drawable/friend_chat_exchange_jiantou"/>
-            <Button
+                android:src="@drawable/friend_chat_exchange_jiantou" />
+            <ImageView
                 android:id="@+id/exchange_book_right"
                 android:layout_width="80dp"
                 android:layout_height="110dp"
-                android:background="@drawable/friend_chat_exchange_add"
+                android:src="@drawable/friend_chat_exchange_add"
                 />
         </LinearLayout>
 

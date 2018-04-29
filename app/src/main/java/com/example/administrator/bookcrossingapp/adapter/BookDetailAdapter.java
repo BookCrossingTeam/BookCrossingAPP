@@ -1,5 +1,6 @@
 package com.example.administrator.bookcrossingapp.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,8 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
     private List<BookDetail> mBookDetailList;
     private static final String TAG = "BookDetailAdapter";
     private Context context;
-    private boolean flagIntent = true;
+    private int flagIntent = 1;
+    private Activity mActivity;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView username;
@@ -55,31 +57,58 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         mBookDetailList = BookDetailList;
     }
 
+    public BookDetailAdapter(List<BookDetail> BookDetailList, Activity activity) {
+        mActivity = activity;
+        mBookDetailList = BookDetailList;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
 
-        if(flagIntent)
-        holder.bookView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                BookDetail bookDetail = mBookDetailList.get(position);
-                Intent intent = new Intent(v.getContext(), ExchangeBookDetailsActivity.class);
-                intent.putExtra("Username", bookDetail.getUsername());
-                intent.putExtra("BookName", bookDetail.getBookName());
-                intent.putExtra("Author", bookDetail.getAuthor());
-                intent.putExtra("Press", bookDetail.getPress());
-                intent.putExtra("RecommendedReason", bookDetail.getRecommendedReason());
-                intent.putExtra("BookImageUrl", bookDetail.getBookImageUrl());
-                intent.putExtra("userid", bookDetail.getUserid());
-                intent.putExtra("nameheadUrl",bookDetail.getUserheadpath());
-                intent.putExtra("bookid",bookDetail.getBookid());
-                view.getContext().startActivity(intent);
-            }
-        });
+        if (flagIntent == 1)
+            holder.bookView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    BookDetail bookDetail = mBookDetailList.get(position);
+                    Intent intent = new Intent(v.getContext(), ExchangeBookDetailsActivity.class);
+                    intent.putExtra("Username", bookDetail.getUsername());
+                    intent.putExtra("BookName", bookDetail.getBookName());
+                    intent.putExtra("Author", bookDetail.getAuthor());
+                    intent.putExtra("Press", bookDetail.getPress());
+                    intent.putExtra("RecommendedReason", bookDetail.getRecommendedReason());
+                    intent.putExtra("BookImageUrl", bookDetail.getBookImageUrl());
+                    intent.putExtra("userid", bookDetail.getUserid());
+                    intent.putExtra("nameheadUrl", bookDetail.getUserheadpath());
+                    intent.putExtra("bookid", bookDetail.getBookid());
+                    view.getContext().startActivity(intent);
+                }
+            });
+
+        if (flagIntent == 2)
+            holder.bookView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    BookDetail bookDetail = mBookDetailList.get(position);
+                    Intent intent = new Intent(v.getContext(), ExchangeBookDetailsActivity.class);
+                    //intent.putExtra("Username", bookDetail.getUsername());
+                    //intent.putExtra("BookName", bookDetail.getBookName());
+                    //intent.putExtra("Author", bookDetail.getAuthor());
+                    //intent.putExtra("Press", bookDetail.getPress());
+                    //intent.putExtra("RecommendedReason", bookDetail.getRecommendedReason());
+                    intent.putExtra("BookImageUrl", bookDetail.getBookImageUrl());
+                    //intent.putExtra("userid", bookDetail.getUserid());
+                    //intent.putExtra("nameheadUrl",bookDetail.getUserheadpath());
+                    intent.putExtra("bookid", bookDetail.getBookid());
+                    mActivity.setResult(1, intent);
+                    mActivity.finish();
+                }
+            });
+
         return holder;
     }
 
@@ -99,8 +128,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         return mBookDetailList.size();
     }
 
-    public void  setIntent(boolean cmd)
-    {
+    public void setIntent(int cmd) {
         flagIntent = cmd;
     }
 }

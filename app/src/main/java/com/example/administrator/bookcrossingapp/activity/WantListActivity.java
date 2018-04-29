@@ -50,7 +50,7 @@ public class WantListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(WantListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new BookDetailAdapter(wantlist);
-        adapter.setIntent(false);
+        adapter.setIntent(0);
         recyclerView.setAdapter(adapter);
 
         //获取书单信息

@@ -19,6 +19,8 @@ public class Swapping {
     private String swappingBookname2;
     private int now_state;
     private boolean confirm;
+    private String swappingBookURL1;
+    private String getSwappingBookURL2;
 
 
     public Swapping() {
@@ -82,4 +84,19 @@ public class Swapping {
         this.confirm = confirm;
     }
 
+    public String getSwappingBookURL1() {
+        return swappingBookURL1;
+    }
+
+    public void setSwappingBookURL1(String swappingBookURL1) {
+        this.swappingBookURL1 = swappingBookURL1;
+    }
+
+    public String getGetSwappingBookURL2() {
+        return getSwappingBookURL2;
+    }
+
+    public void setGetSwappingBookURL2(String getSwappingBookURL2) {
+        this.getSwappingBookURL2 = getSwappingBookURL2;
+    }
 }
