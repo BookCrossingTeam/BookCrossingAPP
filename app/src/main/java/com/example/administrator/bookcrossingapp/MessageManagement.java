@@ -77,6 +77,7 @@ public class MessageManagement {
         Log.i(TAG, "getMsgFromRemote: ");
         int flag = 0;
         try {
+            lastTime = 0;
             List<Msg> msgList = DataSupport.order("time desc").limit(1).find(Msg.class);
             if (!msgList.isEmpty())
                 lastTime = msgList.get(0).getTime();
@@ -173,6 +174,12 @@ public class MessageManagement {
             return false;
         }
         return false;
+    }
+
+
+    public void delInstance()
+    {
+        instance = null;
     }
 
 }

@@ -13,12 +13,16 @@ import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.administrator.bookcrossingapp.MessageManagement;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
+import com.example.administrator.bookcrossingapp.datamodel.Msg;
+
+import org.litepal.crud.DataSupport;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -103,9 +107,10 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
-                builder.setIcon(android.R.drawable.ic_dialog_info);
+                //builder.setIcon(android.R.drawable.ic_dialog_info);
                 builder.setTitle("提示");
-                builder.setMessage("你确认注销账号吗？");
+                builder.setMessage("你确认退出账号吗？");
+                Log.i(TAG, "onClick: ");
                 builder.setCancelable(true);
 
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -113,11 +118,20 @@ public class SettingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         //确认退出登录
                         //清空sharedPreference数据
+
                         SharedPreferences sp = getSharedPreferences("user_info",MODE_PRIVATE);
                         if(sp!=null){
                             sp.edit().clear().commit();
-                            Toast.makeText(SettingActivity.this,"test", Toast.LENGTH_LONG).show();
+
+                            //Toast.makeText(SettingActivity.this,"test", Toast.LENGTH_LONG).show();
                         }
+
+                        DataSupport.deleteAll(BookDetail.class);
+                        DataSupport.deleteAll(Msg.class);
+
+                        MessageManagement.getInstance(SettingActivity.this).delInstance();
+
+
                         //跳转到登录页面
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class );
                         //添加两个设置就搞定对返回的控制

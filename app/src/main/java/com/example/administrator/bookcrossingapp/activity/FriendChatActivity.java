@@ -101,23 +101,23 @@ public class FriendChatActivity extends AppCompatActivity {
         });
 
         //为点击exchange按钮设置点击事件
-        exchangeBtn.setOnClickListener(new View.OnClickListener()
-
-        {
+        exchangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) layout_exchange.getLayoutParams();
-                linearParams.height = 400;
-                layout_exchange_change.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), "exchange your book", Toast.LENGTH_SHORT).show();
-
+                if (layout_exchange_change.getVisibility() == View.GONE) {
+                    linearParams.height = 400;
+                    layout_exchange_change.setVisibility(View.VISIBLE);
+                    Toast.makeText(getApplicationContext(), "exchange your book", Toast.LENGTH_SHORT).show();
+                } else {
+                    linearParams.height = 55;
+                    layout_exchange_change.setVisibility(View.GONE);
+                }
             }
         });
 
         //为添加按钮添加点击事件
-        addBtn.setOnClickListener(new View.OnClickListener()
-
-        {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FriendChatActivity.this, ShareListActivity.class);
@@ -130,7 +130,7 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PollingService.setDelaytime(1000*30);
+        PollingService.setDelaytime(1000 * 30);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -145,7 +145,7 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PollingService.setDelaytime(1000*10);
+        PollingService.setDelaytime(1000 * 10);
         handler.removeCallbacks(runnable);
     }
 
@@ -160,7 +160,7 @@ public class FriendChatActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote()>-1)
+                if (MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote() > -1)
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

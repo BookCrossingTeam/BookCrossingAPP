@@ -65,6 +65,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
         userid = pref.getInt("userid", 0);
 
         init();//初始化组件
+
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
         imagePicker.setShowCamera(true);  //显示拍照按钮

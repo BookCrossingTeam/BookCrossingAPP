@@ -34,10 +34,10 @@ public class UserdetailSharelistFragment extends Fragment {
     }
 
     private void initShareList() {
-        for (int i = 0; i < 3; i++) {
+        /*for (int i = 0; i < 3; i++) {
             BookDetail a = new BookDetail("Yvettemuki", "《The Great Gatsby》", "下拉刷新页面", "", "");
             sharelist.add(a);
-        }
+        }*/
     }
 
     @Override

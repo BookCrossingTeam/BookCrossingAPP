@@ -1,72 +1,31 @@
 package com.example.administrator.bookcrossingapp.datamodel;
 
-import com.example.administrator.bookcrossingapp.R;
+import org.litepal.crud.DataSupport;
 
 /**
  * Created by 57010 on 2017/5/17.
  */
 
-public class BookDetail {
+public class BookDetail extends DataSupport {
     private String username;
-    private int usernameImage;
+    private int userid;
+    private String userheadpath;
+
     private String bookName;
     private String author;
     private String press;
     private String recommendedReason;
-    private int bookImage;
     private String bookImageUrl;
+    private int bookid;
+
     private long posetime;
-    private int userid;
-    private String userheadpath;
 
-    public String getUserheadpath() {
-        return userheadpath;
+    public int getBookid() {
+        return bookid;
     }
 
-    public void setUserheadpath(String userheadpath) {
-        this.userheadpath = userheadpath;
-    }
-
-    public int getUserid() {
-        return userid;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-
-    public String getBookImageUrl() {
-        return bookImageUrl;
-    }
-
-    public void setBookImageUrl(String bookImageUrl) {
-        this.bookImageUrl = bookImageUrl;
-    }
-
-    public BookDetail(String username, String bookName, String author, String press,
-                      String recommendedReason, String bookImageUrl) {
-        this.username = username;
-        this.bookName = bookName;
-        this.author = author;
-        this.press = press;
-        this.recommendedReason = recommendedReason;
-        this.usernameImage = R.drawable.user_image;
-        this.bookImage = R.drawable.book_image;
-        this.bookImageUrl = bookImageUrl;
-
-    }
-
-    public BookDetail(String username, String bookName, String author, String press,
-                      String recommendedReason) {
-        this.username = username;
-        this.bookName = bookName;
-        this.author = author;
-        this.press = press;
-        this.recommendedReason = recommendedReason;
-        this.usernameImage = R.drawable.user_image;
-        this.bookImage = R.drawable.book_image;
-        //this.bookImageUrl = bookImageUrl;
-
+    public void setBookid(int bookid) {
+        this.bookid = bookid;
     }
 
     public String getUsername() {
@@ -75,14 +34,6 @@ public class BookDetail {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public int getUsernameImage() {
-        return usernameImage;
-    }
-
-    public void setUsernameImage(int usernameImage) {
-        this.usernameImage = usernameImage;
     }
 
     public String getBookName() {
@@ -117,13 +68,12 @@ public class BookDetail {
         this.recommendedReason = recommendedReason;
     }
 
-    public int getBookImage() {
-        return bookImage;
-
+    public String getBookImageUrl() {
+        return bookImageUrl;
     }
 
-    public void setBookImage(int bookImage) {
-        this.bookImage = bookImage;
+    public void setBookImageUrl(String bookImageUrl) {
+        this.bookImageUrl = bookImageUrl;
     }
 
     public long getPosetime() {
@@ -134,8 +84,19 @@ public class BookDetail {
         this.posetime = posetime;
     }
 
-    @Override
-    public String toString() {
-        return bookName;
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getUserheadpath() {
+        return userheadpath;
+    }
+
+    public void setUserheadpath(String userheadpath) {
+        this.userheadpath = userheadpath;
     }
 }

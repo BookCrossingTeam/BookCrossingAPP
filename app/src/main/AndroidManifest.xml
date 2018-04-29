@@ -48,7 +48,10 @@
         <activity android:name="com.example.administrator.bookcrossingapp.activity.WantListActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.ShareListActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingShareActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingConfirmActivity" />
+        <activity
+            android:name="com.example.administrator.bookcrossingapp.activity.PosingConfirmActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
         <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.RecordsActivity" />
         <activity android:name="com.example.administrator.bookcrossingapp.activity.SwappingActivity" />

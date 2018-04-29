@@ -38,6 +38,7 @@ public class MeFragment extends Fragment {
     private String username;
     private ImageView headImg;
     private String headImgUrl;
+    private int userid;
 
     public MeFragment(){
         super();
@@ -60,6 +61,7 @@ public class MeFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences("user_info", MODE_PRIVATE);
         username = pref.getString("username", "");
         headImgUrl = pref.getString("headImgPath","");
+        userid = pref.getInt("userid",0);
         tvUsername.setText(username);
         Glide.with(getActivity()).load("http://120.24.217.191/Book/img/headImg/"+headImgUrl).error(R.drawable.me_icon_person).into(headImg);
         /////时间、头像、书籍待完善
@@ -80,6 +82,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ShareListActivity.class);
+                intent.putExtra("userid",userid);
                 startActivity(intent);
             }
         });
@@ -94,6 +97,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), WantListActivity.class);
+                intent.putExtra("userid",userid);
                 startActivity(intent);
             }
         });

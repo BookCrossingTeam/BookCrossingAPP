@@ -27,6 +27,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
     private List<BookDetail> mBookDetailList;
     private static final String TAG = "BookDetailAdapter";
     private Context context;
+    private boolean flagIntent = true;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView username;
@@ -58,8 +59,9 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
-        //ViewHolder holder = new ViewHolder(view);
         final ViewHolder holder = new ViewHolder(view);
+
+        if(flagIntent)
         holder.bookView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +76,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
                 intent.putExtra("BookImageUrl", bookDetail.getBookImageUrl());
                 intent.putExtra("userid", bookDetail.getUserid());
                 intent.putExtra("nameheadUrl",bookDetail.getUserheadpath());
+                intent.putExtra("bookid",bookDetail.getBookid());
                 view.getContext().startActivity(intent);
             }
         });
@@ -94,5 +97,10 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
     @Override
     public int getItemCount() {
         return mBookDetailList.size();
+    }
+
+    public void  setIntent(boolean cmd)
+    {
+        flagIntent = cmd;
     }
 }

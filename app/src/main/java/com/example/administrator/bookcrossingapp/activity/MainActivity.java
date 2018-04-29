@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         bar_menu = (Button) findViewById(R.id.tools_bar_menu);
         bar_menu.setOnClickListener(new View.OnClickListener() {
             @Override

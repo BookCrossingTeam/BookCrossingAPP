@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.adapter.BookDetailAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
-import com.example.administrator.bookcrossingapp.datamodel.BookDetailDB;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -192,19 +191,13 @@ public class HomeFragment extends Fragment {
     }
 
     public void initBookDetailData() {
-        List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
+        List<BookDetail> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetail.class);
         offset = offset + offsetStep;
         //username, bookName, author, press, recommendedReason,imgUrl
         lastTime = 0;
         if (!dbList.isEmpty())
             lastTime = dbList.get(0).getPosetime();
-        for (BookDetailDB db : dbList) {
-            BookDetail bookDetail = new BookDetail(db.getUsername(), db.getBookName(), db.getAuthor(), db.getPress(), db.getRecommendedReason(), db.getBookImageUrl());
-            bookDetail.setPosetime(db.getPosetime());
-            bookDetail.setUserid(db.getUserid());
-            bookDetail.setUserheadpath(db.getUserheadpath());
-            BookDetailList.add(bookDetail);
-        }
+        BookDetailList.addAll(dbList);
     }
 
     public void initSwipe_refresh() {
@@ -227,7 +220,7 @@ public class HomeFragment extends Fragment {
                 try {
                     OkHttpClient client = new OkHttpClient();
                     client.retryOnConnectionFailure();
-                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime+"").build();
+                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime + "").build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
@@ -280,23 +273,22 @@ public class HomeFragment extends Fragment {
                 String imgUrl = jsonObject.getString("imgUrl");
                 long posetime = Long.parseLong(jsonObject.getString("poseTime"));
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
+                int bookId = Integer.parseInt(jsonObject.getString("id"));
                 String userheadpath = jsonObject.getString("headImgPath");
-                BookDetail a = new BookDetail(username, bookName, author, press, recommendedReason, imgUrl);
-                a.setPosetime(posetime);
-                a.setUserid(userId);
-                a.setUserheadpath(userheadpath);
 
-                BookDetailDB db = new BookDetailDB();
-                db.setUsername(username);
-                db.setBookName(bookName);
-                db.setAuthor(author);
-                db.setPress(press);
-                db.setRecommendedReason(recommendedReason);
-                db.setBookImageUrl(imgUrl);
-                db.setPosetime(posetime);
-                db.setUserid(userId);
-                db.setUserheadpath(userheadpath);
-                db.saveThrows();
+                BookDetail book = new BookDetail();
+                book.setUsername(username);
+                book.setBookName(bookName);
+                book.setAuthor(author);
+                book.setPress(press);
+                book.setRecommendedReason(recommendedReason);
+                book.setBookImageUrl(imgUrl);
+                book.setPosetime(posetime);
+                book.setUserid(userId);
+                book.setUserheadpath(userheadpath);
+                book.setBookid(bookId);
+
+                book.save();
             }
             BookDetailList.clear();
             offset = 0;
@@ -308,16 +300,11 @@ public class HomeFragment extends Fragment {
 
     public void updateList() {
         Log.i(TAG, "updateList: ");
-        List<BookDetailDB> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetailDB.class);
+        List<BookDetail> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetail.class);
         offset = offset + offsetStep;
         //username, bookName, author, press, recommendedReason,imgUrl
-        for (BookDetailDB db : dbList) {
-            BookDetail bookDetail = new BookDetail(db.getUsername(), db.getBookName(), db.getAuthor(), db.getPress(), db.getRecommendedReason(), db.getBookImageUrl());
-            bookDetail.setPosetime(db.getPosetime());
-            bookDetail.setUserid(db.getUserid());
-            bookDetail.setUserheadpath(db.getUserheadpath());
-            BookDetailList.add(bookDetail);
-        }
+        BookDetailList.addAll(dbList);
+
         adapter.notifyDataSetChanged();
     }
 

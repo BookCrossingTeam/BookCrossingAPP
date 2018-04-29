@@ -6,7 +6,7 @@ import org.litepal.crud.DataSupport;
  * Created by yvemuki on 2018/3/11.
  */
 
-public class Msg  extends DataSupport {
+public class Msg extends DataSupport {
     public static final int TYPE_RECEIVED = 0;  //static可以进行类调用
     public static final int TYPE_SENT = 1;
     public static final int TYPE_SYS = 2;
@@ -18,17 +18,14 @@ public class Msg  extends DataSupport {
     private String userheadImgPath;
     private long time;
 
-    public Msg(String content, int type){
-        this.content = content;
-        this.type = type;
+    public Msg() {
     }
-    public Msg(){
-    }
-    public String getContent(){
 
+    public String getContent() {
         return content;
     }
-    public int getType(){
+
+    public int getType() {
         return type;
     }
 
