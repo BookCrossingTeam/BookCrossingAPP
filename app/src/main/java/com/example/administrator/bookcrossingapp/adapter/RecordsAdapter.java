@@ -1,5 +1,6 @@
 package com.example.administrator.bookcrossingapp.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.datamodel.Records;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +23,7 @@ import java.util.List;
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHolder> {
 
     private List<Records> mRecordsList;
-
+    private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_pic;
@@ -43,26 +47,24 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
     }
 
     @Override
-    public RecordsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         //照书上的打会只有一条，改为null，原因可能是版本23以上的问题
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_records_item, null);
-        RecordsAdapter.ViewHolder holder = new RecordsAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_records_item, parent, false);
+        ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecordsAdapter.ViewHolder holder, int position) {
         Records records = mRecordsList.get(position);
-        holder.img_pic.setImageResource(records.getRecordsPic());
-        holder.tv_bookname.setText(records.getRecordsBookname());
-        holder.tv_exchangeuser.setText(records.getRecordsExchangeUser());
-        int state = records.getRecordState();
-        if (state == 3)
-            holder.tv_state.setText("已归还");
-        else if (state == 4)
-            holder.tv_state.setText("已超期失效");
-        holder.tv_time.setText(records.getRecordsTime());
 
+        holder.tv_bookname.setText(records.getRecordsBookname());
+        holder.tv_exchangeuser.setText("from: " + records.getRecordsExchangeUser());
+        holder.tv_state.setText("已归还");
+        String disTime = "From:" + new SimpleDateFormat("yyyy-MM-dd").format(new Date(records.getStartTime())) + " To:" + new SimpleDateFormat("yyyy-MM-dd").format(new Date(records.getRecordsTime()));
+        holder.tv_time.setText(disTime);
+        Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/" + records.getRecordsBooknameURL()).into(holder.img_pic);
 
     }
 

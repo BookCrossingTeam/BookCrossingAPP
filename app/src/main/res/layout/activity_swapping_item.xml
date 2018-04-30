@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -100,7 +101,7 @@
                 android:layout_below="@id/swapping_btn_next_state"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="对方已确认" />
+                tools:text="对方已确认" />
         </RelativeLayout>
 
 

@@ -20,7 +20,10 @@ public class Swapping {
     private int now_state;
     private boolean confirm;
     private String swappingBookURL1;
-    private String getSwappingBookURL2;
+    private String SwappingBookURL2;
+    private int exchangeid;
+    private int myuserid;
+    private int touserid;
 
 
     public Swapping() {
@@ -34,6 +37,22 @@ public class Swapping {
         this.swappingBookname2 = swappingBookname2;
         this.now_state = now_state;
         this.confirm = confirm;
+    }
+
+    public int getMyuserid() {
+        return myuserid;
+    }
+
+    public void setMyuserid(int myuserid) {
+        this.myuserid = myuserid;
+    }
+
+    public int getTouserid() {
+        return touserid;
+    }
+
+    public void setTouserid(int touserid) {
+        this.touserid = touserid;
     }
 
     public int getSwappingPic1() {
@@ -92,11 +111,19 @@ public class Swapping {
         this.swappingBookURL1 = swappingBookURL1;
     }
 
-    public String getGetSwappingBookURL2() {
-        return getSwappingBookURL2;
+    public String getSwappingBookURL2() {
+        return SwappingBookURL2;
     }
 
-    public void setGetSwappingBookURL2(String getSwappingBookURL2) {
-        this.getSwappingBookURL2 = getSwappingBookURL2;
+    public void setSwappingBookURL2(String swappingBookURL2) {
+        SwappingBookURL2 = swappingBookURL2;
+    }
+
+    public int getExchangeid() {
+        return exchangeid;
+    }
+
+    public void setExchangeid(int exchangeid) {
+        this.exchangeid = exchangeid;
     }
 }

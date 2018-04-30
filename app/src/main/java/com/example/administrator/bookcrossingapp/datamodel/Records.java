@@ -11,30 +11,19 @@ package com.example.administrator.bookcrossingapp.datamodel;
     4 超期失效状态
 */
 public class Records {
-    private int recordsPic;
+    private String recordsBooknameURL;
     private String recordsBookname;
-    private int recordState;
+
     private String recordsExchangeUser;
-    private String recordsTime;
+    private long startTime;
+    private long recordsTime;
 
-    public Records(String recordsBookname) {
-        this.recordsBookname = recordsBookname;
+    public String getRecordsBooknameURL() {
+        return recordsBooknameURL;
     }
 
-    public Records(int recordsPic, String recordsBookname, int recordState, String recordsExchangeUser, String recordsTime) {
-        this.recordsPic = recordsPic;
-        this.recordsBookname = recordsBookname;
-        this.recordState = recordState;
-        this.recordsExchangeUser = recordsExchangeUser;
-        this.recordsTime = recordsTime;
-    }
-
-    public int getRecordsPic() {
-        return recordsPic;
-    }
-
-    public void setRecordsPic(int RecordsPic) {
-        this.recordsPic = RecordsPic;
+    public void setRecordsBooknameURL(String recordsBooknameURL) {
+        this.recordsBooknameURL = recordsBooknameURL;
     }
 
     public String getRecordsBookname() {
@@ -45,14 +34,6 @@ public class Records {
         this.recordsBookname = recordsBookname;
     }
 
-    public int getRecordState() {
-        return recordState;
-    }
-
-    public void setRecordState(int recordState) {
-        this.recordState = recordState;
-    }
-
     public String getRecordsExchangeUser() {
         return recordsExchangeUser;
     }
@@ -61,11 +42,19 @@ public class Records {
         this.recordsExchangeUser = recordsExchangeUser;
     }
 
-    public String getRecordsTime() {
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getRecordsTime() {
         return recordsTime;
     }
 
-    public void setRecordsTime(String recordsTime) {
+    public void setRecordsTime(long recordsTime) {
         this.recordsTime = recordsTime;
     }
 }
