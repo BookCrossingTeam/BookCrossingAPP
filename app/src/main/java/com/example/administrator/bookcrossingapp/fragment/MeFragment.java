@@ -113,6 +113,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ReviewsActivity.class);
+                intent.putExtra("userid",userid);
                 startActivity(intent);
             }
         });

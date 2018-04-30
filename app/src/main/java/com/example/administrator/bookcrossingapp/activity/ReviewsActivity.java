@@ -1,5 +1,7 @@
 package com.example.administrator.bookcrossingapp.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,7 +26,9 @@ public class ReviewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
         initView();
-        ReviewsArticleFragment fragment1 = new ReviewsArticleFragment();
+        Intent intent = getIntent();
+        int userid = intent.getIntExtra("userid",0);
+        ReviewsArticleFragment fragment1 = ReviewsArticleFragment.newInstance(userid);
         ReviewsOwnFragment fragment2 = new ReviewsOwnFragment();
         mFragments.add(fragment1);
         mFragments.add(fragment2);
