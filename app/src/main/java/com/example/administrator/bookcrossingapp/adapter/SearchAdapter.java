@@ -47,12 +47,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //暂时先不传递消息
-//                int position = holder.getAdapterPosition();
-//                Search search = mSearchList.get(position);
-                Intent intent = new Intent(v.getContext(), SearchDetailActivity.class);
-                //这里会添加需要传递的消息
-                view.getContext().startActivity(intent);
+                int position = holder.getAdapterPosition();
+                Search search = mSearchList.get(position);
+                if (search.getType() == Search.DOUBAN) {
+                    Intent intent = new Intent(v.getContext(), SearchDetailActivity.class);
+                    //这里会添加需要传递的消息
+                    intent.putExtra("type",Search.DOUBAN);
+                    intent.putExtra("searchContent",search.getSearchContent());
+                    view.getContext().startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(v.getContext(), SearchDetailActivity.class);
+                    //这里会添加需要传递的消息
+                    intent.putExtra("searchContent",search.getSearchContent());
+                    view.getContext().startActivity(intent);
+                }
             }
         });
 
@@ -63,7 +73,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, int position) {
         Search search = mSearchList.get(position);
         holder.searchPic.setImageResource(search.getSearchPic());
-        holder.searchContent.setText(search.getSearchContent());
+        holder.searchContent.setText(search.getDisPlay());
     }
 
     @Override

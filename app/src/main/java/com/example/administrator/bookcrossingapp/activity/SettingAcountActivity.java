@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.GlideImageLoader;
 import com.example.administrator.bookcrossingapp.R;
 import com.lzy.imagepicker.ImagePicker;
@@ -39,7 +40,8 @@ public class SettingAcountActivity extends AppCompatActivity {
     private ImageView headImg;
 
     private int userid;
-    private  int IMAGE_PICKER = 10010;
+    private String headImgUrl;
+    private int IMAGE_PICKER = 10010;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +49,18 @@ public class SettingAcountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting_acount);
         SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
         userid = pref.getInt("userid", 0);
+        headImgUrl = pref.getString("headImgPath", "");
+
 
         btnIcon = findViewById(R.id.btn_update_icon);
         btnPassword = findViewById(R.id.btn_update_password);
-        headImg = (ImageView)findViewById(R.id.me_icon_personIcon);
+        headImg = (ImageView) findViewById(R.id.me_icon_personIcon);
+        Glide.with(SettingAcountActivity.this).load("http://120.24.217.191/Book/img/headImg/" + headImgUrl).error(R.drawable.me_icon_person).into(headImg);
 
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingAcountActivity.this,UpdatePasswordActivity.class);
+                Intent intent = new Intent(SettingAcountActivity.this, UpdatePasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -110,7 +115,7 @@ public class SettingAcountActivity extends AppCompatActivity {
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseData);
-                    if (jsonObject.getInt("statuscode")==200) {
+                    if (jsonObject.getInt("statuscode") == 200) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -119,7 +124,7 @@ public class SettingAcountActivity extends AppCompatActivity {
                             }
                         });
                         SharedPreferences.Editor editor = getSharedPreferences("user_info", MODE_PRIVATE).edit();
-                        editor.putString("headImgPath",jsonObject.getString("headImgPath"));
+                        editor.putString("headImgPath", jsonObject.getString("headImgPath"));
                         editor.apply();
                     } else
                         runOnUiThread(new Runnable() {

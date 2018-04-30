@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.activity.ExchangeBookDetailsActivity;
+import com.example.administrator.bookcrossingapp.activity.PosingWantingActivity;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
 import java.text.SimpleDateFormat;
@@ -109,6 +110,27 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
                 }
             });
 
+        if (flagIntent == 3)
+        {
+            holder.nameheadImg.setVisibility(View.INVISIBLE);
+            holder.username.setVisibility(View.GONE);
+            holder.posetime.setVisibility(View.GONE);
+
+            holder.bookView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    BookDetail bookDetail = mBookDetailList.get(position);
+                    Intent intent = new Intent(v.getContext(), PosingWantingActivity.class);
+                    intent.putExtra("BookName", bookDetail.getBookName());
+                    intent.putExtra("Author", bookDetail.getAuthor());
+                    intent.putExtra("Press", bookDetail.getPress());
+                    intent.putExtra("BookImageUrl", bookDetail.getBookImageUrl());
+                    view.getContext().startActivity(intent);
+                }
+            });
+        }
+
         return holder;
     }
 
@@ -119,6 +141,11 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         holder.bookName.setText(bookdetail.getBookName());
         holder.author.setText(bookdetail.getAuthor());
         holder.posetime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(bookdetail.getPosetime())));
+        if (flagIntent == 3)
+        {
+            Glide.with(context).load(bookdetail.getBookImageUrl()).into(holder.bookimg);
+            return;
+        }
         Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/" + bookdetail.getBookImageUrl()).into(holder.bookimg);
         Glide.with(context).load("http://120.24.217.191/Book/img/headImg/" + bookdetail.getUserheadpath()).error(R.drawable.icon).into(holder.nameheadImg);
     }

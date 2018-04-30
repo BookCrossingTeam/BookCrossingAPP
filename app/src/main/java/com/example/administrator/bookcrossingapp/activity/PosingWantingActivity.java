@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.administrator.bookcrossingapp.GlideImageLoader;
 import com.example.administrator.bookcrossingapp.R;
 import com.lzy.imagepicker.ImagePicker;
@@ -27,6 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -56,7 +59,38 @@ public class PosingWantingActivity extends AppCompatActivity {
         SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
         userid = pref.getInt("userid", 0);
 
+
         init();//初始化组件
+
+        Intent intent = getIntent();
+        String BookName = intent.getStringExtra("BookName");
+        String Author = intent.getStringExtra("Author");
+        String Press = intent.getStringExtra("Press");
+        final String BookImageUrl = intent.getStringExtra("BookImageUrl");
+        if (BookImageUrl != null) {
+            bookName.setText(BookName);
+            author.setText(Author);
+            press.setText(Press);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String bookImgAbsolutePath = Glide.with(PosingWantingActivity.this).load(BookImageUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get().getAbsolutePath();
+                        final Bitmap bm = BitmapFactory.decodeFile(bookImgAbsolutePath);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                bookImg.setImageBitmap(bm);
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
 
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -215,7 +249,7 @@ public class PosingWantingActivity extends AppCompatActivity {
         int options = 90;
 
         while (baos.toByteArray().length / 1024 > 50) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
-            Log.i(TAG, "compressImage: "+baos.toByteArray().length);
+            Log.i(TAG, "compressImage: " + baos.toByteArray().length);
             baos.reset(); // 重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             options -= 10;// 每次都减少10
