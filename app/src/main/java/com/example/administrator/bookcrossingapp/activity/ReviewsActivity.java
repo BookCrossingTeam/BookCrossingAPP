@@ -29,7 +29,7 @@ public class ReviewsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int userid = intent.getIntExtra("userid",0);
         ReviewsArticleFragment fragment1 = ReviewsArticleFragment.newInstance(userid);
-        ReviewsOwnFragment fragment2 = new ReviewsOwnFragment();
+        ReviewsOwnFragment fragment2 = ReviewsOwnFragment.newInstance(userid);
         mFragments.add(fragment1);
         mFragments.add(fragment2);
         list.add("文章");

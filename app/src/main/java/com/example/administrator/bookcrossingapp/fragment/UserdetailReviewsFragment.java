@@ -33,9 +33,9 @@ public class UserdetailReviewsFragment extends Fragment {
 
     private void initReviewList() {
         for (int i = 0; i < 3; i++) {
-            ReviewItem reviewItem = new ReviewItem("中国最美大学：中国海洋大学", "作者：yyy", R.drawable.ouc_background);
+            ReviewItem reviewItem = new ReviewItem("中国最美大学：中国海洋大学", "作者：yyy", null);
             reviewlist.add(reviewItem);
-            ReviewItem reviewItem2 = new ReviewItem("一起来海大看樱花吧", "作者：hhh", R.drawable.ouc_background2);
+            ReviewItem reviewItem2 = new ReviewItem("一起来海大看樱花吧", "作者：hhh", null);
             reviewlist.add(reviewItem2);
         }
     }

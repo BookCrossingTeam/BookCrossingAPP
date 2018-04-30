@@ -7,15 +7,15 @@ package com.example.administrator.bookcrossingapp.datamodel;
 public class ReviewItem {
     private String title;
     private String author;
-    private int cover;
+    private String coverImgUrl;
 
     public ReviewItem() {
     }
 
-    public ReviewItem(String title, String author, int cover) {
+    public ReviewItem(String title, String author, String coverImgUrl) {
         this.title = title;
         this.author = author;
-        this.cover = cover;
+        this.coverImgUrl = coverImgUrl;
     }
 
     public String getTitle() {
@@ -34,11 +34,11 @@ public class ReviewItem {
         this.author = author;
     }
 
-    public int getCover() {
-        return cover;
+    public String getCoverImgUrl() {
+        return coverImgUrl;
     }
 
-    public void setCover(int cover) {
-        this.cover = cover;
+    public void setCoverImgUrl(String coverImgUrl) {
+        this.coverImgUrl = coverImgUrl;
     }
 }
