@@ -87,7 +87,9 @@ public class ReviewsArticleFragment extends Fragment {
                try {
                    OkHttpClient client = new OkHttpClient();
                    //不懂这里为什么要加“”
-                   RequestBody requestBody = new FormBody.Builder().add("userid", userid+"").build();
+                   //获取当前时间（毫秒）
+                   long lastTime = System.currentTimeMillis();
+                   RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime+"").build();
                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/reviewAll").post(requestBody).build();
                    Response response = client.newCall(request).execute();
                    Log.i("testtttttttttttt",response.toString());
