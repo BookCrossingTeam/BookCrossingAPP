@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.R;
@@ -53,19 +54,19 @@ public class HomeFragment extends Fragment {
     private BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
-    private long lastTime;
+    private long lastLoadTime;
+    private int bookType;
 
     public static final String ARGUMENT = "argument";
 
-    private int offset;
     private int offsetStep;
 
     public HomeFragment() {
         super();
-        offset = 0;
-        offsetStep = 8;
-        initBookDetailData();
+        offsetStep = 10;
+        bookType = 0;
     }
 
     @Override
@@ -73,8 +74,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        progressBar = view.findViewById(R.id.loading);
         initViewPager();
         initRecyclerView();
+        initBookDetailData();
         initSwipe_refresh();
         return view;
     }
@@ -182,8 +185,11 @@ public class HomeFragment extends Fragment {
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int lastItemPosition = LayoutManager.findLastVisibleItemPosition();
-                    if (lastItemPosition >= BookDetailList.size() - 3)
+                    if (BookDetailList.size() > 3 && lastItemPosition == BookDetailList.size() - 1) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        Log.i(TAG, "onScrollStateChanged: updateList");
                         updateList();
+                    }
                 }
             }
 
@@ -191,12 +197,16 @@ public class HomeFragment extends Fragment {
     }
 
     public void initBookDetailData() {
-        List<BookDetail> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetail.class);
-        offset = offset + offsetStep;
+        BookDetailList.clear();
+        List<BookDetail> dbList = null;
+        if (bookType == 0)
+            dbList = DataSupport.order("posetime desc").limit(offsetStep).find(BookDetail.class);
+        else
+            dbList = DataSupport.where("bookType = ? ", bookType + "").order("posetime desc").limit(offsetStep).find(BookDetail.class);
         //username, bookName, author, press, recommendedReason,imgUrl
-        lastTime = 0;
+        lastLoadTime = 0;
         if (!dbList.isEmpty())
-            lastTime = dbList.get(0).getPosetime();
+            lastLoadTime = dbList.get(dbList.size() - 1).getPosetime();
         BookDetailList.addAll(dbList);
     }
 
@@ -218,9 +228,21 @@ public class HomeFragment extends Fragment {
             public void run() {
                 // do somethings
                 try {
+                    long infTime = 0;
+                    List<BookDetail> bookDetaidblList = null;
+                    if (bookType == 0)
+                        bookDetaidblList = DataSupport.order("posetime desc").limit(1).find(BookDetail.class);
+                    else
+                        bookDetaidblList = DataSupport.where("bookType = ? ", bookType + "").order("posetime desc").limit(1).find(BookDetail.class);
+                    if (!bookDetaidblList.isEmpty())
+                        infTime = bookDetaidblList.get(0).getPosetime();
+
                     OkHttpClient client = new OkHttpClient();
                     client.retryOnConnectionFailure();
-                    RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime + "").build();
+                    //String Time1 = request.getParameter("infTime");
+                    //		String Time2 = request.getParameter("supTime");
+                    //		String Type = request.getParameter("bookType");
+                    RequestBody requestBody = new FormBody.Builder().add("infTime", infTime + "").add("supTime", "7226553600000").add("bookType", bookType + "").build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
@@ -234,7 +256,37 @@ public class HomeFragment extends Fragment {
                         }
                         //Log.i(TAG, "run: " + response.body());
                         String responseData = response.body().string();
-                        handleResponseData(responseData);
+
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String username = jsonObject.getString("username");
+                            String bookName = jsonObject.getString("bookName");
+                            String author = jsonObject.getString("author");
+                            String press = jsonObject.getString("publish");
+                            String recommendedReason = jsonObject.getString("reason");
+                            String imgUrl = jsonObject.getString("imgUrl");
+                            long posetime = Long.parseLong(jsonObject.getString("poseTime"));
+                            int userId = Integer.parseInt(jsonObject.getString("userId"));
+                            int bookId = Integer.parseInt(jsonObject.getString("id"));
+                            int bookType = Integer.parseInt(jsonObject.getString("bookType"));
+                            String userheadpath = jsonObject.getString("headImgPath");
+
+                            BookDetail book = new BookDetail();
+                            book.setUsername(username);
+                            book.setBookName(bookName);
+                            book.setAuthor(author);
+                            book.setPress(press);
+                            book.setRecommendedReason(recommendedReason);
+                            book.setBookImageUrl(imgUrl);
+                            book.setPosetime(posetime);
+                            book.setUserid(userId);
+                            book.setUserheadpath(userheadpath);
+                            book.setBookid(bookId);
+                            book.setBookType(bookType);
+                            book.save();
+                        }
+                        initBookDetailData();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -251,7 +303,6 @@ public class HomeFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //initBookDetailData();
                         adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }
@@ -260,56 +311,110 @@ public class HomeFragment extends Fragment {
         }).start();
     }
 
-    public void handleResponseData(final String responseData) {
-        try {
-            JSONArray jsonArray = new JSONArray(responseData);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String username = jsonObject.getString("username");
-                String bookName = jsonObject.getString("bookName");
-                String author = jsonObject.getString("author");
-                String press = jsonObject.getString("publish");
-                String recommendedReason = jsonObject.getString("reason");
-                String imgUrl = jsonObject.getString("imgUrl");
-                long posetime = Long.parseLong(jsonObject.getString("poseTime"));
-                int userId = Integer.parseInt(jsonObject.getString("userId"));
-                int bookId = Integer.parseInt(jsonObject.getString("id"));
-                String userheadpath = jsonObject.getString("headImgPath");
-
-                BookDetail book = new BookDetail();
-                book.setUsername(username);
-                book.setBookName(bookName);
-                book.setAuthor(author);
-                book.setPress(press);
-                book.setRecommendedReason(recommendedReason);
-                book.setBookImageUrl(imgUrl);
-                book.setPosetime(posetime);
-                book.setUserid(userId);
-                book.setUserheadpath(userheadpath);
-                book.setBookid(bookId);
-
-                book.save();
-            }
-            BookDetailList.clear();
-            offset = 0;
-            initBookDetailData();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void updateList() {
-        Log.i(TAG, "updateList: ");
-        List<BookDetail> dbList = DataSupport.order("posetime desc").limit(offsetStep).offset(offset).find(BookDetail.class);
-        offset = offset + offsetStep;
-        //username, bookName, author, press, recommendedReason,imgUrl
-        BookDetailList.addAll(dbList);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // do somethings
+                try {
+                    long dbTime = 0;
+                    List<BookDetail> bookDetaildbList = null;
+                    if (bookType == 0)
+                        bookDetaildbList = DataSupport.where("posetime < ?", lastLoadTime + "").order("posetime desc").limit(1).find(BookDetail.class);
+                    else
+                        bookDetaildbList = DataSupport.where("bookType = ? and posetime < ?", bookType + "", lastLoadTime + "").order("posetime desc").limit(1).find(BookDetail.class);
+                    if (!bookDetaildbList.isEmpty())
+                        dbTime = bookDetaildbList.get(0).getPosetime();
 
-        adapter.notifyDataSetChanged();
+                    OkHttpClient client = new OkHttpClient();
+                    client.retryOnConnectionFailure();
+                    //String Time1 = request.getParameter("infTime");
+                    //		String Time2 = request.getParameter("supTime");
+                    //		String Type = request.getParameter("bookType");
+                    RequestBody requestBody = new FormBody.Builder().add("infTime", dbTime + "").add("supTime", lastLoadTime + "").add("bookType", bookType + "").build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryPose").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        String responseData = response.body().string();
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String username = jsonObject.getString("username");
+                            String bookName = jsonObject.getString("bookName");
+                            String author = jsonObject.getString("author");
+                            String press = jsonObject.getString("publish");
+                            String recommendedReason = jsonObject.getString("reason");
+                            String imgUrl = jsonObject.getString("imgUrl");
+                            long posetime = Long.parseLong(jsonObject.getString("poseTime"));
+                            int userId = Integer.parseInt(jsonObject.getString("userId"));
+                            int bookId = Integer.parseInt(jsonObject.getString("id"));
+                            int bookType = Integer.parseInt(jsonObject.getString("bookType"));
+                            String userheadpath = jsonObject.getString("headImgPath");
+
+                            BookDetail book = new BookDetail();
+                            book.setUsername(username);
+                            book.setBookName(bookName);
+                            book.setAuthor(author);
+                            book.setPress(press);
+                            book.setRecommendedReason(recommendedReason);
+                            book.setBookImageUrl(imgUrl);
+                            book.setPosetime(posetime);
+                            book.setUserid(userId);
+                            book.setUserheadpath(userheadpath);
+                            book.setBookid(bookId);
+                            book.setBookType(bookType);
+                            book.save();
+
+                            lastLoadTime = posetime;
+                            BookDetailList.add(book);
+                        }
+                        int num = offsetStep - jsonArray.length();
+                        List<BookDetail> dbList = null;
+                        if (bookType == 0)
+                            dbList = DataSupport.where("posetime < ? ", lastLoadTime + "").order("posetime desc").limit(num).find(BookDetail.class);
+                        else
+                            dbList = DataSupport.where("bookType = ? and posetime < ? ", bookType + "", lastLoadTime + "").order("posetime desc").limit(num).find(BookDetail.class);
+                        //username, bookName, author, press, recommendedReason,imgUrl
+                        if (!dbList.isEmpty())
+                            lastLoadTime = dbList.get(dbList.size() - 1).getPosetime();
+                        BookDetailList.addAll(dbList);
+                    }
+                    //Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(), "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }).start();
     }
 
     public void smoothScroll() {
         Log.i(TAG, "smoothScroll: ");
         recyclerView.smoothScrollToPosition(0);
+    }
+
+    public void selectBookType(int type) {
+        if (type == bookType)
+            return;
+        recyclerView.smoothScrollToPosition(0);
+        bookType = type;
+        Log.i(TAG, "selectBookType: " + BookDetail.bookTypeName[type]);
+        initBookDetailData();
+        adapter.notifyDataSetChanged();
     }
 }

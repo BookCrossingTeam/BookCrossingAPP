@@ -3,6 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/ALL"
+            android:actionLayout="@drawable/barre_mark"
+            android:icon="@drawable/barre_mark"
+            android:title="ALL" />
+    </group>
+
+    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/Literature_Art"

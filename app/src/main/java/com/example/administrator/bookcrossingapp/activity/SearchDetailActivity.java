@@ -179,6 +179,8 @@ public class SearchDetailActivity extends AppCompatActivity {
                         String username = jsonObject.getString("username");
                         int bookId = Integer.parseInt(jsonObject.getString("id"));
                         String userheadpath = jsonObject.getString("headImgPath");
+                        int bookType = Integer.parseInt(jsonObject.getString("bookType"));
+                        String recommendedReason = jsonObject.getString("reason");
 
                         BookDetail book = new BookDetail();
                         book.setBookid(bookId);
@@ -191,6 +193,8 @@ public class SearchDetailActivity extends AppCompatActivity {
                         book.setPosetime(posetime);
                         book.setUserid(userId);
                         book.setUserheadpath(userheadpath);
+                        book.setBookType(bookType);
+                        book.setRecommendedReason(recommendedReason);
                         search_result_list.add(book);
                     }
                     runOnUiThread(new Runnable() {

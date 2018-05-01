@@ -7,6 +7,14 @@ import org.litepal.crud.DataSupport;
  */
 
 public class BookDetail extends DataSupport {
+    static public final int bookType_ALL = 0;
+    static public final int bookType_LA = 1;
+    static public final int bookType_HS = 2;
+    static public final int bookType_EM = 3;
+    static public final int bookType_EL = 4;
+    static public final int bookType_ST = 5;
+    static public final int bookType_Others = 6;
+    static public final String[] bookTypeName ={"ALL","Literature & Art","Humanities & Social Sciences","Economic & Management","Enducation & Life","Science & Technology","Others"};
     private String username;
     private int userid;
     private String userheadpath;
@@ -17,8 +25,17 @@ public class BookDetail extends DataSupport {
     private String recommendedReason;
     private String bookImageUrl;
     private int bookid;
+    private int bookType;
 
     private long posetime;
+
+    public int getBookType() {
+        return bookType;
+    }
+
+    public void setBookType(int bookType) {
+        this.bookType = bookType;
+    }
 
     public int getBookid() {
         return bookid;

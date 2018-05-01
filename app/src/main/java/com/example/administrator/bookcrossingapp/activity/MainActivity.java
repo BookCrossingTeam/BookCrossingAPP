@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.DataGenerator;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 import com.example.administrator.bookcrossingapp.fragment.HomeFragment;
 import com.example.administrator.bookcrossingapp.service.PollingService;
 import com.yzq.zxinglibrary.android.CaptureActivity;
@@ -35,12 +38,16 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private TabLayout mTabLayout;
     private Fragment[] mFragmensts;
     private DrawerLayout mDrawerLayout;
     private Button bar_menu;
     private Dialog dialog;//下弹窗
     private int REQUEST_CODE_SCAN = 111; //扫码
+
+    private NavigationView navigationView;
 
 
     @Override
@@ -49,12 +56,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         bar_menu = (Button) findViewById(R.id.tools_bar_menu);
         bar_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                //在这里处理item的点击事件
+                if(item.getTitle().equals(BookDetail.bookTypeName[0]))
+                ((HomeFragment)mFragmensts[0]).selectBookType(0);
+                if(item.getTitle().equals(BookDetail.bookTypeName[1]))
+                    ((HomeFragment)mFragmensts[0]).selectBookType(1);
+                if(item.getTitle().equals(BookDetail.bookTypeName[2]))
+                    ((HomeFragment)mFragmensts[0]).selectBookType(2);
+                if(item.getTitle().equals(BookDetail.bookTypeName[3]))
+                    ((HomeFragment)mFragmensts[0]).selectBookType(3);
+                if(item.getTitle().equals(BookDetail.bookTypeName[4]))
+                    ((HomeFragment)mFragmensts[0]).selectBookType(4);
+                if(item.getTitle().equals(BookDetail.bookTypeName[5]))
+                    ((HomeFragment)mFragmensts[0]).selectBookType(5);
+                if(item.getTitle().equals(BookDetail.bookTypeName[6]))
+                    ((HomeFragment)mFragmensts[0]).selectBookType(6);
+                mDrawerLayout.closeDrawers();
+                return true;
             }
         });
 

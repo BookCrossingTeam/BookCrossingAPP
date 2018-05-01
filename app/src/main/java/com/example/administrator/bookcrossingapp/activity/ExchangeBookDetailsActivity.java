@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
 public class ExchangeBookDetailsActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private TextView tv_chat;
     private TextView tv_want;
     private ImageView img_icon;
-    private TextView username, bookName, author, press, recommendedReason;
+    private TextView username, bookName, author, press, recommendedReason,Classify;
     private ImageView bookImg;
     private ImageView headImg;
 
@@ -34,6 +35,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private String headImgURL;
     private int userid;
     private int bookid;
+    private int bookType;
 
 
 
@@ -54,6 +56,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         userid = intent.getIntExtra("userid",0);
         headImgURL = intent.getStringExtra("nameheadUrl");
         bookid = intent.getIntExtra("bookid",0);
+        bookType = intent.getIntExtra("bookType",6);
 
 
         username = (TextView) findViewById(R.id.tv_username);
@@ -61,6 +64,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         author = (TextView) findViewById(R.id.tv_author);
         press = (TextView) findViewById(R.id.tv_press);
         recommendedReason = (TextView) findViewById(R.id.tv_recommend);
+        Classify = (TextView)findViewById(R.id.tv_classify);
         bookImg = (ImageView) findViewById(R.id.img_pic);
         headImg = (ImageView) findViewById(R.id.img_icon);
         tv_sharelist = findViewById(R.id.tv_sharelist);
@@ -79,6 +83,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         bookName.setText(bookNameValue);
         author.setText(authorValue);
         press.setText(pressValue);
+        Classify.setText(BookDetail.bookTypeName[bookType]);
         recommendedReason.setText(recommendedReasonValue);
         Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/bookImg/"+bookImgURL).into(bookImg);
         Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/headImg/" + headImgURL).error(R.drawable.icon).into(headImg);

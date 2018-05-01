@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.example.administrator.bookcrossingapp.GlideImageLoader;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 import com.example.administrator.bookcrossingapp.datamodel.DoubanIsbn;
 import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
@@ -53,6 +54,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
     private String bookNameValue, authorValue, pressValue, recommendedReasonValue, classifyValue;
     private int userid;
     private String bookImgAbsolutePath;
+    private int bookType;
 
     private int IMAGE_PICKER = 101;
 
@@ -158,6 +160,18 @@ public class PosingConfirmActivity extends AppCompatActivity {
                     Toast.makeText(PosingConfirmActivity.this, "请选择分类", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(classifyValue.equals(BookDetail.bookTypeName[1]))
+                    bookType = 1;
+                if(classifyValue.equals(BookDetail.bookTypeName[2]))
+                    bookType = 2;
+                if(classifyValue.equals(BookDetail.bookTypeName[3]))
+                    bookType = 3;
+                if(classifyValue.equals(BookDetail.bookTypeName[4]))
+                    bookType = 4;
+                if(classifyValue.equals(BookDetail.bookTypeName[5]))
+                    bookType = 5;
+                if(classifyValue.equals(BookDetail.bookTypeName[6]))
+                    bookType = 6;
                 sendPose();
             }
         });
@@ -173,6 +187,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
                     RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
                     RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("file", "book_image.jpg", fileBody)
                             .addFormDataPart("userid", userid + "").addFormDataPart("bookName", bookNameValue)
+                            .addFormDataPart("bookType",bookType+"")
                             .addFormDataPart("author", authorValue).addFormDataPart("press", pressValue).addFormDataPart("recommendedReason", recommendedReasonValue).build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendPose").post(requestBody).build();
                     Response response = client.newCall(request).execute();

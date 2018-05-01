@@ -85,6 +85,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
                     intent.putExtra("userid", bookDetail.getUserid());
                     intent.putExtra("nameheadUrl", bookDetail.getUserheadpath());
                     intent.putExtra("bookid", bookDetail.getBookid());
+                    intent.putExtra("bookType",bookDetail.getBookType());
                     view.getContext().startActivity(intent);
                 }
             });
@@ -105,6 +106,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
                     //intent.putExtra("userid", bookDetail.getUserid());
                     //intent.putExtra("nameheadUrl",bookDetail.getUserheadpath());
                     intent.putExtra("bookid", bookDetail.getBookid());
+                    intent.putExtra("bookType",bookDetail.getBookType());
                     mActivity.setResult(1, intent);
                     mActivity.finish();
                 }
@@ -140,6 +142,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter<BookDetailAdapter.Vi
         holder.username.setText(bookdetail.getUsername());
         holder.bookName.setText(bookdetail.getBookName());
         holder.author.setText(bookdetail.getAuthor());
+
         holder.posetime.setText(new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date(bookdetail.getPosetime())));
         if (flagIntent == 3)
         {

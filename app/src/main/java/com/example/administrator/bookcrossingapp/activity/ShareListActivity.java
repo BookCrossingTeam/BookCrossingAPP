@@ -122,6 +122,7 @@ public class ShareListActivity extends AppCompatActivity {
                 int userId = Integer.parseInt(jsonObject.getString("userId"));
                 String username = jsonObject.getString("username");
                 int bookId = Integer.parseInt(jsonObject.getString("id"));
+                int bookType = Integer.parseInt(jsonObject.getString("bookType"));
                 String userheadpath = jsonObject.getString("headImgPath");
 
                 BookDetail book = new BookDetail();
@@ -135,6 +136,7 @@ public class ShareListActivity extends AppCompatActivity {
                 book.setPosetime(posetime);
                 book.setUserid(userId);
                 book.setUserheadpath(userheadpath);
+                book.setBookType(bookType);
                 sharelist.add(book);
             }
         } catch (Exception e) {
