@@ -20,6 +20,7 @@ public class ReviewsEditActivity extends AppCompatActivity {
     private String titleValue, contentValue;
     private Drawable.ConstantState coverValue;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class ReviewsEditActivity extends AppCompatActivity {
                     Toast.makeText(ReviewsEditActivity.this, "请填写内容", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (coverValue.equals(getResources().getDrawable(R.drawable.plus_sign).getConstantState()))
+                if (coverValue.equals(getResources().getDrawable(R.drawable.add_cover).getConstantState()))
                 {
                     Toast.makeText(ReviewsEditActivity.this, "请上传封面", Toast.LENGTH_SHORT).show();
                     return;

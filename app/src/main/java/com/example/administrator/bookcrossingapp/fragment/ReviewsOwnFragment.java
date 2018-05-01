@@ -66,16 +66,6 @@ public class ReviewsOwnFragment extends Fragment {
 
     }
 
-    private void initReviewListTest() {
-        String test = Integer.toString(userid);
-        for (int i = 0; i < 3; i++) {
-            ReviewItem reviewItem = new ReviewItem("我的：中国最美大学：中国海洋大学", "作者: "+test, null);
-            reviewlist.add(reviewItem);
-            ReviewItem reviewItem2 = new ReviewItem("我的：一起来海大看樱花吧", "作者：hhh", null);
-            reviewlist.add(reviewItem2);
-        }
-    }
-
     private void initReviewList(){
         new Thread(new Runnable() {
             @Override
@@ -83,7 +73,6 @@ public class ReviewsOwnFragment extends Fragment {
                 //发送请求
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    //不懂这里为什么要加“”
                     RequestBody requestBody = new FormBody.Builder().add("userid", userid+"").build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/reviewOwn").post(requestBody).build();
                     Response response = client.newCall(request).execute();
@@ -142,6 +131,7 @@ public class ReviewsOwnFragment extends Fragment {
         btn_write.setVisibility(View.VISIBLE);
         btn_write.setOnClickListener(new View.OnClickListener() {
             @Override
+            //点击发表文章
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),ReviewsEditActivity.class);
                 startActivity(intent);
