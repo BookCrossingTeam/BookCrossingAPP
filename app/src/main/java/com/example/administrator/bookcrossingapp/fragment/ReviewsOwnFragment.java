@@ -145,12 +145,13 @@ public class ReviewsOwnFragment extends Fragment {
             JSONArray jsonArray = new JSONArray(responseData);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int articleId = Integer.parseInt(jsonObject.getString("id"));
                 String title = jsonObject.getString("title");
                 String author = jsonObject.getString("username");
-                //关于图片还需要修改
                 String coverImgUrl = jsonObject.getString("coverImgUrl");
 
                 ReviewItem reviewItem = new ReviewItem();
+                reviewItem.setArticleId(articleId);
                 reviewItem.setTitle(title);
                 reviewItem.setAuthor(author);
                 reviewItem.setCoverImgUrl(coverImgUrl);

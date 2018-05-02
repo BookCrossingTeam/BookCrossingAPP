@@ -61,9 +61,11 @@ public class ReviewItemAdapter  extends RecyclerView.Adapter<ReviewItemAdapter.V
         holder.reviewView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //item点击事件
                 int position = holder.getAdapterPosition();
                 ReviewItem reviewItem = mReviewList.get(position);
                 Intent intent = new Intent(v.getContext(),ReviewsDetailActivity.class);
+                intent.putExtra("articleId", reviewItem.getArticleId());
                 intent.putExtra("cover",reviewItem.getCoverImgUrl());
                 intent.putExtra("title",reviewItem.getTitle());
                 intent.putExtra("author",reviewItem.getAuthor());

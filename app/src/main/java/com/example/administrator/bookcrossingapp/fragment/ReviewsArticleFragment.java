@@ -67,17 +67,6 @@ public class ReviewsArticleFragment extends Fragment {
 
     }
 
-    private void initReviewListTest() {
-        String test = Integer.toString(userid);
-        Log.i("Reviewtest1111",test);
-        for (int i = 0; i < 3; i++) {
-            ReviewItem reviewItem = new ReviewItem("中国最美大学：中国海洋大学", "作者： "+test, null
-            );
-            reviewlist.add(reviewItem);
-            ReviewItem reviewItem2 = new ReviewItem("一起来海大看樱花吧", "作者：hhh", null);
-            reviewlist.add(reviewItem2);
-        }
-    }
     private void initReviewList(){
         //从服务器端获取数据
        new Thread(new Runnable() {
@@ -149,12 +138,13 @@ public class ReviewsArticleFragment extends Fragment {
             JSONArray jsonArray = new JSONArray(responseData);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int articleId = Integer.parseInt(jsonObject.getString("id"));
                 String title = jsonObject.getString("title");
                 String author = jsonObject.getString("username");
-                //关于图片还需要修改
                 String coverImgUrl = jsonObject.getString("coverImgUrl");
 
                 ReviewItem reviewItem = new ReviewItem();
+                reviewItem.setArticleId(articleId);
                 reviewItem.setTitle(title);
                 reviewItem.setAuthor(author);
                 reviewItem.setCoverImgUrl(coverImgUrl);

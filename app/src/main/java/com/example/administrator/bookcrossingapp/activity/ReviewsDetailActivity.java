@@ -1,12 +1,31 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ReviewsDetailActivity extends AppCompatActivity {
 
@@ -15,7 +34,8 @@ public class ReviewsDetailActivity extends AppCompatActivity {
     private TextView tv_author;
     private TextView tv_content;
 
-    private int cover;
+    private int articleId;
+    private String cover;
     private String title;
     private String author;
     private String content;
@@ -25,7 +45,8 @@ public class ReviewsDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews_detail);
         Intent intent = getIntent();
-        cover = intent.getIntExtra("cover", R.drawable.ouc_background);
+        articleId = intent.getIntExtra("articleId",0);
+        cover = intent.getStringExtra("cover");
         title = intent.getStringExtra("title");
         author = intent.getStringExtra("author");
 
@@ -34,11 +55,68 @@ public class ReviewsDetailActivity extends AppCompatActivity {
         tv_author = findViewById(R.id.reviews_detail_author);
         tv_content = findViewById(R.id.reviews_detail_content);
 
-        img_cover.setImageResource(cover);
+        //利用Glide来将图片加载显示
+        Glide.with(this).load("http://120.24.217.191/Book/img/bookImg/" + cover).into(img_cover);
         tv_title.setText(title);
         tv_author.setText(author);
-        tv_content.setText("内容无");
+        initContent();
+
+
 
 
     }
+
+    public void initContent(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //发送请求
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("articleId", articleId + "")
+                            .build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/detailContent").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    Log.i("contentTest",response.toString());
+                    if (response.isSuccessful()) {
+
+                        String responseData = response.body().string();
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        if(jsonArray.length() > 0){
+                            //因为只有唯一一个返回值
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            content = jsonObject.getString("content");
+                        }
+                        ReviewsDetailActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(ReviewsDetailActivity.this,"成功连接上详情页面",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        ReviewsDetailActivity.this.runOnUiThread((new Runnable() {
+                            @Override
+                            public void run() {
+                                tv_content.setText(content);
+                            }
+                        }));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        Objects.requireNonNull(ReviewsDetailActivity.this).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(ReviewsDetailActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            }
+        }).start();
+    }
+
+
 }

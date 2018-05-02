@@ -5,6 +5,7 @@ package com.example.administrator.bookcrossingapp.datamodel;
  */
 
 public class ReviewItem {
+    private int articleId;
     private String title;
     private String author;
     private String coverImgUrl;
@@ -12,10 +13,19 @@ public class ReviewItem {
     public ReviewItem() {
     }
 
-    public ReviewItem(String title, String author, String coverImgUrl) {
+    public ReviewItem(int articleId, String title, String author, String coverImgUrl) {
+        this.articleId = articleId;
         this.title = title;
         this.author = author;
         this.coverImgUrl = coverImgUrl;
+    }
+
+    public  int getArticleId(){
+        return articleId;
+    }
+
+    public void setArticleId(int articleId){
+        this.articleId = articleId;
     }
 
     public String getTitle() {
