@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.R;
@@ -42,6 +43,7 @@ public class SearchDetailActivity extends AppCompatActivity {
     private String content;
     private int type;
     private ProgressBar progressBar;
+    private TextView empty_msg;
 
     private BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
@@ -56,9 +58,11 @@ public class SearchDetailActivity extends AppCompatActivity {
         content = intent.getStringExtra("searchContent");
 
         RecyclerView recyclerView = findViewById(R.id.search_result_recyclerView);
+        empty_msg = findViewById(R.id.search_result_empty);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(SearchDetailActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BookDetailAdapter(search_result_list);
+        adapter = new BookDetailAdapter(search_result_list,SearchDetailActivity.this);
         if (type == Search.DOUBAN)
             adapter.setIntent(3);
         recyclerView.setAdapter(adapter);
@@ -167,7 +171,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     Log.d(TAG, "run: " + responseData);
-                    JSONArray jsonArray = new JSONArray(responseData);
+                    final JSONArray jsonArray = new JSONArray(responseData);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String bookName = jsonObject.getString("bookName");
@@ -181,6 +185,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                         String userheadpath = jsonObject.getString("headImgPath");
                         int bookType = Integer.parseInt(jsonObject.getString("bookType"));
                         String recommendedReason = jsonObject.getString("reason");
+                        int exchangeState = Integer.parseInt(jsonObject.getString("exchangeState"));
 
                         BookDetail book = new BookDetail();
                         book.setBookid(bookId);
@@ -195,6 +200,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                         book.setUserheadpath(userheadpath);
                         book.setBookType(bookType);
                         book.setRecommendedReason(recommendedReason);
+                        book.setExchangeState(exchangeState);
                         search_result_list.add(book);
                     }
                     runOnUiThread(new Runnable() {
@@ -202,6 +208,8 @@ public class SearchDetailActivity extends AppCompatActivity {
                         public void run() {
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
+                            if(jsonArray.length()==0)
+                                empty_msg.setVisibility(View.VISIBLE);
                         }
                     });
                 } catch (Exception e) {

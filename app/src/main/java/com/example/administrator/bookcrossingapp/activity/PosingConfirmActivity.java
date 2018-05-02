@@ -92,7 +92,6 @@ public class PosingConfirmActivity extends AppCompatActivity {
         //传值
         Intent intent = getIntent();
         final String content = intent.getStringExtra("code_content");
-        recommendedReason.setText(content);
 
         new Thread(new Runnable() {
             @Override

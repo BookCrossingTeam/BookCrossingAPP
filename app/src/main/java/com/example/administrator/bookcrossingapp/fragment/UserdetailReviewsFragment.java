@@ -32,12 +32,6 @@ public class UserdetailReviewsFragment extends Fragment {
     }
 
     private void initReviewList() {
-        for (int i = 0; i < 3; i++) {
-            ReviewItem reviewItem = new ReviewItem(1,"中国最美大学：中国海洋大学", "作者：yyy", null);
-            reviewlist.add(reviewItem);
-            ReviewItem reviewItem2 = new ReviewItem(1,"一起来海大看樱花吧", "作者：hhh", null);
-            reviewlist.add(reviewItem2);
-        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

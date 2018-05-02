@@ -24,6 +24,8 @@ public class Swapping {
     private int exchangeid;
     private int myuserid;
     private int touserid;
+    private int bookAid;
+    private int bookBid;
 
 
     public Swapping() {
@@ -125,5 +127,21 @@ public class Swapping {
 
     public void setExchangeid(int exchangeid) {
         this.exchangeid = exchangeid;
+    }
+
+    public int getBookAid() {
+        return bookAid;
+    }
+
+    public void setBookAid(int bookAid) {
+        this.bookAid = bookAid;
+    }
+
+    public int getBookBid() {
+        return bookBid;
+    }
+
+    public void setBookBid(int bookBid) {
+        this.bookBid = bookBid;
     }
 }

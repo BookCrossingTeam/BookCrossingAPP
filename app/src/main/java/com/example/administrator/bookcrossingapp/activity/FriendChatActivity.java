@@ -107,6 +107,7 @@ public class FriendChatActivity extends AppCompatActivity {
                         if (!"".equals(content)) {
                             //如果输入框内容不为空
                             if (MessageManagement.getInstance(FriendChatActivity.this).sendMsg(userid, content)) {
+                                PollingService.setNewNum(MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote());
                                 refreshMsg();
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -171,8 +172,7 @@ public class FriendChatActivity extends AppCompatActivity {
         exchange_pose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (book_left_id == 0 || book_right_id == 0)
-                {
+                if (book_left_id == 0 || book_right_id == 0) {
                     Toast.makeText(FriendChatActivity.this, "请选择双方的书", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -184,14 +184,14 @@ public class FriendChatActivity extends AppCompatActivity {
                         try {
                             OkHttpClient client = new OkHttpClient();
                             RequestBody requestBody = new FormBody.Builder().add("userAId", MessageManagement.getInstance(FriendChatActivity.this).getMyuserid() + "")
-                                    .add("userBId",userid+"")
-                                    .add("bookAId",book_right_id+"")
-                                    .add("bookBId",book_left_id+"")
+                                    .add("userBId", userid + "")
+                                    .add("bookAId", book_right_id + "")
+                                    .add("bookBId", book_left_id + "")
                                     .build();
                             Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/exchange").post(requestBody).build();
                             Response response = client.newCall(request).execute();
                             if (response.isSuccessful()) {
-                                String responseData = response.body().string();
+                                final String responseData = response.body().string();
                                 if (responseData.equals("OK"))
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -205,6 +205,14 @@ public class FriendChatActivity extends AppCompatActivity {
                                             refreshMsg();
                                         }
                                     });
+                                else {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(FriendChatActivity.this, responseData, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
 
                         } catch (Exception e) {
@@ -228,22 +236,22 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PollingService.setDelaytime(1000 * 30);
+        PollingService.setDelaytime(1000 * 10);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
                 refreshMsg();
-                handler.postDelayed(runnable, 10000);
+                handler.postDelayed(runnable, 500);
             }
         };
-        handler.postDelayed(runnable, 10000);
+        handler.postDelayed(runnable, 500);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        PollingService.setDelaytime(1000 * 10);
+        PollingService.setDelaytime(1000 * 60);
         handler.removeCallbacks(runnable);
     }
 
@@ -271,14 +279,13 @@ public class FriendChatActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote() > -1)
+                if (PollingService.getNewNum() > 0)
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Log.i(TAG, "refreshMsg: ");
                             int oldlistsize = msgList.size();
                             MessageManagement.getInstance(FriendChatActivity.this).initMsglist(userid, msgList);
-
                             //当有新的数据插入是时，会刷新RecyclerView显示
                             adapter.notifyDataSetChanged(); //重新获取最新数据list位置
                             if (recyclerViewlayoutManager.findLastVisibleItemPosition() == oldlistsize - 1)
@@ -286,6 +293,7 @@ public class FriendChatActivity extends AppCompatActivity {
                                 msgRecyclerView.smoothScrollToPosition(msgList.size() - 1);
                         }
                     });
+                PollingService.setNewNum(0);
             }
         }).start();
 

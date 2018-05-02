@@ -6,6 +6,7 @@
     android:layout_height="134dp">
 
     <RelativeLayout
+        android:id="@+id/book_box"
         android:layout_width="match_parent"
         android:layout_height="136dp"
         android:background="@drawable/white_box">

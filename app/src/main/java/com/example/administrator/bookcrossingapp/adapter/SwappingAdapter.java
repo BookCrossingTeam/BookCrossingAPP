@@ -83,6 +83,8 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
                             RequestBody requestBody = new FormBody.Builder().add("id", swapping.getExchangeid() + "")
                                     .add("myuserid", swapping.getMyuserid() + "")
                                     .add("touserid", swapping.getTouserid() + "")
+                                    .add("bookAId",swapping.getBookAid()+"")
+                                    .add("bookBId",swapping.getBookBid()+"")
                                     .build();
                             Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/exchange_update").post(requestBody).build();
                             Response response = client.newCall(request).execute();

@@ -28,6 +28,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private ImageView img_icon;
     private String usernameValue;
     private int imgIconPath;
+    private int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,8 @@ public class UserDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_detail);
         initView();
         initData();
-        UserdetailSharelistFragment fragment1 = new UserdetailSharelistFragment();
-        UserdetailWantlistFragment fragment2 = new UserdetailWantlistFragment();
+        UserdetailSharelistFragment fragment1 = new UserdetailSharelistFragment(userid);
+        UserdetailWantlistFragment fragment2 = new UserdetailWantlistFragment(userid);
         UserdetailReviewsFragment fragment3 = new UserdetailReviewsFragment();
         mFragments.add(fragment1);
         mFragments.add(fragment2);
@@ -45,6 +46,7 @@ public class UserDetailActivity extends AppCompatActivity {
         list.add("wantList");
         list.add("reviewsList");
         userdetail_tab_layout.setupWithViewPager(userdetail_pager);
+        userdetail_pager.setOffscreenPageLimit(0);
         userdetail_pager.setAdapter(new TabSimpleAdapter(getSupportFragmentManager(), mFragments, list));
     }
 
@@ -52,13 +54,14 @@ public class UserDetailActivity extends AppCompatActivity {
         //从上一个页面传过来的值
         Intent intent = getIntent();
         usernameValue = intent.getStringExtra("username");
+        userid = intent.getIntExtra("userid",0);
         tv_username.setText(usernameValue);
     }
 
     private void initView() {
         userdetail_tab_layout = (TabLayout) findViewById(R.id.userdetail_tab_layout);
         userdetail_pager = (ViewPager) findViewById(R.id.userdetail_pager);
-        //tv_username = findViewById(R.id.user_detail_username);
+        tv_username = findViewById(R.id.user_detail_username);
         img_icon = findViewById(R.id.img_icon);
 
         userdetail_tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

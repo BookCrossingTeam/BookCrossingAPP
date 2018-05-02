@@ -1,6 +1,7 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,7 +22,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private TextView tv_chat;
     private TextView tv_want;
     private ImageView img_icon;
-    private TextView username, bookName, author, press, recommendedReason,Classify;
+    private TextView username, bookName, author, press, recommendedReason, Classify;
     private ImageView bookImg;
     private ImageView headImg;
 
@@ -38,8 +39,6 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
     private int bookType;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +52,10 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         pressValue = intent.getStringExtra("Press");
         recommendedReasonValue = intent.getStringExtra("RecommendedReason");
         bookImgURL = intent.getStringExtra("BookImageUrl");
-        userid = intent.getIntExtra("userid",0);
+        userid = intent.getIntExtra("userid", 0);
         headImgURL = intent.getStringExtra("nameheadUrl");
-        bookid = intent.getIntExtra("bookid",0);
-        bookType = intent.getIntExtra("bookType",6);
+        bookid = intent.getIntExtra("bookid", 0);
+        bookType = intent.getIntExtra("bookType", 6);
 
 
         username = (TextView) findViewById(R.id.tv_username);
@@ -64,7 +63,7 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         author = (TextView) findViewById(R.id.tv_author);
         press = (TextView) findViewById(R.id.tv_press);
         recommendedReason = (TextView) findViewById(R.id.tv_recommend);
-        Classify = (TextView)findViewById(R.id.tv_classify);
+        Classify = (TextView) findViewById(R.id.tv_classify);
         bookImg = (ImageView) findViewById(R.id.img_pic);
         headImg = (ImageView) findViewById(R.id.img_icon);
         tv_sharelist = findViewById(R.id.tv_sharelist);
@@ -79,22 +78,31 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
         Log.d(TAG, "onClick: " + pressValue);
         Log.d(TAG, "onClick: " + recommendedReasonValue);
         Log.d(TAG, "onClick: " + bookid);
+
+        SharedPreferences pref = getSharedPreferences("user_info", MODE_PRIVATE);
+        int myuserid = pref.getInt("userid",0);
+        if(myuserid == userid)
+        {
+            tv_chat.setVisibility(View.GONE);
+            tv_want.setVisibility(View.GONE);
+        }
+
         username.setText(usernameValue);
         bookName.setText(bookNameValue);
         author.setText(authorValue);
         press.setText(pressValue);
         Classify.setText(BookDetail.bookTypeName[bookType]);
         recommendedReason.setText(recommendedReasonValue);
-        Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/bookImg/"+bookImgURL).into(bookImg);
+        Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/bookImg/" + bookImgURL).into(bookImg);
         Glide.with(ExchangeBookDetailsActivity.this).load("http://120.24.217.191/Book/img/headImg/" + headImgURL).error(R.drawable.icon).into(headImg);
 
         tv_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ExchangeBookDetailsActivity.this, FriendChatActivity.class);
-                intent.putExtra("userid",userid);
-                intent.putExtra("bookid",bookid);
-                intent.putExtra("bookimg",bookImgURL);
+                intent.putExtra("userid", userid);
+                intent.putExtra("bookid", bookid);
+                intent.putExtra("bookimg", bookImgURL);
                 startActivity(intent);
             }
         });
@@ -103,8 +111,8 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ExchangeBookDetailsActivity.this, ShareListActivity.class);
-                intent.putExtra("username",usernameValue);
-                intent.putExtra("userid",userid);
+                intent.putExtra("username", usernameValue);
+                intent.putExtra("userid", userid);
                 startActivity(intent);
             }
         });
@@ -113,8 +121,20 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ExchangeBookDetailsActivity.this, WantListActivity.class);
-                intent.putExtra("username",usernameValue);
-                intent.putExtra("userid",userid);
+                intent.putExtra("username", usernameValue);
+                intent.putExtra("userid", userid);
+                startActivity(intent);
+            }
+        });
+
+        tv_want.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PosingWantingActivity.class);
+                intent.putExtra("BookName", bookNameValue);
+                intent.putExtra("Author", authorValue);
+                intent.putExtra("Press", pressValue);
+                intent.putExtra("BookImageUrl", "http://120.24.217.191/Book/img/bookImg/"+bookImgURL);
                 startActivity(intent);
             }
         });
@@ -123,8 +143,8 @@ public class ExchangeBookDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ExchangeBookDetailsActivity.this, UserDetailActivity.class);
-                intent.putExtra("username",usernameValue);
-                intent.putExtra("userid",userid);
+                intent.putExtra("username", usernameValue);
+                intent.putExtra("userid", userid);
                 startActivity(intent);
             }
         });

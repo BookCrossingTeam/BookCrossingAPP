@@ -24,7 +24,8 @@ public class PollingService extends Service {
 
     private Handler handler;
     private Runnable runnable;
-    static private int  delaytime;
+    static private int delaytime;
+    static private int newNum;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -34,7 +35,7 @@ public class PollingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        delaytime = 10000;
+        delaytime = 60000;
 
         sendNotification("正在运行中");
 
@@ -47,14 +48,16 @@ public class PollingService extends Service {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (MessageManagement.getInstance(PollingService.this).getMsgFromRemote()>0)
+                        newNum = MessageManagement.getInstance(PollingService.this).getMsgFromRemote();
+                        if (newNum > 0) {
                             sendNotification("有新消息");
+                        }
                         handler.postDelayed(runnable, delaytime);
                     }
                 }).start();
             }
         };
-        handler.postDelayed(runnable, delaytime);
+        handler.postDelayed(runnable, 5000);
     }
 
     @Override
@@ -66,10 +69,6 @@ public class PollingService extends Service {
         super.onDestroy();
     }
 
-    static public void setDelaytime(int time)
-    {
-        delaytime = time;
-    }
 
     public void sendNotification(String msg) {
         NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -103,8 +102,7 @@ public class PollingService extends Service {
                 .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
 
 
-        if(msg.equals("正在运行中"))
-        {
+        if (msg.equals("正在运行中")) {
             builder.setOngoing(true);
             mNotifyMgr.notify(1100, builder.build());
             return;
@@ -115,4 +113,18 @@ public class PollingService extends Service {
         mNotifyMgr.notify(1101, builder.build());
 
     }
+
+    static public int getNewNum() {
+        return newNum;
+    }
+
+    static public void setNewNum(int num) {
+        newNum = num;
+    }
+
+    static public void setDelaytime(int time) {
+        delaytime = time;
+    }
+
+
 }

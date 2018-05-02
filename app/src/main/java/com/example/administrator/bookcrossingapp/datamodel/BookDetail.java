@@ -26,8 +26,17 @@ public class BookDetail extends DataSupport {
     private String bookImageUrl;
     private int bookid;
     private int bookType;
+    private int exchangeState;
 
     private long posetime;
+
+    public int getExchangeState() {
+        return exchangeState;
+    }
+
+    public void setExchangeState(int exchangeState) {
+        this.exchangeState = exchangeState;
+    }
 
     public int getBookType() {
         return bookType;

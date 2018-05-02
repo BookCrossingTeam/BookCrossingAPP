@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.activity.FriendChatActivity;
+import com.example.administrator.bookcrossingapp.activity.UserDetailActivity;
 import com.example.administrator.bookcrossingapp.datamodel.Friend;
 
 import java.text.SimpleDateFormat;
@@ -65,6 +66,19 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 view.getContext().startActivity(intent);
             }
         });
+
+        holder.friendPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Friend friend = mFriendList.get(position);
+                Intent intent = new Intent(view.getContext(), UserDetailActivity.class);
+                intent.putExtra("username", friend.getFriendName());
+                intent.putExtra("userid", friend.getUserid());
+                view.getContext().startActivity(intent);
+            }
+        });
+
         return holder;
     }
 

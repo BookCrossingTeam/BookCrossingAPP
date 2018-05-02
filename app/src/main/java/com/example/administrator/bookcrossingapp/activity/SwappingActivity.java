@@ -76,9 +76,15 @@ public class SwappingActivity extends AppCompatActivity {
                             long exchangeTime = Long.parseLong(jsonObject.getString("exchangeTime"));
                             int exchangeState = Integer.parseInt(jsonObject.getString("exchangeState"));
 
+                            int bookAid = Integer.parseInt(jsonObject.getString("bookAid"));
+                            int bookBid = Integer.parseInt(jsonObject.getString("bookBid"));
+
                             Swapping swapping = new Swapping();
                             swapping.setExchangeid(exchangeid);
                             swapping.setSwappingBookURL1(bookAURL);
+
+                            swapping.setBookAid(bookAid);
+                            swapping.setBookBid(bookBid);
 
                             swapping.setSwappingBookURL2(bookBURL);
                             if(userAid == userid)

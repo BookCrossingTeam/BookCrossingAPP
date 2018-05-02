@@ -9,18 +9,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@drawable/title_friend">
+        android:layout_height="90dp"
+        android:background="@drawable/title_friend"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="Personal Details"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/user_detail_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TextView" />
 
     </LinearLayout>
 

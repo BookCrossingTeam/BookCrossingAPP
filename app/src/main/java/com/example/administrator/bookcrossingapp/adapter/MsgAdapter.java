@@ -1,6 +1,7 @@
 package com.example.administrator.bookcrossingapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.MessageManagement;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.activity.UserDetailActivity;
 import com.example.administrator.bookcrossingapp.datamodel.Msg;
 
 import java.text.SimpleDateFormat;
@@ -59,7 +61,20 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
         context = parent.getContext();
         //可以理解为虽然在构造函数时候已经获取了view中的组件元素，但还要重新构造一次，利用msg_item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_friend_chat_item, parent, false);
-        return new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+
+        holder.leftImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Msg msg = mMsgList.get(position);
+                Intent intent = new Intent(view.getContext(), UserDetailActivity.class);
+                intent.putExtra("username", msg.getUsername());
+                intent.putExtra("userid", msg.getUserid());
+                view.getContext().startActivity(intent);
+            }
+        });
+        return holder;
     }
 
     @Override

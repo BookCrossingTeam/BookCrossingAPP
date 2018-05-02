@@ -16,6 +16,7 @@ import com.example.administrator.bookcrossingapp.MessageManagement;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.adapter.FriendAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.Friend;
+import com.example.administrator.bookcrossingapp.service.PollingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +56,14 @@ public class FriendFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //PollingService.setDelaytime(Integer.MAX_VALUE);
+        PollingService.setDelaytime(15000);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-
                 initFriends();
                 adapter.notifyDataSetChanged();
-                handler.postDelayed(runnable, 5000);
+                handler.postDelayed(runnable, 2000);
             }
         };
         handler.post(runnable);
@@ -72,7 +72,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        //PollingService.setDelaytime(10000);
+        PollingService.setDelaytime(60000);
         handler.removeCallbacks(runnable);
     }
 
@@ -87,8 +87,6 @@ public class FriendFragment extends Fragment {
     private void initFriends() {
         Log.i(TAG, "initFriends: ");
         MessageManagement.getInstance(getActivity()).initFrinedList(friendList);
-        for (Friend friend : friendList)
-            Log.i(TAG, "initFriends: " + friend.getIsread() + friend.getFriendName());
     }
 
     public void initFriendsRecyclerView() {
@@ -111,7 +109,9 @@ public class FriendFragment extends Fragment {
                     @Override
                     public void run() {
                         Log.i(TAG, "onRefresh run: ");
-                        if (MessageManagement.getInstance(getActivity()).getMsgFromRemote()>-1) {
+                        int num = MessageManagement.getInstance(getActivity()).getMsgFromRemote();
+                        PollingService.setNewNum(num);
+                        if (num > -1) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

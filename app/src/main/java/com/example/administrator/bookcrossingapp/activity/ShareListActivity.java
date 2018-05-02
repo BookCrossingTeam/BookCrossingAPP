@@ -7,6 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +34,8 @@ public class ShareListActivity extends AppCompatActivity {
     private TextView tv_title;
     private TextView tv_username;
     private int userid;
-    private BookDetailAdapter adapter;
+    private ProgressBar progressBar;
+    public BookDetailAdapter adapter;
     private SwipeRefreshLayout swipeRefresh;
     private static final String TAG = "ShareListActivity";
     private List<BookDetail> sharelist = new ArrayList<>();
@@ -43,6 +46,7 @@ public class ShareListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         tv_title = findViewById(R.id.list_title);
+        progressBar = findViewById(R.id.bookLoading);
         tv_title.setText("ShareList");
         int flag;
 
@@ -54,7 +58,7 @@ public class ShareListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(ShareListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         if (flag == 0)
-            adapter = new BookDetailAdapter(sharelist);
+            adapter = new BookDetailAdapter(sharelist,ShareListActivity.this);
         if (flag == 1)
         {
             adapter = new BookDetailAdapter(sharelist, ShareListActivity.this);
@@ -87,6 +91,7 @@ public class ShareListActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
                             }
                         }));
                     }
@@ -124,8 +129,10 @@ public class ShareListActivity extends AppCompatActivity {
                 int bookId = Integer.parseInt(jsonObject.getString("id"));
                 int bookType = Integer.parseInt(jsonObject.getString("bookType"));
                 String userheadpath = jsonObject.getString("headImgPath");
+                int exchangeState = Integer.parseInt(jsonObject.getString("exchangeState"));
 
                 BookDetail book = new BookDetail();
+                book.setExchangeState(exchangeState);
                 book.setBookid(bookId);
                 book.setUsername(username);
                 book.setBookName(bookName);

@@ -1,11 +1,14 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +33,12 @@ public class WantListActivity extends AppCompatActivity {
     private TextView tv_title;
     private TextView tv_username;
     private int userid;
+    private ProgressBar progressBar;
     private static final String TAG = "WantListActivity";
-    private BookDetailAdapter adapter;
+    public BookDetailAdapter adapter;
     private List<BookDetail> wantlist = new ArrayList<>();
+
+    private int myuserid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +47,26 @@ public class WantListActivity extends AppCompatActivity {
 
         tv_title = findViewById(R.id.list_title);
         tv_title.setText("WantList");
+        progressBar = findViewById(R.id.bookLoading);
 
         Intent intent = getIntent();
-        userid = intent.getIntExtra("userid",0);
+        userid = intent.getIntExtra("userid", 0);
 
 
         RecyclerView recyclerView = findViewById(R.id.booklist_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(WantListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BookDetailAdapter(wantlist);
-        adapter.setIntent(0);
+
+        SharedPreferences pref = getSharedPreferences("user_info", MODE_PRIVATE);
+        myuserid = pref.getInt("userid", 0);
+        if (myuserid == userid) {
+            adapter = new BookDetailAdapter(wantlist,WantListActivity.this);
+            adapter.setIntent(0);
+        } else {
+            adapter = new BookDetailAdapter(wantlist);
+            adapter.setIntent(3);
+        }
+
         recyclerView.setAdapter(adapter);
 
         //获取书单信息
@@ -64,7 +80,7 @@ public class WantListActivity extends AppCompatActivity {
                 // 获取数据
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("userid", userid+"").build();
+                    RequestBody requestBody = new FormBody.Builder().add("userid", userid + "").build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/queryWant").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     Log.i(TAG, "response is :" + response.isSuccessful());
@@ -77,6 +93,7 @@ public class WantListActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
                             }
                         }));
                     }
@@ -116,7 +133,10 @@ public class WantListActivity extends AppCompatActivity {
                 book.setAuthor(author);
                 book.setPress(press);
                 book.setRecommendedReason("");
-                book.setBookImageUrl(imgUrl);
+                if (userId == myuserid)
+                    book.setBookImageUrl(imgUrl);
+                else
+                    book.setBookImageUrl("http://120.24.217.191/Book/img/bookImg/" + imgUrl);
                 book.setPosetime(posetime);
                 book.setUserid(userId);
                 book.setUserheadpath(userheadpath);
