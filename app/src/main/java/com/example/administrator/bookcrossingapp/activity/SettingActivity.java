@@ -85,7 +85,7 @@ public class SettingActivity extends AppCompatActivity {
                             PackageInfo packageInfo = packageManager.getPackageInfo(SettingActivity.this.getPackageName(), 0);
                             //接收包信息
                             curVersionCode = packageInfo.versionCode;
-                            Log.i(TAG, "run: "+curVersionCode);
+                            Log.i(TAG, "run: " + curVersionCode);
 
                             OkHttpClient client = new OkHttpClient();
                             Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/Update_info").build();
@@ -285,6 +285,13 @@ public class SettingActivity extends AppCompatActivity {
                     if (fileLength > 0) // only if total length is known
                         publishProgress((int) (total * 100 / fileLength));
                     output.write(data, 0, count);
+                }
+                String[] command = {"chmod", "777", file.getPath()};
+                ProcessBuilder builder = new ProcessBuilder(command);
+                try {
+                    builder.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
             } catch (Exception e) {
