@@ -210,6 +210,8 @@ public class SearchDetailActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             if(jsonArray.length()==0)
                                 empty_msg.setVisibility(View.VISIBLE);
+                            else
+                                empty_msg.setVisibility(View.GONE);
                         }
                     });
                 } catch (Exception e) {
