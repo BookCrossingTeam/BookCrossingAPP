@@ -1,6 +1,7 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -44,6 +45,7 @@ public class ReviewsEditActivity extends AppCompatActivity {
     private Button btn_write;
     private String titleValue, contentValue;
     private Drawable.ConstantState coverValue;
+    private int userid;
     private static final String TAG = "ReviewEditActivity";
 
     private int IMAGE_PICKER = 10010;
@@ -53,6 +55,9 @@ public class ReviewsEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews_edit);
         initReviewsEdit();
+
+        SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
+        userid = pref.getInt("userid", 0);
 
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -144,8 +149,11 @@ public class ReviewsEditActivity extends AppCompatActivity {
 
                     OkHttpClient client = new OkHttpClient();
                     RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), file);
-                    RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("file", "img_cover.jpg", fileBody)
-                            .addFormDataPart("titleValue", titleValue + "").addFormDataPart("contentValue", contentValue)
+                    RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                            .addFormDataPart("file", "img_cover.jpg", fileBody)
+                            .addFormDataPart("userid", userid + "")
+                            .addFormDataPart("titleValue", titleValue + "")
+                            .addFormDataPart("contentValue", contentValue)
                             .build();
                     Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/sendReview").post(requestBody).build();
                     Response response = client.newCall(request).execute();
