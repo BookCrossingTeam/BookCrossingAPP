@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.activity.SettingAcountActivity;
 import com.example.administrator.bookcrossingapp.datamodel.ReviewItem;
 import com.example.administrator.bookcrossingapp.activity.ReviewsEditActivity;
 import com.example.administrator.bookcrossingapp.adapter.ReviewItemAdapter;
@@ -149,7 +151,6 @@ public class ReviewsOwnFragment extends Fragment {
                 String title = jsonObject.getString("title");
                 String author = jsonObject.getString("username");
                 String coverImgUrl = jsonObject.getString("coverImgUrl");
-
                 ReviewItem reviewItem = new ReviewItem();
                 reviewItem.setArticleId(articleId);
                 reviewItem.setTitle(title);

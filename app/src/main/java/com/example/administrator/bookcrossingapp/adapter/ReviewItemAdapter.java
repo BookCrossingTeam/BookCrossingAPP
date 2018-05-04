@@ -80,7 +80,7 @@ public class ReviewItemAdapter  extends RecyclerView.Adapter<ReviewItemAdapter.V
         ReviewItem reviewItem = mReviewList.get(position);
         holder.tv_author.setText(reviewItem.getAuthor());
         holder.tv_title.setText(reviewItem.getTitle());
-        Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/" + reviewItem.getCoverImgUrl()).into(holder.img_cover);
+        Glide.with(context).load("http://120.24.217.191/Book/img/reviewImg/" + reviewItem.getCoverImgUrl()).into(holder.img_cover);
     }
 
     @Override
