@@ -56,7 +56,7 @@ public class ReviewsDetailActivity extends AppCompatActivity {
         tv_content = findViewById(R.id.reviews_detail_content);
 
         //利用Glide来将图片加载显示
-        Glide.with(this).load("http://120.24.217.191/Book/img/bookImg/" + cover).into(img_cover);
+        Glide.with(this).load("http://120.24.217.191/Book/img/reviewImg/" + cover).into(img_cover);
         tv_title.setText(title);
         tv_author.setText(author);
         initContent();

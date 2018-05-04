@@ -66,10 +66,10 @@ public class ReviewsEditActivity extends AppCompatActivity {
         imagePicker.setCrop(true);        //允许裁剪（单选才有效）
         imagePicker.setSaveRectangle(true); //是否按矩形区域保存
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-        imagePicker.setFocusWidth(720);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(960);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setOutPutX(720);//保存文件的宽度。单位像素
-        imagePicker.setOutPutY(960);//保存文件的高度。单位像素
+        imagePicker.setFocusWidth(360);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(150);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(360);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(150);//保存文件的高度。单位像素
 
 
     }
