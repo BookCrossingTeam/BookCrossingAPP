@@ -146,6 +146,7 @@ public class PosingConfirmActivity extends AppCompatActivity {
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pose_btn.setEnabled(false);
                 bookNameValue = bookName.getText().toString();
                 authorValue = author.getText().toString();
                 pressValue = press.getText().toString();
@@ -153,10 +154,12 @@ public class PosingConfirmActivity extends AppCompatActivity {
                 classifyValue = classify.getSelectedItem().toString();
                 if (bookNameValue.equals("") || authorValue.equals("") || pressValue.equals("") || recommendedReasonValue.equals("")) {
                     Toast.makeText(PosingConfirmActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
+                    pose_btn.setEnabled(true);
                     return;
                 }
                 if (classifyValue.equals("请选择分类")) {
                     Toast.makeText(PosingConfirmActivity.this, "请选择分类", Toast.LENGTH_SHORT).show();
+                    pose_btn.setEnabled(true);
                     return;
                 }
                 if(classifyValue.equals(BookDetail.bookTypeName[1]))
@@ -212,6 +215,14 @@ public class PosingConfirmActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(PosingConfirmActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                finally {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pose_btn.setEnabled(true);
                         }
                     });
                 }

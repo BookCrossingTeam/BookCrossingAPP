@@ -58,12 +58,15 @@ public class SignUpActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                confirm.setEnabled(false);
                 telephoneValue = telephone.getText().toString();
                 if (telephoneValue.equals("")) {
                     Toast.makeText(SignUpActivity.this, "请填写手机号", Toast.LENGTH_SHORT).show();
+                    confirm.setEnabled(true);
                     return;
                 }
                 if (!Pattern.matches("1[0-9]{10}", telephoneValue)) {
+                    confirm.setEnabled(true);
                     Toast.makeText(SignUpActivity.this, "请填写正确手机号", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -139,6 +142,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        finally {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    confirm.setEnabled(true);
+                                }
+                            });
+                        }
                     }
                 }).start();
             }
@@ -159,6 +170,8 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "请同意相关协议", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                btn_signup.setEnabled(false);
 
                 passwordValue = CalcMD5.getMD5(passwordValue);
 
@@ -211,6 +224,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(SignUpActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        finally {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btn_signup.setEnabled(true);
                                 }
                             });
                         }

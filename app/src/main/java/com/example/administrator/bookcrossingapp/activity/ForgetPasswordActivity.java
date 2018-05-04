@@ -51,13 +51,17 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         imageConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageConfirm.setEnabled(false);
+
                 telephoneValue = editTelephone.getText().toString();
                 if (telephoneValue.equals("")) {
                     Toast.makeText(ForgetPasswordActivity.this, "请填写手机号", Toast.LENGTH_SHORT).show();
+                    imageConfirm.setEnabled(true);
                     return;
                 }
                 if (!Pattern.matches("1[0-9]{10}", telephoneValue)) {
                     Toast.makeText(ForgetPasswordActivity.this, "请填写正确手机号", Toast.LENGTH_SHORT).show();
+                    imageConfirm.setEnabled(true);
                     return;
                 }
                 new Thread(new Runnable() {
@@ -132,6 +136,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        finally {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    imageConfirm.setEnabled(true);
+                                }
+                            });
+                        }
                     }
                 }).start();
             }
@@ -140,11 +152,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         imageSummit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageSummit.setEnabled(false);
                 newPasswordValue = editNewpassowrd.getText().toString();
                 telephoneValue = editTelephone.getText().toString();
                 identicodeValue = editIdenticode.getText().toString();
                 if (newPasswordValue.equals("") || telephoneValue.equals("") || telephoneValue.equals("") || identicodeValue.equals("")) {
                     Toast.makeText(ForgetPasswordActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
+                    imageSummit.setEnabled(true);
                     return;
                 }
 
@@ -191,6 +205,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(ForgetPasswordActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        finally {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    imageSummit.setEnabled(true);
                                 }
                             });
                         }

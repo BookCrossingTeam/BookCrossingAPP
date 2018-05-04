@@ -62,7 +62,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(SearchDetailActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BookDetailAdapter(search_result_list,SearchDetailActivity.this);
+        adapter = new BookDetailAdapter(search_result_list, SearchDetailActivity.this);
         if (type == Search.DOUBAN)
             adapter.setIntent(3);
         recyclerView.setAdapter(adapter);
@@ -208,7 +208,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                         public void run() {
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
-                            if(jsonArray.length()==0)
+                            if (jsonArray.length() == 0)
                                 empty_msg.setVisibility(View.VISIBLE);
                             else
                                 empty_msg.setVisibility(View.GONE);
@@ -218,8 +218,6 @@ public class SearchDetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).
-
-                start();
+        }).start();
     }
 }

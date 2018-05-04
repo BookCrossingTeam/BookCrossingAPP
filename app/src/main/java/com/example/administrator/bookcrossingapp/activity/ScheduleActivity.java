@@ -234,6 +234,14 @@ public class ScheduleActivity extends AppCompatActivity {
                         }
                     });
                 }
+                finally {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            login.setEnabled(true);
+                        }
+                    });
+                }
             }
         }).start();
     }

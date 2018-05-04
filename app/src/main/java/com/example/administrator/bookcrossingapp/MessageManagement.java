@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.administrator.bookcrossingapp.datamodel.Friend;
 import com.example.administrator.bookcrossingapp.datamodel.Msg;
 import com.example.administrator.bookcrossingapp.datamodel.MsgJson;
+import com.example.administrator.bookcrossingapp.service.PollingService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -115,6 +116,7 @@ public class MessageManagement {
             e.printStackTrace();
             return -1;
         }
+        PollingService.setNewNum(flag);
         return flag;
     }
 

@@ -100,31 +100,43 @@ public class FriendChatActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                send.setEnabled(false);
                 final String content = inputText.getText().toString();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!"".equals(content)) {
-                            //如果输入框内容不为空
-                            if (MessageManagement.getInstance(FriendChatActivity.this).sendMsg(userid, content)) {
-                                PollingService.setNewNum(MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote());
-                                refreshMsg();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
-                                        msgRecyclerView.scrollToPosition(msgList.size() - 1);
-                                        inputText.setText(""); //清空输入框内容}
-                                    }
-                                });
-                            } else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), "网络开小差啦", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        try {
+                            if (!"".equals(content)) {
+                                //如果输入框内容不为空
+                                if (MessageManagement.getInstance(FriendChatActivity.this).sendMsg(userid, content)) {
+                                    PollingService.setNewNum(MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote());
+                                    refreshMsg();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
+                                            msgRecyclerView.scrollToPosition(msgList.size() - 1);
+                                            inputText.setText(""); //清空输入框内容}
+                                        }
+                                    });
+                                } else {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "网络开小差啦", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        } finally {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    send.setEnabled(true);
+                                }
+                            });
                         }
                     }
                 }).start();
@@ -172,8 +184,11 @@ public class FriendChatActivity extends AppCompatActivity {
         exchange_pose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                exchange_pose.setEnabled(false);
+
                 if (book_left_id == 0 || book_right_id == 0) {
                     Toast.makeText(FriendChatActivity.this, "请选择双方的书", Toast.LENGTH_SHORT).show();
+                    exchange_pose.setEnabled(true);
                     return;
                 }
 
@@ -202,6 +217,7 @@ public class FriendChatActivity extends AppCompatActivity {
                                             exchange_pose.setEnabled(false);
                                             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) layout_exchange.getLayoutParams();
                                             linearParams.height = layout_exchange_height;
+                                            MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
                                             refreshMsg();
                                         }
                                     });
@@ -225,6 +241,14 @@ public class FriendChatActivity extends AppCompatActivity {
                                     }
                                 });
                             }
+                        }
+                        finally {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    exchange_pose.setEnabled(true);
+                                }
+                            });
                         }
                     }
                 }).start();

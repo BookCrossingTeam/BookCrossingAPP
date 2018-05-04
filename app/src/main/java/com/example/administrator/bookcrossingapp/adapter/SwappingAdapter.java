@@ -71,6 +71,7 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
         holder.btn_next_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.btn_next_state.setEnabled(false);
                 int position = holder.getAdapterPosition();
                 final Swapping swapping = mSwappingList.get(position);
 
@@ -102,6 +103,14 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                        }
+                        finally {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.btn_next_state.setEnabled(true);
+                                }
+                            });
                         }
                     }
                 }).start();

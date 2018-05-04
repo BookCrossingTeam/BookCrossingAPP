@@ -138,9 +138,11 @@ public class UserdetailSharelistFragment extends Fragment {
                 int bookId = Integer.parseInt(jsonObject.getString("id"));
                 int bookType = Integer.parseInt(jsonObject.getString("bookType"));
                 String userheadpath = jsonObject.getString("headImgPath");
+                int exchangeState = Integer.parseInt(jsonObject.getString("exchangeState"));
 
                 BookDetail book = new BookDetail();
                 book.setBookid(bookId);
+                book.setExchangeState(exchangeState);
                 book.setUsername(username);
                 book.setBookName(bookName);
                 book.setAuthor(author);

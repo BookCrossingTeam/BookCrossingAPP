@@ -116,12 +116,14 @@ public class PosingWantingActivity extends AppCompatActivity {
         pose_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pose_btn.setEnabled(false);
                 bookNameValue = bookName.getText().toString();
                 authorValue = author.getText().toString();
                 pressValue = press.getText().toString();
 
                 if (bookNameValue.equals("") || authorValue.equals("") || pressValue.equals("")) {
                     Toast.makeText(PosingWantingActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
+                    pose_btn.setEnabled(true);
                     return;
                 }
                 sendPose();
@@ -209,6 +211,14 @@ public class PosingWantingActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(PosingWantingActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                finally {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pose_btn.setEnabled(true);
                         }
                     });
                 }
