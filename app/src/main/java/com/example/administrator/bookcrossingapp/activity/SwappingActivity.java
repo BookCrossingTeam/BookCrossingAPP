@@ -81,6 +81,7 @@ public class SwappingActivity extends AppCompatActivity {
 
                             Swapping swapping = new Swapping();
                             swapping.setExchangeid(exchangeid);
+                            swapping.setExchangeState(exchangeState);
                             swapping.setSwappingBookURL1(bookAURL);
 
                             swapping.setBookAid(bookAid);

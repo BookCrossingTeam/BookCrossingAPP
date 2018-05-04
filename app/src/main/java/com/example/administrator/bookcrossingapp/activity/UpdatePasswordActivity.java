@@ -8,16 +8,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.administrator.bookcrossingapp.CalcMD5;
 import com.example.administrator.bookcrossingapp.R;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class UpdatePasswordActivity extends AppCompatActivity {
     private EditText editUsername;
     private EditText editNewPassword;
-    private EditText editConfirmPassword;
+    private EditText editOldPassword;
     private ImageView imageUpdate;
-    private String username, newpassword, confirmpassword;
+    private String username, newpassword, oldpassword;
+    private int userid;
 
 
     @Override
@@ -27,15 +33,15 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         //初始化控件
         editUsername = (EditText) findViewById(R.id.edit_username_update);
         editNewPassword = (EditText) findViewById(R.id.edit_newPassword_update);
-        editConfirmPassword = (EditText) findViewById(R.id.edit_confirmPassord_update);
+        editOldPassword = (EditText) findViewById(R.id.edit_oldPassord_update);
         imageUpdate = (ImageView) findViewById(R.id.image_updatePassword_summit);
 
 
         //editUsername不可点击不可编辑，系统将用户名传值给editUsername
-        SharedPreferences pref = this.getSharedPreferences("my_user_info", MODE_PRIVATE);
+        SharedPreferences pref = this.getSharedPreferences("user_info", MODE_PRIVATE);
         username = pref.getString("username", "");
+        userid = pref.getInt("userid", 0);
         editUsername.setText(username);
-
 
 
         //提交修改
@@ -44,19 +50,14 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 username = editUsername.getText().toString();
                 newpassword = editNewPassword.getText().toString();
-                confirmpassword = editConfirmPassword.getText().toString();
-                if (username.equals("")) {
-                    Toast.makeText(UpdatePasswordActivity.this, "用户名获取失败", Toast.LENGTH_SHORT).show();
+                oldpassword = editOldPassword.getText().toString();
+
+                if (username.equals("") || newpassword.equals("") || oldpassword.equals("")) {
+                    Toast.makeText(UpdatePasswordActivity.this, "填写完整", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (newpassword.equals(confirmpassword) == false) {
-                    Toast.makeText(UpdatePasswordActivity.this, "请两次密码输入一致", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
                 sent_info();
-                //感觉需要一个返回的判断？
-                Toast.makeText(UpdatePasswordActivity.this, "密码重置成功", Toast.LENGTH_SHORT).show();
-                finish();
             }
         });
     }
@@ -70,26 +71,50 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    newpassword = CalcMD5.getMD5(newpassword);
+                    oldpassword = CalcMD5.getMD5(oldpassword);
+
                     OkHttpClient client = new OkHttpClient();
-                    /*
-                    待实现，将添加改成更新
-                    RequestBody requestBody = new FormBody.Builder().add("telephone", telephoneValue).add("password", passwordValue1).build();
-                    Request request = new Request.Builder().url("http://120.24.217.191/sign_up.php").post(requestBody).build();
+                    RequestBody requestBody = new FormBody.Builder().add("userid", userid + "").add("newpassword", newpassword).add("oldpassword", oldpassword).build();
+                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/passwordUpdate").post(requestBody).build();
                     Response response = client.newCall(request).execute();
-                    String responseData = response.body().string();
-                    */
+
+                    final String responseData = response.body().string();
+                    if (responseData.equals("ok")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(UpdatePasswordActivity.this, "密码重置成功", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                    } else if (!responseData.equals("")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(UpdatePasswordActivity.this, responseData, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(UpdatePasswordActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(UpdatePasswordActivity.this, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         }).start();
     }
 
-
-    /**
-     * Created by Administrator on 2018/4/7.
-     */
-
-    public static class Records {
-    }
 }

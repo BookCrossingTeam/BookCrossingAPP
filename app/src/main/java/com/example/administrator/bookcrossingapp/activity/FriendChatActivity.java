@@ -207,7 +207,8 @@ public class FriendChatActivity extends AppCompatActivity {
                             Response response = client.newCall(request).execute();
                             if (response.isSuccessful()) {
                                 final String responseData = response.body().string();
-                                if (responseData.equals("OK"))
+                                if (responseData.equals("OK")) {
+                                    MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -217,11 +218,11 @@ public class FriendChatActivity extends AppCompatActivity {
                                             exchange_pose.setEnabled(false);
                                             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) layout_exchange.getLayoutParams();
                                             linearParams.height = layout_exchange_height;
-                                            MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
+
                                             refreshMsg();
                                         }
                                     });
-                                else {
+                                } else {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -241,8 +242,7 @@ public class FriendChatActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }
-                        finally {
+                        } finally {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
