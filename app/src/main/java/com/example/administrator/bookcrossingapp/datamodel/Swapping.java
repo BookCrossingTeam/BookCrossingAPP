@@ -26,6 +26,7 @@ public class Swapping {
     private int touserid;
     private int bookAid;
     private int bookBid;
+    private int exchangeState;
 
 
     public Swapping() {
@@ -39,6 +40,14 @@ public class Swapping {
         this.swappingBookname2 = swappingBookname2;
         this.now_state = now_state;
         this.confirm = confirm;
+    }
+
+    public int getExchangeState() {
+        return exchangeState;
+    }
+
+    public void setExchangeState(int exchangeState) {
+        this.exchangeState = exchangeState;
     }
 
     public int getMyuserid() {

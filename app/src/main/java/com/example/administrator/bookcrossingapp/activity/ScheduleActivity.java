@@ -446,6 +446,7 @@ public class ScheduleActivity extends AppCompatActivity {
         result = sbf.toString();
 
         // result = new String(result.getBytes("gb2312"), "UTF-8");
+        //result = result.replaceAll("<div style=.*?未选中.*?</div>","");
 
         return result;
     }

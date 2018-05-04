@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
@@ -86,20 +87,41 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
                                     .add("touserid", swapping.getTouserid() + "")
                                     .add("bookAId",swapping.getBookAid()+"")
                                     .add("bookBId",swapping.getBookBid()+"")
+                                    .add("exchangeState",swapping.getExchangeState()+"")
                                     .build();
                             Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/exchange_update").post(requestBody).build();
                             Response response = client.newCall(request).execute();
                             if (response.isSuccessful()) {
 
-                                String responseData = response.body().string();
+                                final String responseData = response.body().string();
 
                                 if (responseData.equals("OK"))
+                                {
                                     mActivity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mActivity.initData();
                                         }
                                     });
+                                }
+                                else if(!responseData.equals(""))
+                                {
+                                    mActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(mActivity, responseData, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    mActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(mActivity, "服务器开小差啦", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
