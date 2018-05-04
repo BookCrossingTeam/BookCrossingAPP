@@ -113,7 +113,6 @@ public class ReviewsEditActivity extends AppCompatActivity {
 
                 //上传
                 sendPose();
-                Toast.makeText(ReviewsEditActivity.this, "上传成功，后台尚未实现", Toast.LENGTH_SHORT).show();
 
             }
 
