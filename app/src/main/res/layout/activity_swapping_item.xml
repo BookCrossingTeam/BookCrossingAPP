@@ -31,6 +31,8 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/swapping_pic1"
                 android:gravity="center_horizontal|top"
+                android:textColor="#000"
+                android:textSize="14sp"
                 android:text="bookname1" />
         </RelativeLayout>
 
@@ -41,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/swapping_pic1_layout"
             android:gravity="center_vertical"
-            android:text="←→"
+            android:text="← →"
             android:textColor="@color/viewfinder_laser"
             android:textStyle="bold" />
 
@@ -65,6 +67,8 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/swapping_pic2"
                 android:gravity="center_horizontal|top"
+                android:textColor="#000"
+                android:textSize="14sp"
                 android:text="bookname2" />
         </RelativeLayout>
 
@@ -82,15 +86,19 @@
                 android:layout_marginTop="30dp"
                 android:gravity="center_horizontal"
                 android:text="state:线上确认"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:textSize="14sp" />
 
 
             <Button
                 android:id="@+id/swapping_btn_next_state"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_below="@id/swapping_now_state"
                 android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_swaping"
+                android:textColor="#fff"
                 android:layout_marginTop="10dp"
                 android:text="Commit" />
 
@@ -100,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/swapping_btn_next_state"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"
                 tools:text="对方已确认" />
         </RelativeLayout>
 

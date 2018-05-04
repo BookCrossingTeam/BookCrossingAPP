@@ -11,21 +11,27 @@
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="0dp"
-       android:layout_weight="8"
+       android:layout_weight="12"
        android:orientation="vertical"
-
        android:id="@+id/layout_frame">
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="30dp"
+           android:textSize="18sp"
+           android:gravity="center"
+           android:textStyle="bold"
+           android:text="title"/>
      <EditText
          android:id="@+id/reviews_edit_title"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_gravity="center"
-         android:hint="title"
          android:layout_marginRight="15dp"
          android:layout_marginLeft="15dp"
          android:paddingLeft="10dp"
-         android:textSize="18dp"
-         android:layout_marginTop="30dp"
+         android:textSize="16sp"
          android:gravity="center"/>
 
      <TextView
@@ -33,7 +39,8 @@
          android:layout_height="wrap_content"
          android:layout_marginTop="15dp"
          android:gravity="center"
-         android:textSize="16dp"
+         android:textSize="18sp"
+         android:textStyle="bold"
          android:text="cover photo"/>
 
      <ImageView
@@ -48,15 +55,17 @@
      <TextView
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:textSize="18dp"
+         android:layout_marginTop="20dp"
+         android:textSize="18sp"
          android:gravity="center"
+         android:textStyle="bold"
          android:text="content"/>
 
      <EditText
          android:id="@+id/reviews_edit_content"
-         android:layout_marginTop="15dp"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
+         android:textSize="16sp"
          android:layout_marginLeft="15dp"
          android:layout_marginRight="15dp"
          android:inputType="textMultiLine"
@@ -68,7 +77,6 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_weight="1"
-       android:layout_marginTop="20dp"
        android:orientation="vertical"
        >
     <Button

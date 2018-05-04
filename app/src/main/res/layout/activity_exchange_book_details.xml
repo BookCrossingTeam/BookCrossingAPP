@@ -196,7 +196,7 @@
                 android:elevation="1dp"
                 android:text="  BookName :"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_bookname"
@@ -204,7 +204,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:textSize="20sp"
+                android:textColor="#222222"
+                android:textSize="16sp"
                 tools:text="666666666666666666666666666666666666666666" />
         </LinearLayout>
 
@@ -224,7 +225,7 @@
                 android:layout_weight="0"
                 android:text="  Author :"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_author"
@@ -233,7 +234,8 @@
                 android:layout_weight="1"
                 android:elevation="1dp"
                 android:text="TextView"
-                android:textSize="20sp" />
+                android:textColor="#222222"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -253,7 +255,7 @@
                 android:elevation="1dp"
                 android:text="  Press :"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_press"
@@ -262,7 +264,8 @@
                 android:layout_weight="1"
                 android:elevation="1dp"
                 android:text="TextView"
-                android:textSize="20sp" />
+                android:textColor="#222222"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -282,7 +285,7 @@
                 android:elevation="1dp"
                 android:text="  Classify :"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_classify"
@@ -291,7 +294,8 @@
                 android:layout_weight="1"
                 android:elevation="1dp"
                 android:text=""
-                android:textSize="20sp" />
+                android:textColor="#222222"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -309,7 +313,7 @@
                 android:elevation="0dp"
                 android:text="Recommend :"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_recommend"
@@ -319,7 +323,8 @@
                 android:layout_weight="1"
                 android:elevation="1dp"
                 android:text="TextView"
-                android:textSize="20sp" />
+                android:textColor="#222222"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

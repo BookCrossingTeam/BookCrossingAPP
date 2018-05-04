@@ -2,28 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_title"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:orientation="horizontal"
+    android:background="@drawable/login_kuang"
+    android:layout_height="56dp">
 
 
     <EditText
         android:id="@+id/editContent"
         android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginLeft="12dp"
-        android:paddingLeft="18dp"
-        android:paddingRight="18dp"
-        android:layout_weight="12"
+        android:layout_height="48dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="18"
+        android:textSize="16dp"
         android:inputType="text"
-        android:background="@drawable/login_kuang"
+        android:background="@null"
         android:hint="书名/作者/出版社" />
 
     <ImageButton
         android:id="@+id/btnSearch"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="10dp"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        android:background="#fff"
+        android:background="#00000000"
+        android:paddingBottom="5dp"
         android:src="@drawable/button_search" />
 
 </LinearLayout>

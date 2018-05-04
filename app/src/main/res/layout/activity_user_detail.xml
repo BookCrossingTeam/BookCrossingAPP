@@ -19,9 +19,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Personal Details"
+            android:text="PERSONAL DETAILS"
             android:textColor="#000"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/user_detail_username"
