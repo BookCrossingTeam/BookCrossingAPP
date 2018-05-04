@@ -37,6 +37,7 @@ public class SettingAcountActivity extends AppCompatActivity {
 
     private Button btnIcon;
     private Button btnPassword;
+    private Button btnSchedule;
     private ImageView headImg;
 
     private int userid;
@@ -54,6 +55,7 @@ public class SettingAcountActivity extends AppCompatActivity {
 
         btnIcon = findViewById(R.id.btn_update_icon);
         btnPassword = findViewById(R.id.btn_update_password);
+        btnSchedule = (Button) findViewById(R.id.btn_schedule);
         headImg = (ImageView) findViewById(R.id.me_icon_personIcon);
         Glide.with(SettingAcountActivity.this).load("http://120.24.217.191/Book/img/headImg/" + headImgUrl).error(R.drawable.me_icon_person).into(headImg);
 
@@ -70,6 +72,15 @@ public class SettingAcountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SettingAcountActivity.this, ImageGridActivity.class);
                 startActivityForResult(intent, IMAGE_PICKER);
+            }
+        });
+
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingAcountActivity.this, ScheduleActivity.class);
+                intent.putExtra("userid",userid);
+                startActivity(intent);
             }
         });
 

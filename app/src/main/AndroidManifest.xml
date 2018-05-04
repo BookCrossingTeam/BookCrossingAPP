@@ -16,50 +16,48 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_launcher_round"
-        android:name="org.litepal.LitePalApplication"
-        android:vmSafeMode ="true"
-        android:theme="@style/AppTheme.NoActionBar">
-
+        android:theme="@style/AppTheme.NoActionBar"
+        android:vmSafeMode="true">
         <activity
-            android:name="com.example.administrator.bookcrossingapp.activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.MainActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.LoginActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.SignUpActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ExchangeBookDetailsActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.FriendChatActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ForgetPasswordActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.AgreementActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.SettingActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.SettingAcountActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.UpdatePasswordActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.SearchDetailActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingWantingActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.WantListActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ShareListActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.PosingShareActivity" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.ExchangeBookDetailsActivity" />
+        <activity android:name=".activity.FriendChatActivity" />
+        <activity android:name=".activity.ForgetPasswordActivity" />
+        <activity android:name=".activity.AgreementActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.SettingAcountActivity" />
+        <activity android:name=".activity.UpdatePasswordActivity" />
+        <activity android:name=".activity.SearchDetailActivity" />
+        <activity android:name=".activity.PosingWantingActivity" />
+        <activity android:name=".activity.WantListActivity" />
+        <activity android:name=".activity.ShareListActivity" />
+        <activity android:name=".activity.PosingShareActivity" />
         <activity
-            android:name="com.example.administrator.bookcrossingapp.activity.PosingConfirmActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.RecordsActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.SwappingActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.UserDetailActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsEditActivity" />
-        <activity android:name="com.example.administrator.bookcrossingapp.activity.ReviewsDetailActivity"/>
+            android:name=".activity.PosingConfirmActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity android:name=".activity.ReviewsActivity" />
+        <activity android:name=".activity.RecordsActivity" />
+        <activity android:name=".activity.SwappingActivity" />
+        <activity android:name=".activity.UserDetailActivity" />
+        <activity android:name=".activity.ReviewsEditActivity" />
+        <activity android:name=".activity.ReviewsDetailActivity" />
 
-        <service android:name="com.example.administrator.bookcrossingapp.service.PollingService" />
+        <service android:name=".service.PollingService" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -71,6 +69,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".activity.ScheduleActivity"></activity>
     </application>
 
 </manifest>
