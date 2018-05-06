@@ -70,20 +70,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 //在这里处理item的点击事件
-                if(item.getTitle().equals(BookDetail.bookTypeName[0]))
-                ((HomeFragment)mFragmensts[0]).selectBookType(0);
-                if(item.getTitle().equals(BookDetail.bookTypeName[1]))
-                    ((HomeFragment)mFragmensts[0]).selectBookType(1);
-                if(item.getTitle().equals(BookDetail.bookTypeName[2]))
-                    ((HomeFragment)mFragmensts[0]).selectBookType(2);
-                if(item.getTitle().equals(BookDetail.bookTypeName[3]))
-                    ((HomeFragment)mFragmensts[0]).selectBookType(3);
-                if(item.getTitle().equals(BookDetail.bookTypeName[4]))
-                    ((HomeFragment)mFragmensts[0]).selectBookType(4);
-                if(item.getTitle().equals(BookDetail.bookTypeName[5]))
-                    ((HomeFragment)mFragmensts[0]).selectBookType(5);
-                if(item.getTitle().equals(BookDetail.bookTypeName[6]))
-                    ((HomeFragment)mFragmensts[0]).selectBookType(6);
+                if (item.getTitle().equals(BookDetail.bookTypeName[0]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(0);
+                if (item.getTitle().equals(BookDetail.bookTypeName[1]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(1);
+                if (item.getTitle().equals(BookDetail.bookTypeName[2]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(2);
+                if (item.getTitle().equals(BookDetail.bookTypeName[3]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(3);
+                if (item.getTitle().equals(BookDetail.bookTypeName[4]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(4);
+                if (item.getTitle().equals(BookDetail.bookTypeName[5]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(5);
+                if (item.getTitle().equals(BookDetail.bookTypeName[6]))
+                    ((HomeFragment) mFragmensts[0]).selectBookType(6);
                 mDrawerLayout.closeDrawers();
                 return true;
             }
@@ -143,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
                     setDialog();//点击事件
                     return;
                 }
-                if(tab.getPosition() == 0)
-                    ((HomeFragment)mFragmensts[0]).smoothScroll();
+                if (tab.getPosition() == 0)
+                    ((HomeFragment) mFragmensts[0]).smoothScroll();
 
                 onTabItemSelected(tab.getPosition());
                 //改变Tab 状态

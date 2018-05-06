@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.R;
@@ -170,6 +171,7 @@ public class SwappingActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 adapter.notifyDataSetChanged();
+                                findViewById(R.id.swapping_loading).setVisibility(View.GONE);
                             }
                         }));
                     }

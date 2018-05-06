@@ -35,7 +35,7 @@ public class PollingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        delaytime = 60000;
+        delaytime = 60*1000;
 
         sendNotification("正在运行中");
 
@@ -48,7 +48,7 @@ public class PollingService extends Service {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        newNum = MessageManagement.getInstance(PollingService.this).getMsgFromRemote();
+                        MessageManagement.getInstance(PollingService.this).getMsgFromRemote();
                         if (newNum > 0) {
                             sendNotification("有新消息");
                         }
@@ -114,17 +114,12 @@ public class PollingService extends Service {
 
     }
 
-    static public int getNewNum() {
+    public synchronized static  int getNewNum() {
         return newNum;
     }
 
-    static public void setNewNum(int num) {
+    public synchronized static  void setNewNum(int num) {
         newNum = num;
     }
-
-    static public void setDelaytime(int time) {
-        delaytime = time;
-    }
-
 
 }

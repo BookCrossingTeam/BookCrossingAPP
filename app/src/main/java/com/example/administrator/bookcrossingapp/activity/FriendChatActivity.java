@@ -109,7 +109,6 @@ public class FriendChatActivity extends AppCompatActivity {
                             if (!"".equals(content)) {
                                 //如果输入框内容不为空
                                 if (MessageManagement.getInstance(FriendChatActivity.this).sendMsg(userid, content)) {
-                                    PollingService.setNewNum(MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote());
                                     refreshMsg();
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -208,13 +207,14 @@ public class FriendChatActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 final String responseData = response.body().string();
                                 if (responseData.equals("OK")) {
-                                    MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             layout_exchange_change.setVisibility(View.GONE);
                                             book_left_id = 0;
                                             book_right_id = 0;
+                                            Glide.with(FriendChatActivity.this).load(R.drawable.friend_chat_exchange_add).into(book_left);
+                                            Glide.with(FriendChatActivity.this).load(R.drawable.friend_chat_exchange_add).into(book_right);
                                             exchange_pose.setEnabled(false);
                                             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) layout_exchange.getLayoutParams();
                                             linearParams.height = layout_exchange_height;
@@ -222,7 +222,7 @@ public class FriendChatActivity extends AppCompatActivity {
                                             refreshMsg();
                                         }
                                     });
-                                } else {
+                                } else if(!responseData.equals("")){
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -260,13 +260,12 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PollingService.setDelaytime(1000 * 10);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
                 refreshMsg();
-                handler.postDelayed(runnable, 500);
+                handler.postDelayed(runnable, 5*1000);
             }
         };
         handler.postDelayed(runnable, 500);
@@ -275,7 +274,6 @@ public class FriendChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PollingService.setDelaytime(1000 * 60);
         handler.removeCallbacks(runnable);
     }
 
@@ -303,7 +301,8 @@ public class FriendChatActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (PollingService.getNewNum() > 0)
+                MessageManagement.getInstance(FriendChatActivity.this).getMsgFromRemote();
+                if (PollingService.getNewNum() > -1)
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
