@@ -127,7 +127,7 @@ public class SearchFragment extends Fragment {
             if (hs.contains(bookDetail.getBookName()))
                 continue;
             hs.add(bookDetail.getBookName());
-            Search search = new Search(android.R.drawable.ic_menu_search, bookDetail.getBookName());
+            Search search = new Search(R.drawable.button_search, bookDetail.getBookName());
             search.setDisPlay(bookDetail.getBookName());
             search.setType(Search.LOCAL);
             searchList.add(search);
@@ -138,7 +138,7 @@ public class SearchFragment extends Fragment {
             if (hs.contains(bookDetail.getBookName()))
                 continue;
             hs.add(bookDetail.getBookName());
-            Search search = new Search(android.R.drawable.ic_menu_search, bookDetail.getBookName());
+            Search search = new Search(R.drawable.button_search, bookDetail.getBookName());
             search.setDisPlay(bookDetail.getBookName());
             search.setType(Search.LOCAL);
             searchList.add(search);
@@ -149,7 +149,7 @@ public class SearchFragment extends Fragment {
             if (hs.contains(bookDetail.getAuthor()))
                 continue;
             hs.add(bookDetail.getAuthor());
-            Search search = new Search(android.R.drawable.ic_menu_search, bookDetail.getAuthor());
+            Search search = new Search(R.drawable.button_search, bookDetail.getAuthor());
             search.setDisPlay(bookDetail.getAuthor());
             search.setType(Search.LOCAL);
             searchList.add(search);
@@ -160,13 +160,13 @@ public class SearchFragment extends Fragment {
             if (hs.contains(bookDetail.getAuthor()))
                 continue;
             hs.add(bookDetail.getAuthor());
-            Search search = new Search(android.R.drawable.ic_menu_search, bookDetail.getAuthor());
+            Search search = new Search(R.drawable.button_search, bookDetail.getAuthor());
             search.setDisPlay(bookDetail.getAuthor());
             search.setType(Search.LOCAL);
             searchList.add(search);
         }
 
-        Search search = new Search(android.R.drawable.ic_menu_search, content);
+        Search search = new Search(R.drawable.button_search, content);
         search.setDisPlay("去豆瓣搜索");
         search.setType(Search.DOUBAN);
         searchList.add(search);

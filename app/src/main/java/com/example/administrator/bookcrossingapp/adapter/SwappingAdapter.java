@@ -44,6 +44,7 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
         Button btn_next_state;
         TextView tv_confirm;
         View swappingview;
+        TextView tv_username;
 
         public ViewHolder(View view) {
             super(view);
@@ -55,6 +56,7 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
             tv_now_state = view.findViewById(R.id.swapping_now_state);
             btn_next_state = view.findViewById(R.id.swapping_btn_next_state);
             tv_confirm = view.findViewById(R.id.swapping_others_confirm);
+            tv_username = view.findViewById(R.id.swapping_exchange_username);
         }
     }
 

@@ -23,16 +23,17 @@
                 android:id="@+id/swapping_pic1"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:id="@+id/swapping_bookname1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/swapping_pic1"
                 android:gravity="center_horizontal|top"
+                android:layout_marginTop="2dp"
                 android:textColor="#000"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="bookname1" />
         </RelativeLayout>
 
@@ -59,16 +60,17 @@
                 android:id="@+id/swapping_pic2"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:id="@+id/swapping_bookname2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:layout_below="@id/swapping_pic2"
                 android:gravity="center_horizontal|top"
                 android:textColor="#000"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="bookname2" />
         </RelativeLayout>
 
@@ -81,7 +83,7 @@
             <TextView
                 android:id="@+id/swapping_now_state"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:gravity="center_horizontal"
@@ -91,16 +93,29 @@
                 android:textSize="14sp" />
 
 
+
             <Button
                 android:id="@+id/swapping_btn_next_state"
                 android:layout_width="100dp"
-                android:layout_height="32dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/swapping_now_state"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/btn_swaping"
+                android:textSize="12sp"
                 android:textColor="#fff"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="Commit" />
+
+            <TextView
+                android:id="@+id/swapping_exchange_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#000"
+                android:textSize="12sp"
+                android:layout_below="@+id/swapping_btn_next_state"
+                android:text="xxx"/>
 
             <TextView
                 android:id="@+id/swapping_others_confirm"
@@ -108,9 +123,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/swapping_btn_next_state"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:textSize="14sp"
-                tools:text="对方已确认" />
+                android:layout_marginTop="30dp"
+                android:textSize="12sp"
+                tools:text="已确认" />
         </RelativeLayout>
 
 
