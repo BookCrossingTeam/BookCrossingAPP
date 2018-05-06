@@ -93,29 +93,28 @@
                 android:textSize="14sp" />
 
 
-
             <Button
                 android:id="@+id/swapping_btn_next_state"
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="32dp"
                 android:layout_below="@id/swapping_now_state"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/btn_swaping"
-                android:textSize="12sp"
+                android:text="Commit"
                 android:textColor="#fff"
-                android:layout_marginTop="15dp"
-                android:text="Commit" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/swapping_exchange_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="#000"
-                android:textSize="12sp"
                 android:layout_below="@+id/swapping_btn_next_state"
-                android:text="xxx"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="xxx"
+                android:textColor="#000"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/swapping_others_confirm"
@@ -123,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/swapping_btn_next_state"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:textSize="12sp"
                 tools:text="已确认" />
         </RelativeLayout>

@@ -69,6 +69,8 @@ public class SwappingActivity extends AppCompatActivity {
 
                             int userAid = Integer.parseInt(jsonObject.getString("userAid"));
                             int userBid = Integer.parseInt(jsonObject.getString("userBid"));
+                            String userAname = jsonObject.getString("userAname");
+                            String userBname = jsonObject.getString("userBname");
 
                             String bookAURL = jsonObject.getString("bookAURL");
                             String bookBURL = jsonObject.getString("bookBURL");
@@ -93,6 +95,8 @@ public class SwappingActivity extends AppCompatActivity {
                             {
                                 swapping.setMyuserid(userAid);
                                 swapping.setTouserid(userBid);
+                                swapping.setMyusername(userAname);
+                                swapping.setTousername(userBname);
                                 swapping.setSwappingBookname1(bookAName+"(*)");
                                 swapping.setSwappingBookname2(bookBName);
                                 if(exchangeState==0)
@@ -130,6 +134,8 @@ public class SwappingActivity extends AppCompatActivity {
                             {
                                 swapping.setMyuserid(userBid);
                                 swapping.setTouserid(userAid);
+                                swapping.setMyusername(userBname);
+                                swapping.setTousername(userAname);
                                 swapping.setSwappingBookname1(bookAName);
                                 swapping.setSwappingBookname2(bookBName+"(*)");
                                 if(exchangeState==0)

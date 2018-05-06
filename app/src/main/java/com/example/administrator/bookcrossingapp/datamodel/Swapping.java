@@ -24,6 +24,8 @@ public class Swapping {
     private int exchangeid;
     private int myuserid;
     private int touserid;
+    private String myusername;
+    private String tousername;
     private int bookAid;
     private int bookBid;
     private int exchangeState;
@@ -40,6 +42,22 @@ public class Swapping {
         this.swappingBookname2 = swappingBookname2;
         this.now_state = now_state;
         this.confirm = confirm;
+    }
+
+    public String getMyusername() {
+        return myusername;
+    }
+
+    public void setMyusername(String myusername) {
+        this.myusername = myusername;
+    }
+
+    public String getTousername() {
+        return tousername;
+    }
+
+    public void setTousername(String tousername) {
+        this.tousername = tousername;
     }
 
     public int getExchangeState() {

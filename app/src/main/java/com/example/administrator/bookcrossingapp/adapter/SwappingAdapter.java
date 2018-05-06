@@ -150,6 +150,7 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
         holder.img_pic2.setImageResource(swapping.getSwappingPic2());
         holder.tv_bookname1.setText(swapping.getSwappingBookname1());
         holder.tv_bookname2.setText(swapping.getSwappingBookname2());
+        holder.tv_username.setText(swapping.getTousername());
 
         Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/" + swapping.getSwappingBookURL1()).into(holder.img_pic1);
         Glide.with(context).load("http://120.24.217.191/Book/img/bookImg/" + swapping.getSwappingBookURL2()).into(holder.img_pic2);
@@ -195,7 +196,7 @@ public class SwappingAdapter extends RecyclerView.Adapter<SwappingAdapter.ViewHo
         }
         if (now_state == 8) {
             holder.tv_now_state.setText("state：线上确认完成");
-            holder.btn_next_state.setText("等待对方线下确认");
+            holder.btn_next_state.setText("等待对方确认");
             holder.btn_next_state.setEnabled(false);
             holder.tv_confirm.setText("对方线下未确认");
         }
