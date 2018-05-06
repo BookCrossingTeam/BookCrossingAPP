@@ -74,7 +74,7 @@ public class MessageManagement {
         return myheadImgPath;
     }
 
-    public int getMsgFromRemote() {
+    public synchronized int getMsgFromRemote() {
         Log.i(TAG, "getMsgFromRemote: ");
         int flag = 0;
         try {
@@ -108,12 +108,13 @@ public class MessageManagement {
                         Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
                         vibrator.vibrate(500);
                     }
+                    flag++;
                 }
-                flag++;
                 msg.saveThrows();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            PollingService.setNewNum(-1);
             return -1;
         }
         PollingService.setNewNum(flag);
@@ -155,11 +156,6 @@ public class MessageManagement {
             }
         });
         Log.i(TAG, "initMsglist: " + _msgList.size());
-    }
-
-    public List<Msg> getFriendUnread(int userid) {
-        List<Msg> msgList = DataSupport.where("userid = ? and isRead = ?", userid + "", "0").order("time asc").find(Msg.class);
-        return msgList;
     }
 
     public boolean sendMsg(int touserid, String content) {

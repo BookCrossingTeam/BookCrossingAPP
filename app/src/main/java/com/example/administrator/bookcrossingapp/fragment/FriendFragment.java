@@ -56,14 +56,12 @@ public class FriendFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        PollingService.setDelaytime(15000);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                initFriends();
-                adapter.notifyDataSetChanged();
-                handler.postDelayed(runnable, 2000);
+                refreshFriends();
+                handler.postDelayed(runnable, 10 * 1000);
             }
         };
         handler.post(runnable);
@@ -72,7 +70,6 @@ public class FriendFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        PollingService.setDelaytime(60000);
         handler.removeCallbacks(runnable);
     }
 
@@ -84,15 +81,31 @@ public class FriendFragment extends Fragment {
         return friendFragment;
     }
 
-    private void initFriends() {
-        Log.i(TAG, "initFriends: ");
-        MessageManagement.getInstance(getActivity()).initFrinedList(friendList);
+    private void refreshFriends() {
+        Log.i(TAG, "refreshFriends: ");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MessageManagement.getInstance(getActivity()).getMsgFromRemote();
+                if (PollingService.getNewNum() > -1) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MessageManagement.getInstance(getActivity()).initFrinedList(friendList);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    PollingService.setNewNum(0);
+                }
+            }
+        }).start();
     }
 
     public void initFriendsRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.friend_list_recyclerView);
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(LayoutManager);
+        MessageManagement.getInstance(getActivity()).initFrinedList(friendList);
         adapter = new FriendAdapter(friendList);
         recyclerView.setAdapter(adapter);
     }
@@ -110,14 +123,11 @@ public class FriendFragment extends Fragment {
                     public void run() {
                         Log.i(TAG, "onRefresh run: ");
                         int num = MessageManagement.getInstance(getActivity()).getMsgFromRemote();
-                        PollingService.setNewNum(num);
                         if (num > -1) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //initBookDetailData();
-                                    //adapter.notifyDataSetChanged();
-                                    initFriends();
+                                    MessageManagement.getInstance(getActivity()).initFrinedList(friendList);
                                     adapter.notifyDataSetChanged();
                                     swipeRefresh.setRefreshing(false);
                                 }
