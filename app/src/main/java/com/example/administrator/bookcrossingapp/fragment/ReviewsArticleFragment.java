@@ -129,7 +129,7 @@ public class ReviewsArticleFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.reviews_article_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ReviewItemAdapter(reviewlist);
+        adapter = new ReviewItemAdapter(reviewlist, getContext(), getActivity());
         recyclerView.setAdapter(adapter);
     }
 
@@ -142,12 +142,14 @@ public class ReviewsArticleFragment extends Fragment {
                 String title = jsonObject.getString("title");
                 String author = jsonObject.getString("username");
                 String coverImgUrl = jsonObject.getString("coverImgUrl");
+                int likeAmount = Integer.parseInt(jsonObject.getString("likeAmount"));
 
                 ReviewItem reviewItem = new ReviewItem();
                 reviewItem.setArticleId(articleId);
                 reviewItem.setTitle(title);
                 reviewItem.setAuthor(author);
                 reviewItem.setCoverImgUrl(coverImgUrl);
+                reviewItem.setLikeAmount(likeAmount);
                 reviewlist.add(reviewItem);
             }
         } catch (Exception e) {

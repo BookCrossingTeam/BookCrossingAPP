@@ -26,6 +26,7 @@ public class ReviewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
         initView();
+
         Intent intent = getIntent();
         int userid = intent.getIntExtra("userid",0);
         ReviewsArticleFragment fragment1 = ReviewsArticleFragment.newInstance(userid);

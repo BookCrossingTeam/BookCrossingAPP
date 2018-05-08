@@ -9,15 +9,17 @@ public class ReviewItem {
     private String title;
     private String author;
     private String coverImgUrl;
+    private int likeAmount;
 
     public ReviewItem() {
     }
 
-    public ReviewItem(int articleId, String title, String author, String coverImgUrl) {
+    public ReviewItem(int articleId, String title, String author, String coverImgUrl, int likeAmount) {
         this.articleId = articleId;
         this.title = title;
         this.author = author;
         this.coverImgUrl = coverImgUrl;
+        this.likeAmount = likeAmount;
     }
 
     public  int getArticleId(){
@@ -50,5 +52,13 @@ public class ReviewItem {
 
     public void setCoverImgUrl(String coverImgUrl) {
         this.coverImgUrl = coverImgUrl;
+    }
+
+    public int getLikeAmount(){
+        return this.likeAmount;
+    }
+
+    public void setLikeAmount(int likeAmount){
+        this.likeAmount = likeAmount;
     }
 }

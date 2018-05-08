@@ -10,12 +10,13 @@
 
         <Button
             android:id="@+id/reviews_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="right"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:visibility="gone"
-            android:text="发表文章"/>
+            android:background="@drawable/review_pose_btn" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/reviews_article_recyclerView"
