@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="230dp"
     android:orientation="vertical"
@@ -11,10 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:srcCompat="@drawable/ouc_background" />
+        android:layout_marginTop="10dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,15 +26,15 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/review_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
 
-                android:text="中国最美的大学：中国海洋大学"
                 android:textSize="16sp"
-                 />
+                tools:text="中国最美的大学：中国海洋大学" />
 
             <TextView
                 android:id="@+id/review_item_author"
@@ -42,8 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textColor="#000"
-                android:text="作者：Yvettemuki"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="作者：Yvettemuki" />
 
         </LinearLayout>
 
@@ -65,11 +65,10 @@
                 android:id="@+id/tv_review_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="232"
-                android:textColor="#000"
                 android:layout_gravity="center"
-                android:textSize="10sp"/>
+                android:layout_marginTop="2dp"
+                android:textColor="#000"
+                android:textSize="10sp" />
 
         </LinearLayout>
 
