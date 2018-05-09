@@ -311,7 +311,7 @@ public class FriendChatActivity extends AppCompatActivity {
                             MessageManagement.getInstance(FriendChatActivity.this).initMsglist(userid, msgList);
                             //当有新的数据插入是时，会刷新RecyclerView显示
                             adapter.notifyDataSetChanged(); //重新获取最新数据list位置
-                            if (recyclerViewlayoutManager.findLastVisibleItemPosition() == oldlistsize - 1)
+                            if (msgList.size()>0 && recyclerViewlayoutManager.findLastVisibleItemPosition() == oldlistsize - 1)
                                 //将RecyclerView定位到最后一行(相当于保证聊天界面会定位到最新的地方)
                                 msgRecyclerView.smoothScrollToPosition(msgList.size() - 1);
                         }
