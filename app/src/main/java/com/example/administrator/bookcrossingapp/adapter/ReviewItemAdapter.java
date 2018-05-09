@@ -171,6 +171,11 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Vi
         holder.tv_title.setText(reviewItem.getTitle());
         holder.tv_like.setText(reviewItem.getLikeAmount() + "");
         Glide.with(context).load("http://120.24.217.191/Book/img/reviewImg/" + reviewItem.getCoverImgUrl()).into(holder.img_cover);
+        if(reviewItem.getIsLike() == 1){
+            //如果该用户已点赞
+            Drawable drawable = context.getResources().getDrawable(R.drawable.btn_review_like_tap);
+            holder.btn_like.setBackground(drawable);
+        }
     }
 
     @Override

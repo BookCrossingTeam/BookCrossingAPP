@@ -153,6 +153,12 @@ public class ReviewsOwnFragment extends Fragment {
                 String author = jsonObject.getString("username");
                 String coverImgUrl = jsonObject.getString("coverImgUrl");
                 int likeAmount = Integer.parseInt(jsonObject.getString("likeAmount"));
+                int isLike;
+                if( jsonObject.getString("userId").equals("isNotLike")){
+                    //表明该item没有被该用户点赞(注意，java的字符串比较是equals函数！)
+                    isLike = 0;
+                }
+                else isLike = 1;
 
                 ReviewItem reviewItem = new ReviewItem();
                 reviewItem.setArticleId(articleId);
@@ -160,6 +166,8 @@ public class ReviewsOwnFragment extends Fragment {
                 reviewItem.setAuthor(author);
                 reviewItem.setCoverImgUrl(coverImgUrl);
                 reviewItem.setLikeAmount(likeAmount);
+                reviewItem.setIsLike(isLike);
+
                 reviewlist.add(reviewItem);
             }
         } catch (Exception e) {

@@ -78,7 +78,9 @@ public class ReviewsArticleFragment extends Fragment {
                    //不懂这里为什么要加“”
                    //获取当前时间（毫秒）
                    long lastTime = System.currentTimeMillis();
-                   RequestBody requestBody = new FormBody.Builder().add("lastTime", lastTime+"").build();
+                   RequestBody requestBody = new FormBody.Builder()
+                           .add("userid",userid+"")
+                           .add("lastTime", lastTime+"").build();
                    Request request = new Request.Builder().url("http://120.24.217.191/Book/APP/reviewAll").post(requestBody).build();
                    Response response = client.newCall(request).execute();
                    Log.i("testtttttttttttt",response.toString());
@@ -143,6 +145,12 @@ public class ReviewsArticleFragment extends Fragment {
                 String author = jsonObject.getString("username");
                 String coverImgUrl = jsonObject.getString("coverImgUrl");
                 int likeAmount = Integer.parseInt(jsonObject.getString("likeAmount"));
+                int isLike;
+                if( jsonObject.getString("userId").equals("isNotLike")){
+                    //表明该item没有被该用户点赞(注意，java的字符串比较是equals函数！)
+                    isLike = 0;
+                }
+                else isLike = 1;
 
                 ReviewItem reviewItem = new ReviewItem();
                 reviewItem.setArticleId(articleId);
@@ -150,6 +158,8 @@ public class ReviewsArticleFragment extends Fragment {
                 reviewItem.setAuthor(author);
                 reviewItem.setCoverImgUrl(coverImgUrl);
                 reviewItem.setLikeAmount(likeAmount);
+                reviewItem.setIsLike(isLike);
+
                 reviewlist.add(reviewItem);
             }
         } catch (Exception e) {
