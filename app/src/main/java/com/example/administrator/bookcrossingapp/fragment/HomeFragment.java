@@ -1,5 +1,6 @@
 package com.example.administrator.bookcrossingapp.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.R;
+import com.example.administrator.bookcrossingapp.activity.SignUpActivity;
 import com.example.administrator.bookcrossingapp.adapter.BookDetailAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
@@ -79,6 +82,7 @@ public class HomeFragment extends Fragment {
         initRecyclerView();
         initBookDetailData();
         initSwipe_refresh();
+
         return view;
     }
 
