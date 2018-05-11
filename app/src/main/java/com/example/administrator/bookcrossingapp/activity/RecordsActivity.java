@@ -1,6 +1,7 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.adapter.RecordsAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.Records;
+import com.yzq.zxinglibrary.android.Intents;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,6 +64,11 @@ public class RecordsActivity extends AppCompatActivity {
 
                         String responseData = response.body().string();
                         JSONArray jsonArray = new JSONArray(responseData);
+                        //将记录数传进去本地
+                        SharedPreferences.Editor editor = getSharedPreferences("other_info", MODE_PRIVATE).edit();
+                        editor.putInt("recordNum", jsonArray.length());
+                        editor.apply();
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             //SELECT e.userAid,u1.username as userAname,e.userBid,u2.username as userBname,a.bookName as bookAName,a.imgUrl as bookAURL,b.bookName as bookBName,b.imgUrl as bookBURL,e.exchangeTime,e.startTime

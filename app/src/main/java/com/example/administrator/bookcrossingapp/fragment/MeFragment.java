@@ -42,6 +42,7 @@ public class MeFragment extends Fragment {
     private ImageView headImg;
     private String headImgUrl;
     private TextView tvTime;
+    private TextView tvRecord;
     private int userid;
 
     public MeFragment(){
@@ -70,6 +71,11 @@ public class MeFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         String date = simpleDateFormat.format(new Date());
         tvTime.setText(date);
+        SharedPreferences pref2 = getActivity().getSharedPreferences("other_info",MODE_PRIVATE);
+        int recordNum = pref2.getInt("recordNum",0);
+        if( recordNum != 0 ){
+            tvRecord.setText(recordNum+" books");
+        }
         Glide.with(getActivity()).load("http://120.24.217.191/Book/img/headImg/"+headImgUrl).error(R.drawable.me_icon_person).into(headImg);
         /////时间、头像、书籍待完善
     }
@@ -85,6 +91,7 @@ public class MeFragment extends Fragment {
         headImg = view.findViewById(R.id.me_icon_personIcon);
         tvUsername = view.findViewById(R.id.me_text_1);
         tvTime = view.findViewById(R.id.me_info_1);
+        tvRecord = view.findViewById(R.id.me_info_2);
 
         btnPosing.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -149,7 +149,7 @@ public class FriendChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) layout_exchange.getLayoutParams();
                 if (layout_exchange_change.getVisibility() == View.GONE) {
-                    linearParams.height = 500;
+                    linearParams.height = 4 * layout_exchange_height;
                     layout_exchange_change.setVisibility(View.VISIBLE);
                     Toast.makeText(getApplicationContext(), "exchange your book", Toast.LENGTH_SHORT).show();
                 } else {

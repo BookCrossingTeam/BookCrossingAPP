@@ -193,7 +193,7 @@ public class SettingActivity extends AppCompatActivity {
 
                             //Toast.makeText(SettingActivity.this,"test", Toast.LENGTH_LONG).show();
                         }
-
+                        getSharedPreferences("other_info", MODE_PRIVATE).edit().clear().apply();
                         getSharedPreferences("schedule_info", MODE_PRIVATE).edit().clear().apply();
 
                         DataSupport.deleteAll(BookDetail.class);
