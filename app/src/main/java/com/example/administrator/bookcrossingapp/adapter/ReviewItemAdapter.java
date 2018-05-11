@@ -137,12 +137,12 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Vi
                                         }
                                     });
                                 } else {
-                                    mActivity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(mActivity, "点赞失败！", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+//                                    mActivity.runOnUiThread(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            Toast.makeText(mActivity, "点赞失败！", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    });
                                 }
 
                             }

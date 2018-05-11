@@ -80,12 +80,12 @@ public class ReviewsOwnFragment extends Fragment {
                     Response response = client.newCall(request).execute();
                     Log.i("testtttttttttttt",response.toString());
                     if(response.isSuccessful()){
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(), "成功连接服务器！", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Toast.makeText(getActivity(), "成功连接服务器！", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
                         String responseData = response.body().string();
                         handleResponseData(responseData);
 
@@ -146,7 +146,7 @@ public class ReviewsOwnFragment extends Fragment {
     public void handleResponseData(final String responseData) {
         try {
             JSONArray jsonArray = new JSONArray(responseData);
-            for (int i = 0; i < jsonArray.length(); i++) {
+            for (int i = jsonArray.length()-1; i >= 0; i--) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 int articleId = Integer.parseInt(jsonObject.getString("id"));
                 String title = jsonObject.getString("title");

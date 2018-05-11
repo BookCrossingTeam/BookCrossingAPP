@@ -142,7 +142,7 @@ public class UserdetailReviewsFragment extends Fragment {
     public void handleResponseData(final String responseData) {
         try {
             JSONArray jsonArray = new JSONArray(responseData);
-            for (int i = 0; i < jsonArray.length(); i++) {
+            for (int i = jsonArray.length()-1; i >= 0; i--) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 int articleId = Integer.parseInt(jsonObject.getString("id"));
                 String title = jsonObject.getString("title");

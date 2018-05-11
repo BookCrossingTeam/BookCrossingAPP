@@ -20,6 +20,9 @@ import com.example.administrator.bookcrossingapp.activity.ShareListActivity;
 import com.example.administrator.bookcrossingapp.activity.SwappingActivity;
 import com.example.administrator.bookcrossingapp.activity.WantListActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by yvemuki on 2018/3/13.
@@ -38,6 +41,7 @@ public class MeFragment extends Fragment {
     private String username;
     private ImageView headImg;
     private String headImgUrl;
+    private TextView tvTime;
     private int userid;
 
     public MeFragment(){
@@ -63,6 +67,9 @@ public class MeFragment extends Fragment {
         headImgUrl = pref.getString("headImgPath","");
         userid = pref.getInt("userid",0);
         tvUsername.setText(username);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        String date = simpleDateFormat.format(new Date());
+        tvTime.setText(date);
         Glide.with(getActivity()).load("http://120.24.217.191/Book/img/headImg/"+headImgUrl).error(R.drawable.me_icon_person).into(headImg);
         /////时间、头像、书籍待完善
     }
@@ -77,6 +84,7 @@ public class MeFragment extends Fragment {
         btnWanting = view.findViewById(R.id.me_button_wanting);
         headImg = view.findViewById(R.id.me_icon_personIcon);
         tvUsername = view.findViewById(R.id.me_text_1);
+        tvTime = view.findViewById(R.id.me_info_1);
 
         btnPosing.setOnClickListener(new View.OnClickListener() {
             @Override
