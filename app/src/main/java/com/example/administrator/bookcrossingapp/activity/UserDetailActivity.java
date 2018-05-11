@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.administrator.bookcrossingapp.R;
 import com.example.administrator.bookcrossingapp.adapter.TabSimpleAdapter;
+import com.example.administrator.bookcrossingapp.fragment.ReviewsOwnFragment;
 import com.example.administrator.bookcrossingapp.fragment.UserdetailReviewsFragment;
 import com.example.administrator.bookcrossingapp.fragment.UserdetailSharelistFragment;
 import com.example.administrator.bookcrossingapp.fragment.UserdetailWantlistFragment;
@@ -38,7 +39,7 @@ public class UserDetailActivity extends AppCompatActivity {
         initData();
         UserdetailSharelistFragment fragment1 = new UserdetailSharelistFragment(userid);
         UserdetailWantlistFragment fragment2 = new UserdetailWantlistFragment(userid);
-        UserdetailReviewsFragment fragment3 = new UserdetailReviewsFragment();
+        UserdetailReviewsFragment fragment3 = UserdetailReviewsFragment.newInstance(userid);
         mFragments.add(fragment1);
         mFragments.add(fragment2);
         mFragments.add(fragment3);
