@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:singleLine="false"
-                android:text="1、内容到时候再瞎编吧\n2、内容到时候再瞎编吧\n3、内容到时候再瞎编吧\n4、内容到时候再瞎编吧\n5、内容到时候再瞎编吧"
+                android:text="      图书漂流BookCrosing是非盈利性的APP软件，对于在该软件上发表的任何言论由用户自行承担责任。用户必须完全同意所有服务条款并完成注册程序，才能成为BookCrosing的用户享受更全面的服务。"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
