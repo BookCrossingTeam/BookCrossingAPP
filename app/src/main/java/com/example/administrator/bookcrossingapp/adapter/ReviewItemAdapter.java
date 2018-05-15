@@ -176,6 +176,11 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Vi
             Drawable drawable = context.getResources().getDrawable(R.drawable.btn_review_like_tap);
             holder.btn_like.setBackground(drawable);
         }
+        else
+        {
+            Drawable drawable = context.getResources().getDrawable(R.drawable.btn_review_like);
+            holder.btn_like.setBackground(drawable);
+        }
     }
 
     @Override
