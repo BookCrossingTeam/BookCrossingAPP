@@ -3,6 +3,7 @@ package com.example.administrator.bookcrossingapp.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,8 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
-import com.example.administrator.bookcrossingapp.activity.SignUpActivity;
+import com.example.administrator.bookcrossingapp.activity.ReviewsDetailActivity;
 import com.example.administrator.bookcrossingapp.adapter.BookDetailAdapter;
 import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
@@ -65,6 +66,10 @@ public class HomeFragment extends Fragment {
     public static final String ARGUMENT = "argument";
 
     private int offsetStep;
+    private int currentPos = 1;
+
+    private Handler handler;
+    private Runnable runnable;
 
     public HomeFragment() {
         super();
@@ -83,7 +88,23 @@ public class HomeFragment extends Fragment {
         initBookDetailData();
         initSwipe_refresh();
 
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                viewPager.setCurrentItem(currentPos+1);
+                handler.postDelayed(runnable, 5 * 1000);
+            }
+        };
+        handler.postDelayed(runnable,5*1000);
+
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 
     public static HomeFragment newInstance(String from) {
@@ -97,6 +118,15 @@ public class HomeFragment extends Fragment {
     public void initViewPager() {
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         final int[] images = new int[]{R.drawable.banner, R.drawable.banner, R.drawable.banner, R.drawable.banner};//图片ID数组
+
+        final String[] imgURL = new String[]{
+                "5D22EF068FD1C305FC558206E1D40AB2042d6b52758bee578b7280f6d679a49c",  //4
+                "6AE928349E802D3DF59B43CBC6AA06A747ff07e2322c28831256cd998c0942e",  //1
+                "636AA8EA3912C94AC690F9A0DFD03F9C45fef0e29b71bebcba0e122fbc3a5f29",  //2
+                "88B8310B63FBDB4E75575A12474E9DAA26de893cf007f13ed02b8e735ceefe72",  //3
+                "5D22EF068FD1C305FC558206E1D40AB2042d6b52758bee578b7280f6d679a49c",  //4
+                "6AE928349E802D3DF59B43CBC6AA06A747ff07e2322c28831256cd998c0942e"  //1
+        };
 
 
         //存放点点的容器
@@ -124,7 +154,7 @@ public class HomeFragment extends Fragment {
             @Override
             public int getCount() {
                 // TODO Auto-generated method stub
-                return images.length;
+                return 6;
             }
 
             @Override
@@ -135,14 +165,27 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object o) {
-                //container.removeViewAt(position);
+                Log.i(TAG, "destroyItem: " + position);
+                Glide.clear((View) o);
+                container.removeView((View) o);
             }
 
             @Override
-            public Object instantiateItem(ViewGroup container, int position) {
+            public Object instantiateItem(ViewGroup container, final int position) {
+                Log.i(TAG, "instantiateItem: " + position);
                 ImageView im = new ImageView(getContext());
 
-                im.setImageResource(images[position]);
+                Glide.with(getContext()).load("http://120.24.217.191/Book/img/reviewImg/" + imgURL[position]).into(im);
+                im.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                im.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), ReviewsDetailActivity.class);
+                        intent.putExtra("articleId", 7);
+                        intent.putExtra("cover", imgURL[position]);
+                        getActivity().startActivity(intent);
+                    }
+                });
                 container.addView(im);
                 return im;
             }
@@ -150,12 +193,25 @@ public class HomeFragment extends Fragment {
         };
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            int FIRST_ITEM_INDEX = 1;
+            int LAST_ITEM_INDEX = 4;
+            boolean isChanged;
+
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
                 // TODO Auto-generated method stub
+                if (ViewPager.SCROLL_STATE_IDLE == arg0) {
+                    Log.d(TAG, "onPageScrollStateChanged: " + arg0);
+                    if (isChanged) {
+                        isChanged = false;
+                        viewPager.setCurrentItem(currentPos, false);
+                    }
+                }
 
             }
 
@@ -167,10 +223,20 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected: " + position);
                 // TODO Auto-generated method stub
+                if (position > LAST_ITEM_INDEX) {
+                    isChanged = true;
+                    currentPos = FIRST_ITEM_INDEX;
+                } else if (position < FIRST_ITEM_INDEX) {
+                    isChanged = true;
+                    currentPos = LAST_ITEM_INDEX;
+                } else {
+                    currentPos = position;
+                }
                 tips[currentPage].setBackgroundResource(R.drawable.banner_page);
-                currentPage = position;
-                tips[position].setBackgroundResource(R.drawable.banner_page_now);
+                currentPage = currentPos - 1;
+                tips[currentPage].setBackgroundResource(R.drawable.banner_page_now);
             }
         });
     }
@@ -179,7 +245,7 @@ public class HomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         final LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(LayoutManager);
-        adapter = new BookDetailAdapter(BookDetailList,getActivity());
+        adapter = new BookDetailAdapter(BookDetailList, getActivity());
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
