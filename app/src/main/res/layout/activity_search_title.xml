@@ -11,16 +11,16 @@
         android:id="@+id/editContent"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_gravity="center"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_gravity="center"
+        android:layout_weight="18"
+        android:background="@null"
+        android:hint="书名/作者"
+        android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_weight="18"
-        android:textSize="16dp"
-        android:inputType="text"
-        android:background="@null"
-        android:hint="书名/作者/出版社" />
+        android:textSize="16dp" />
 
     <ImageButton
         android:id="@+id/btnSearch"

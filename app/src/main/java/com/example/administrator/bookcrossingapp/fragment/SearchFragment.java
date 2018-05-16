@@ -84,9 +84,16 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchList.clear();
                 if (!editContent.getText().toString().equals(""))
-                    researchList(editContent.getText().toString());
+                {
+                    searchList.clear();
+                    reSearchList(editContent.getText().toString());
+                }
+                else
+                {
+                    searchList.clear();
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -118,7 +125,7 @@ public class SearchFragment extends Fragment {
         }
     }
 
-    public void researchList(String content) {
+    public void reSearchList(String content) {
 
         HashSet<String> hs = new HashSet<String>();
 
