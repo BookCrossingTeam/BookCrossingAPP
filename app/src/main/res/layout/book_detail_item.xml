@@ -26,11 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="28dp"
-            android:layout_toEndOf="@+id/book_detail_icon"
+            android:layout_alignStart="@+id/book_detail_bookname"
+            android:layout_marginBottom="26dp"
             android:textSize="12sp"
-            Android:text="Francis Scott Key Fitzgerald"
-            android:layout_toRightOf="@+id/book_detail_icon" />
+            Android:text="Francis Scott Key Fitzgerald" />
 
         <TextView
             android:id="@+id/book_detail_bookname"
@@ -77,10 +76,10 @@
             android:id="@+id/book_detail_posetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/book_detail_author"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/book_detail_author"
-            android:layout_marginBottom="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="132dp"
             android:textSize="10sp"
             android:visibility="visible"
             Android:text="4-13 15:00:00" />

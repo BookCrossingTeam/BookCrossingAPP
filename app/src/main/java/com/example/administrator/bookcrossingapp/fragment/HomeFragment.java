@@ -98,11 +98,11 @@ public class HomeFragment extends Fragment {
         runnable = new Runnable() {
             @Override
             public void run() {
-                viewPager.setCurrentItem(currentPos+1);
+                viewPager.setCurrentItem(currentPos + 1);
                 handler.postDelayed(runnable, 5 * 1000);
             }
         };
-        handler.postDelayed(runnable,5*1000);
+        handler.postDelayed(runnable, 5 * 1000);
     }
 
     @Override
@@ -124,14 +124,35 @@ public class HomeFragment extends Fragment {
         final int[] images = new int[]{R.drawable.banner, R.drawable.banner, R.drawable.banner, R.drawable.banner};//图片ID数组
 
         final String[] imgURL = new String[]{
-                "5D22EF068FD1C305FC558206E1D40AB2042d6b52758bee578b7280f6d679a49c",  //4
-                "6AE928349E802D3DF59B43CBC6AA06A747ff07e2322c28831256cd998c0942e",  //1
-                "636AA8EA3912C94AC690F9A0DFD03F9C45fef0e29b71bebcba0e122fbc3a5f29",  //2
-                "88B8310B63FBDB4E75575A12474E9DAA26de893cf007f13ed02b8e735ceefe72",  //3
-                "5D22EF068FD1C305FC558206E1D40AB2042d6b52758bee578b7280f6d679a49c",  //4
-                "6AE928349E802D3DF59B43CBC6AA06A747ff07e2322c28831256cd998c0942e"  //1
+                "266C01F1F1427093276D925E5D4B9B424659ec9eda77550f4965cb2e5bc17716",  //4
+                "CC19FAA090606C087BDEAC09BCF535643c2436947d22fe9eef716741b303abf8",  //1
+                "7A647E3BC67BD7C4AF128CB19E26D49961d40c4c554f0aedb98daaceb3811434",  //2
+                "F3C94BC17516807158A6DDB9EE22435340fc2b2a7ea857053e479fe775632768",  //3
+                "266C01F1F1427093276D925E5D4B9B424659ec9eda77550f4965cb2e5bc17716",  //4
+                "CC19FAA090606C087BDEAC09BCF535643c2436947d22fe9eef716741b303abf8"  //1
         };
 
+        final int[] articleId = new int[]{
+                24, 26, 22,23,24,26
+        };
+
+        final String[] title = new String[]{
+                "书是人类进步的阶梯",
+                "复仇者联盟观后感",
+                "海大啊海大",
+                "中国海洋大学",
+                "书是人类进步的阶梯",
+                "复仇者联盟观后感"
+        };
+
+        final String[] author = new String[]{
+                "linxiangpeng",
+                "linxiangpeng",
+                "linxiangpeng",
+                "linxiangpeng",
+                "linxiangpeng",
+                "linxiangpeng"
+        };
 
         //存放点点的容器
         LinearLayout tipsBox = (LinearLayout) view.findViewById(R.id.tipsBox);
@@ -185,8 +206,10 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), ReviewsDetailActivity.class);
-                        intent.putExtra("articleId", 7);
+                        intent.putExtra("articleId", articleId[position]);
                         intent.putExtra("cover", imgURL[position]);
+                        intent.putExtra("title", title[position]);
+                        intent.putExtra("author", author[position]);
                         getActivity().startActivity(intent);
                     }
                 });
