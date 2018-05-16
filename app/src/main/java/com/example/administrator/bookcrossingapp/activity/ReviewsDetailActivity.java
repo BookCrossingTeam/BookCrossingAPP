@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class ReviewsDetailActivity extends AppCompatActivity {
         tv_title = findViewById(R.id.reviews_detail_title);
         tv_author = findViewById(R.id.reviews_detail_author);
         tv_content = findViewById(R.id.reviews_detail_content);
+        //设置内容可以滚动
+        tv_content.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         //利用Glide来将图片加载显示
         Glide.with(this).load("http://120.24.217.191/Book/img/reviewImg/" + cover).into(img_cover);
