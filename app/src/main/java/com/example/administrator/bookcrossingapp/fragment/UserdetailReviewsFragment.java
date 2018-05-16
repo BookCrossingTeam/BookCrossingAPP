@@ -1,7 +1,6 @@
 package com.example.administrator.bookcrossingapp.fragment;
 
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,9 +14,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.administrator.bookcrossingapp.R;
-import com.example.administrator.bookcrossingapp.activity.ReviewsEditActivity;
-import com.example.administrator.bookcrossingapp.datamodel.ReviewItem;
 import com.example.administrator.bookcrossingapp.adapter.ReviewItemAdapter;
+import com.example.administrator.bookcrossingapp.datamodel.ReviewItem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -79,7 +77,7 @@ public class UserdetailReviewsFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getActivity(), "成功连接服务器！", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "成功连接服务器！", Toast.LENGTH_SHORT).show();
                             }
                         });
                         String responseData = response.body().string();

@@ -1,10 +1,9 @@
 package com.example.administrator.bookcrossingapp.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.ImageView;
@@ -13,13 +12,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.bookcrossingapp.R;
-import com.example.administrator.bookcrossingapp.datamodel.BookDetail;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import okhttp3.FormBody;
@@ -94,7 +90,7 @@ public class ReviewsDetailActivity extends AppCompatActivity {
                         ReviewsDetailActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(ReviewsDetailActivity.this,"成功连接上详情页面",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ReviewsDetailActivity.this,"成功连接上详情页面",Toast.LENGTH_SHORT).show();
                             }
                         });
 
