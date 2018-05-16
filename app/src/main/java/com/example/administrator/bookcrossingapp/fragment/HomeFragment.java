@@ -88,6 +88,12 @@ public class HomeFragment extends Fragment {
         initBookDetailData();
         initSwipe_refresh();
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -97,8 +103,6 @@ public class HomeFragment extends Fragment {
             }
         };
         handler.postDelayed(runnable,5*1000);
-
-        return view;
     }
 
     @Override
