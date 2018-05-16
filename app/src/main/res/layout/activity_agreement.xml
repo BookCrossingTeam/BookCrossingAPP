@@ -1,65 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.bookcrossingapp.activity.AgreementActivity">
-
+    android:orientation="vertical"
+    android:background="#fff">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="55dp"
+        android:background="@drawable/title_friend">
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:background="#333333" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="服务条款"
-                android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="40sp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/line4"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="#333333" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:singleLine="false"
-                android:text="      图书漂流BookCrosing是非盈利性的APP软件，对于在该软件上发表的任何言论由用户自行承担责任。用户必须完全同意所有服务条款并完成注册程序，才能成为BookCrosing的用户享受更全面的服务。"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-        </LinearLayout>
-
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TERMS AND CONDITIONS"
+            android:textColor="#000"
+            android:textSize="18sp" />
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:singleLine="false"
+        android:text="      图书漂流BookCrosing是非盈利性的APP软件，对于在该软件上发表的任何言论由用户自行承担责任。用户必须完全同意所有服务条款并完成注册程序，才能成为BookCrosing的用户享受更全面的服务。"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

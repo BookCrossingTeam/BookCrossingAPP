@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="0dp"
+    android:background="#fff"
     tools:context="com.example.administrator.bookcrossingapp.activity.SignUpActivity">
 
     <ImageView

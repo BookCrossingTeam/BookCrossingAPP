@@ -28,7 +28,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="28dp"
             android:layout_toEndOf="@+id/book_detail_icon"
-            android:textSize="14sp"
+            android:textSize="12sp"
             Android:text="Francis Scott Key Fitzgerald"
             android:layout_toRightOf="@+id/book_detail_icon" />
 
@@ -43,7 +43,8 @@
             android:gravity="center_horizontal"
             android:maxLines="2"
             android:maxWidth="150dp"
-            android:textSize="18sp"
+            android:textSize="14sp"
+            android:textColor="#000"
             Android:text="The Great Gatsby"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="73dp" />
@@ -56,7 +57,8 @@
             android:layout_toEndOf="@+id/book_detail_icon"
             android:layout_toRightOf="@+id/book_detail_icon"
             android:text="Yvettemuki"
-            android:textSize="14sp"
+            android:textColor="#000"
+            android:textSize="12sp"
             android:visibility="visible" />
 
         <ImageView
@@ -79,7 +81,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/book_detail_author"
             android:layout_marginBottom="10dp"
-            android:textSize="8sp"
+            android:textSize="10sp"
             android:visibility="visible"
             Android:text="4-13 15:00:00" />
 
